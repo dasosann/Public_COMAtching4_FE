@@ -12,6 +12,9 @@ M.Container = styled.div`
     border-radius: 8px;
     gap: 16px;
     font-family: "Pretendard", sans-serif;
+    /* position: sticky;
+    top: 56px;
+    z-index: 1; */
 `
 M.HoldPoint = styled.div`
     font-size: 12px;

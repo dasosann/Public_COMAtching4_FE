@@ -7,26 +7,34 @@ const NavBar = () => {
   const { pathname } = location;
 
   return (
-    
     <div className="navbar">
-        <Link to="/" className={`nav-item ${pathname === '/' ? 'active' : ''}`}>
-            <img src="./assets/home.svg" alt="Home" className="icon" />
-            <span className="label">Home</span>
-        </Link>
-        <Link to="/chat" className={`nav-item ${pathname === '/chat' ? 'active' : ''}`}>
-            <img src="./assets/chat.svg" alt="Chat" className="icon" />
-            <span className="label">Chat</span>
-        </Link>
-        <Link to="/meetings" className={`nav-item ${pathname === '/meetings' ? 'active' : ''}`}>
-            <img src="./assets/meetings.svg" alt="Meetings" className="icon" />
-            <span className="label">Meetings</span>
-        </Link>
-        <Link to="/mypage" className={`nav-item ${pathname === '/mypage' ? 'active' : ''}`}>
-            <img src="./assets/mypage.svg" alt="My Page" className="icon" />
-            <span className="label">My Page</span>
-        </Link>
-    </div>
+      <Link to="/" className={`nav-item ${pathname === '/' ? 'active' : ''}`}>
+        <img
+          src={pathname === '/' ? './assets/homeactive.svg' : './assets/home.svg'}
+          alt="Home"
+          className="icon"
+        />
+        <span className="label">Home</span>
+      </Link>
 
+      <Link to="/chat" className={`nav-item ${pathname === '/chat' ? 'active' : ''}`}>
+        <img
+          src={pathname === '/chat' ? './assets/chatactive.svg' : './assets/chat.svg'}
+          alt="Chat"
+          className="icon"
+        />
+        <span className="label">Chat</span>
+      </Link>
+
+      <Link to="/mypage" className={`nav-item ${pathname === '/mypage' ? 'active' : ''}`}>
+        <img
+          src={pathname === '/mypage' ? './assets/mypageactive.svg' : './assets/mypage.svg'}
+          alt="My Page"
+          className="icon"
+        />
+        <span className="label">My Page</span>
+      </Link>
+    </div>
   );
 };
 

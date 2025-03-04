@@ -3,7 +3,8 @@ import axios from "axios";
 
 // Axios 기본 설정
 const instance = axios.create({
-  baseURL: "https://cuk.comatching.site", // 실제 서버 URL 사용
+  baseURL : "http://13.124.46.181:8080" 
+  // baseURL: "https://cuk.comatching.site", 
 });
 
 // 요청 인터셉터 설정

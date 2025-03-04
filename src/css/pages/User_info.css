@@ -134,7 +134,6 @@ button {
     bottom: 16px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 10;
     border: none;
     outline: none;
     transition: background-color 0.3s ease, color 0.3s ease;

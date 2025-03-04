@@ -1,0 +1,32 @@
+.mypage-support-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #808080;
+    margin-bottom: 10px;
+    text-align: left;
+    margin-top: 50px;
+  }
+  
+  .mypage-support-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 600;
+    color: black;
+    padding: 24px 10px;
+    border-bottom: 1px solid #E5E5E5;
+  }
+  
+  .mypage-etc-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #808080;
+    margin-top: 20px;
+    text-align: left;
+  }
+  
+  .mypage-etc .mypage-support-item {
+    border-bottom: 1px solid #E5E5E5;
+  }
+  

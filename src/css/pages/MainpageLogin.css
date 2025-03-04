@@ -158,20 +158,7 @@
   font-weight: bold;
   color: #363636;
 }
-.welcome {
-  margin-top: 16px;
-  width: 260px;
-  height: 85px;
-  font-weight: bold;
-  font-family: 'Pretendard', sans-serif;
-  text-align: left;
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  font-size: 32px;
-  color: black;
-  line-height: 1.2;
-}
+
 .charge-request-disabled {
   
   color: #a0a0a0; /* 회색 글자 */

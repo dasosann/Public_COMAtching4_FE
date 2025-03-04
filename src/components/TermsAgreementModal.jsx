@@ -38,7 +38,7 @@ const TermsAgreementModal = ({ isOpen, onRequestClose, handleSubmit, registerChe
                 className="Modal"
                 overlayClassName="Overlay"
             >
-                <div className="modal-content">
+                <div className="modal-contents">
                     <div className="agreement-section">
                         <h3 className='agreement_title'>약관에 동의해주세요</h3>
                         <p className='agreement_sub'>여러분의 소중한 개인정보를 잘 지켜 드릴게요</p>

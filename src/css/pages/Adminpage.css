@@ -4,6 +4,7 @@
     align-items: center;
     height: 100vh; /* 화면의 전체 높이를 차지하도록 설정 */
     background-color: #F4F4F4;
+    font-family: "Pretendard", sans-serif;
     
 }
 
@@ -26,6 +27,7 @@
     border: 1px solid #ccc;
     border-radius: 0.8em; /* 둥글게 설정, 8px = 0.5em */
     box-shadow: 0 0 0.625em rgba(0, 0, 0, 0.1); /* 입력창에도 그림자 추가 */
+    font-size: 18px;
 }
 
 .login-button {

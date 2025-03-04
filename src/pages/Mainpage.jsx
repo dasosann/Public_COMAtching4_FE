@@ -53,7 +53,7 @@ function Mainpage() {
   }, [navigate]);
 
   // 로그인 상태에 따라 다른 컴포넌트 렌더링
-  return isLoggedIn ? <MainpageUnLogin /> : <MainpageUnLogin />;
+  return isLoggedIn ? <MainpageLogin /> : <MainpageLogin />;
 }
 
 export default Mainpage;

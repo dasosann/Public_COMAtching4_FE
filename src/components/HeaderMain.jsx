@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import * as styles from "../css/components/HeaderMain.css";
+import * as styles from "../css/components/HeaderMain.css"; // Vanilla Extract 스타일 import
 
 function HeaderMain() {
   const navigate = useNavigate();
 
   return (
     <div className={styles.header}>
-      <div>
+      <div className={styles.left}>
         <object
           className={styles.logoImg}
           data={`${import.meta.env.VITE_PUBLIC_URL}../../assets/logoblacknav.svg`}
@@ -16,6 +16,11 @@ function HeaderMain() {
         >
           <span>로고</span>
         </object>
+      </div>
+      <div >
+        <div className={styles.iconWrapper}>
+          <img className={styles.iconImage} src="/assets/Mainpage/notice.svg" alt="알림 아이콘" />
+        </div>
       </div>
     </div>
   );

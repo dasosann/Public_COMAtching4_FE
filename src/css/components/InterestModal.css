@@ -1,0 +1,39 @@
+.interest-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  .interest-item {
+    width: 113px;
+    height: 113px;
+    border: 1px solid #E5E5E5;
+    background: rgba(26, 26, 26, 0.02);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .interest-item p{
+    font-size: 17px;
+    font-weight: bold;
+    margin-top: 4px;
+    margin-bottom: 7px;
+  }
+  .interest-icon {
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
+    
+  }
+  
+  .interest-item.selected {
+    background: linear-gradient(45deg, #F8D1E0 0%, #FFFFFF 75%);
+    border: 2px solid #F57DB2;
+  }
