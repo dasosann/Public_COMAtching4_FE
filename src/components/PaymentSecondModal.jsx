@@ -7,7 +7,7 @@ const PaymentSecondModal = ({ isOpen, closeModal }) => {
   return (
     <P.StyledDiv>2번째 모달</P.StyledDiv>
     
-  );
+  );git 
 };
 
 export default PaymentSecondModal;
