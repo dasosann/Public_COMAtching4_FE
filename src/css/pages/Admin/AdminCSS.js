@@ -7,7 +7,7 @@ export const MainWrapper = styled.div`
   font-family: "Pretendard", sans-serif;
   display: flex;
   min-height: calc(100vh - 88px);
-  width: 1920px;
+  /* width: 1920px; */
   flex-direction: column;
   align-items: center;
   gap: 16px;

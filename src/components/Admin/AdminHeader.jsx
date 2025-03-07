@@ -1,11 +1,21 @@
 import React from 'react';
 import A from '../../css/components/AdminHeader';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { selected } from '../../css/components/MBTIMaker.css';
 
 const AdminHeader = ({ adminSelect, setAdminSelect }) => {
   const navigate = useNavigate();
   const goToMainButton = ()=>{
-    navigate("/adminpage")
+    setAdminSelect("Main")
+    navigate("/adminpage/myPage")
+  }
+  const goToTeamButton = ()=>{
+    setAdminSelect("팀관리");
+    navigate("/adminpage/myPage", {state: {selectedTab:"팀관리"}})
+  }
+  const goToMemberButton = ()=>{
+    setAdminSelect("가입자자관리");
+    navigate("/adminpage/myPage", {state: {selectedTab:"가입자관리"}})
   }
   return (
     <A.HeaderContainer>
@@ -13,7 +23,7 @@ const AdminHeader = ({ adminSelect, setAdminSelect }) => {
 
       <A.HeaderMenu style={{padding:"0 20px"}}>
         <A.HeaderText
-          onClick={() => setAdminSelect("Main")}
+          onClick={goToMainButton}
           isActive={adminSelect === "Main"}
           style={{ paddingLeft:'24px', paddingRight:'24px' }}
         >
@@ -21,7 +31,7 @@ const AdminHeader = ({ adminSelect, setAdminSelect }) => {
         </A.HeaderText>
 
         <A.HeaderText
-          onClick={() => setAdminSelect("가입자관리")}
+          onClick={goToMemberButton}
           isActive={adminSelect === "가입자관리"}
           style={{ paddingLeft:'8px', paddingRight:'8px' }}
         >
@@ -30,7 +40,7 @@ const AdminHeader = ({ adminSelect, setAdminSelect }) => {
 
         {/* "팀 관리 + 알람" 영역을 A.MenuItem으로 그룹화 */}
         <A.MenuItem
-          onClick={() => setAdminSelect("팀관리")}
+          onClick={goToTeamButton}
           isActive={adminSelect === "팀관리"}
         >
           <A.HeaderText>

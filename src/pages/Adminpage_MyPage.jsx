@@ -1,16 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {AdminHeader} from '../components/Admin/AdminHeader';
 import {AdminMyPageMain,AdminMyPageManage, AdminTeamManage} from '../components/Admin/AdminMyPageMain';
 import { adminUserState } from '../Atoms';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import AdminNotAllowed from '../components/Admin/AdminNotAllowed';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 const Adminpage_MyPage = () => {
     const navigate = useNavigate();
     const [adminSelect, setAdminSelect] = useState("Main");
     const {isChecked} = useRecoilValue(adminUserState);
-    const {authority} = useRecoilValue(authority);
-    
+    const {authority} = useRecoilValue(adminUserState);
+    const location = useLocation();
+    useEffect(() => {
+    if (location.state?.selectedTab) {
+        setAdminSelect(location.state.selectedTab);
+    }
+    }, [location.state]);
     // if(!isChecked && authority==="오퍼레이터" ){
     //     return (
     //         <>

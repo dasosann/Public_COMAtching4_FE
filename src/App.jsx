@@ -30,7 +30,7 @@ import PaymentCallTest from "./components/PaymentCallTest.jsx";
 import Adminpage_MyPage from "./pages/Adminpage_MyPage.jsx";
 import AdminRegister from "./pages/AdminRegister.jsx";
 import AdminWebmail from "./pages/AdminWebmail.jsx";
-import AdminSearch from "./components/Admin/AdminSearch.jsx";
+import AdminSearch from "./pages/AdminSearch.jsx";
 
 
 export default function App() {
