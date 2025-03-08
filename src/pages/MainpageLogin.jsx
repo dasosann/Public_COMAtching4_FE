@@ -20,6 +20,7 @@ import AccountButtonInfo from "../components/AccountButtonInfo";
 import Cookies from "js-cookie"; // js-cookie import 추가
 import EventModal from "../components/EventModal";
 import PointBalance from "../components/PointBalance";
+import MatchProfiles from "../components/Mainpage/MatchProfiles";
 function MainpageLogin() {
   const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 훅 사용
   const [isAccountClicked, setIsAccountClicked] = useState(false);
@@ -151,11 +152,50 @@ function MainpageLogin() {
       alert("이미 요청되었습니다."); // 이미 요청된 경우 알림
     }
   };
+  const sampleProfiles = [
+    {
+      nickname: "JaneDoe",
+      school: "가톨릭대학교",
+      department: "컴퓨터공학과",
+      mbti: "INTJ",
+      age: 22,
+      admissionYear: 23,
+      contactId: "@janedoe",
+      favoriteSong: "IU - Love Poem",
+      introduction: "안녕하세요!!",
+      interests: ["여행"],
+    },
+    {
+      nickname: "JohnSmith",
+      school: "고려대학교",
+      department: "경영학과",
+      mbti: "ENTP",
+      age: 24,
+      admissionYear: 21,
+      contactId: "@johnsmith",
+      favoriteSong: "Coldplay - Fix You",
+      introduction: "모험을 좋아하는 자유로운 영혼입니다. 새로운 도전을 즐깁니다!",
+      interests: ["영화 감상", "자전거", "요리"],
+    },
+    {
+      nickname: "AliceKim",
+      school: "연세대학교",
+      department: "심리학과",
+      mbti: "INFJ",
+      age: 23,
+      admissionYear: 22,
+      contactId: "@alicekim",
+      favoriteSong: "BTS - Spring Day",
+      introduction: "사람들과 깊이 있는 대화를 나누는 걸 좋아해요. 심리학이 흥미로워요!",
+      interests: ["음악 감상", "글쓰기", "명상"],
+    },
+  ];
   return (
     <div className="container">
       <HeaderMain />
       <Background />
       <PointBalance amount={userInfo.point}/>
+      <MatchProfiles profiles={sampleProfiles}/>
       <div className="Mainpage__Login">
         
         <div
