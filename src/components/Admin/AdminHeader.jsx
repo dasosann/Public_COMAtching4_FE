@@ -19,7 +19,7 @@ const AdminHeader = ({ adminSelect, setAdminSelect }) => {
   }
   return (
     <A.HeaderContainer>
-      <A.HeaderImg src="/assets/Admin/header_logo.svg" alt="코매칭 로고" onClick={goToMainButton} />
+      <A.HeaderImg src="/assets/Admin/header_logo.svg" alt="코매칭 로고" onClick={()=>navigate("/adminpage",{replace:true})} />
 
       <A.HeaderMenu style={{padding:"0 20px"}}>
         <A.HeaderText
@@ -63,7 +63,7 @@ const AdminHeader = ({ adminSelect, setAdminSelect }) => {
 const AdminRegisterHeader = ()=>{
   const navigate = useNavigate();
   const goToMainButton = ()=>{
-    navigate("/adminpage")
+    navigate("/adminpage",{replace:true} )
   }
   return (
     <A.HeaderContainer>

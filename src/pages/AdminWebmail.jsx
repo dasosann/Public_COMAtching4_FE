@@ -7,6 +7,9 @@ const AdminWebmail = () => {
     const [values,setValues]=useState(Array(6).fill(''));
     const inputRefs = useRef([]);
     const [timeLeft, setTimeLeft] = useState(EMAIL_VALID_DURATION); // 180초 = 3분
+    useEffect(()=>{
+        setTimeLeft(EMAIL_VALID_DURATION)
+    },[])
     const handleChange = (e,index)=>{
         const value = e.target.value;
         if(value &&!/^\d$/.test(value)) return;

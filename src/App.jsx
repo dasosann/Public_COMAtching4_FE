@@ -8,7 +8,7 @@ import Guide from "./pages/Guide.jsx";
 import Redirection from "./pages/RedirectionPage.jsx";
 import OpenExternalBrowser from "./OpenExternalBrowser.jsx";
 import Userinfo from "./pages/User_info_page.jsx";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import Describe from "./pages/Describe.jsx";
 import "./App.css";
 import "./axiosConfig.jsx";
@@ -31,6 +31,9 @@ import Adminpage_MyPage from "./pages/Adminpage_MyPage.jsx";
 import AdminRegister from "./pages/AdminRegister.jsx";
 import AdminWebmail from "./pages/AdminWebmail.jsx";
 import AdminSearch from "./pages/AdminSearch.jsx";
+import AdminUserDetail from "./pages/AdminUserDetail.jsx";
+import AdminProtectedRoute from "./AdminProtectedRoute.jsx";
+import AdminUserWarningHistory from "./pages/AdminUserWarningHistory.jsx";
 
 
 export default function App() {
@@ -47,26 +50,42 @@ export default function App() {
             
             <Route path="/hobby" element={<Hobby />} />
             <Route path="/adminpage" element={<Adminpageunlogin />} />
-            <Route
+            {/* <Route
               path="/adminpage/charge-requests"
               element={<AdminRequestList />}
-            />
+            /> */}
+            {/* admin+operator 둘 다 접근 가능한 라우트 */}
             <Route
-              path="/adminpage/myPage"
-              element={<Adminpage_MyPage />}
-            />
+              path="/adminpage/*"
+              element={
+                <AdminProtectedRoute allowedAuthorities={["admin", "operator"]}>
+                  <Outlet />
+                </AdminProtectedRoute>
+              }
+            >
+              <Route path="myPage" element={<Adminpage_MyPage />} />
+              <Route path="myPage/search" element={<AdminSearch />} />
+              <Route path="user/:uuid" element={<AdminUserDetail />} />
+              <Route path="user/:uuid/warnhistory" element={<AdminUserWarningHistory />} />
+              {/* ... 등등 */}
+            </Route>
+            
             <Route
-              path="/adminpage/myPage/search"
-              element={<AdminSearch />}
-            />
+              path="/adminpage/*"
+              element={
+                <AdminProtectedRoute allowedAuthorities={["admin"]}>
+                  <Outlet />
+                </AdminProtectedRoute>
+              }
+            >
+              <Route path="webmail-check" element={<AdminUserDetail />} />
+            </Route>
+          
             <Route
               path="/adminpage/register"
               element={<AdminRegister />}
             />
-            <Route
-              path="/adminpage/webmail-check"
-              element={<AdminWebmail/>}
-            />
+            
             
 
             <Route path="/loading" element={<Loading />} />

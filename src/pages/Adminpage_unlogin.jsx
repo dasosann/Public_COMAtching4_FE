@@ -97,7 +97,7 @@ function Adminpageunlogin() {
         </form>
         <div className="links-container">
           <div className="link-row">
-            <a href="register" className="login-link">
+            <a href="adminpage/register" className="login-link">
               가입하기
             </a>
             <a href="#find-id-password" className="login-link">
