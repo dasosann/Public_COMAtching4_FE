@@ -17,18 +17,20 @@ S.SortSearchDiv = styled.div`
     justify-content: flex-end;
     height: 81px;
 `
-S.SortButton = styled.button`
+S.FunctionButton = styled.button`
+    background-color: #ff775e;
+    background-color: ${({isBlacklisted})=>(isBlacklisted ? "#1a1a1a":'#ff775e')};
     box-sizing: border-box;
     padding: 12px 10px;
-    width: 120px;
     height: 48px;
     border-radius: 8px;
     color: #fff;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
     border: none;
-    background-color: ${({isSelected})=>(isSelected ? '#ff7752':'#999')};
+    display: flex;
+    align-items: center;
 `
 S.SearchInput = styled.input`
     all: unset;    
@@ -76,7 +78,7 @@ S.NameSpan= styled.span`
     font-weight: 600;
 `
 S.EmailSpan = styled.span`
-    color: #828282;
+    color: ${({isBlacklisted})=>(isBlacklisted ? '#D91329' : '#828282')};
     font-weight: 700;
     font-size: 24px;
 `
@@ -84,7 +86,11 @@ S.EmailDiv =styled.div`
     height: 48px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+`
+S.NicknameAndGenderDiv =styled.div`
+    height: 32px;
+    display: flex;
+    align-items: center;
 `
 S.DetailButton = styled.button`
     all: unset;
@@ -120,6 +126,24 @@ S.PageButton =styled.button`
         opacity: 0.7;
     }
 `
-
-
+S.ButtonWrapper= styled.div`
+    display: flex;
+    justify-content:  flex-end;
+    gap: 32px;
+`
+S.SubText=styled.div`
+    font-size: 16px;
+    color: #858585;
+    font-weight: 500;
+`
+S.SecondAdminDivWrapper= styled.div`
+    display: flex;
+    gap: 16px;
+`
+S.BlackListText= styled.span`
+    font-size: 20px;
+    font-weight: 600;
+    color: #D91329;
+    margin-left: 8px;
+`   
 export default S;

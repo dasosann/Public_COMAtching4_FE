@@ -38,11 +38,13 @@ W.TimeText =styled.span`
 W.ResendButton = styled.button`
     width: 90px;
     height: 48px;
-    background-color:rgba(255,119,94,1) ;
+    background-color:rgba(255,119,94,1);
     color:#fff;
     font-size: 20px;
     font-weight: 700;
     border-radius: 8px;
+    box-sizing: border-box;
+    padding: 11.5px 10px;
 `
 W.FlexDiv =styled.div`
     display: flex;

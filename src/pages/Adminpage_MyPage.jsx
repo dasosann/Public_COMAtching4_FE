@@ -16,17 +16,19 @@ const Adminpage_MyPage = () => {
         setAdminSelect(location.state.selectedTab);
     }
     }, [location.state]);
-    // if(!isChecked && authority==="오퍼레이터" ){
-    //     return (
-    //         <>
-    //             <AdminHeader setAdminSelect={setAdminSelect} adminSelect={adminSelect}></AdminHeader>
-    //             <AdminNotAllowed/>
-    //         </>
-    //     )
-    // }
-    // else if(!isChecked && authority==="관리자"){
-    //     navigate("/adminpage/webmail-check")
-    // }
+    if(!isChecked && authority==="operator" ){
+        console.log("authority:", authority);
+        console.log("isChecked:", isChecked, "typeof:", typeof isChecked);
+        return (
+            <>
+                <AdminHeader setAdminSelect={setAdminSelect} adminSelect={adminSelect}/>
+                <AdminNotAllowed/>
+            </>
+        )
+    }
+    else if(!isChecked && authority==="admin"){
+        navigate("/adminpage/webmail-check",{replace:true})
+    }
     return (
             <div>
                 <AdminHeader setAdminSelect={setAdminSelect} adminSelect={adminSelect}/>

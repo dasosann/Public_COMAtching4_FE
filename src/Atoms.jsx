@@ -57,12 +57,12 @@ export const userState = atom({
 export const adminUserState = atom({
   key: "adminUserState",
   default: {
-    isChecked: false,  // 관리자 로그인 여부
+    isChecked: true,  // 관리자 로그인 여부
     userId: "",  
     email:"",
     name: "",           // 관리자 실명
-    authority: "",
-    university:"",      
+    authority: "admin",
+    university:"",
   },
 });
 export const selectedMBTIState = atom({

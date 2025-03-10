@@ -1,8 +1,12 @@
-giggggggimport React, { useState } from 'react';
+import React, { useState } from 'react';
 import { AdminHeader } from '../components/Admin/AdminHeader';
 import { AdminDiv, MainWrapper } from '../css/pages/Admin/AdminCSS';
 import S from '../css/pages/Admin/AdminSearch';
-const SearchUserComponent = ({nickname,email})=>{
+import {AdminMyPageMain,AdminMyPageManage, AdminTeamManage} from '../components/Admin/AdminMyPageMain';
+import {useNavigate } from 'react-router-dom';
+import axios from 'axios';
+const SearchUserComponent = ({nickname,email,uuid})=>{
+  const navigate = useNavigate();
   return(
     <S.UserComponentWrapper>
       <S.NickNameDiv>
@@ -13,7 +17,7 @@ const SearchUserComponent = ({nickname,email})=>{
             <S.TitleSpan>E-mail :</S.TitleSpan>
             <S.EmailSpan>&nbsp;{email}</S.EmailSpan>
           </div>
-          <S.DetailButton>상세정보 보기</S.DetailButton>
+          <S.DetailButton onClick={()=>navigate(`/adminpage/user/${uuid}`)}>상세정보 보기</S.DetailButton>
       </S.EmailDiv>
     </S.UserComponentWrapper>
   )
@@ -61,23 +65,46 @@ const Pagination = ({totalPage,currentPage,onPageChange})=>{
   
 }
 const AdminSearch = () => {
-  const dummyData = Array.from({ length: 10 }, (_, i) => ({
+  const dummyData = Array.from({ length: 32 }, (_, i) => ({
     nickname: `User${i + 1}`,
-    email: `user${i + 1}@example.com`
+    email: `user${i + 1}@example.com`,
+    uuid : i
   }));
+  const [searchQuery, setSearchQuery] = useState(""); // 검색어 상태
   const [adminSelect, setAdminSelect] = useState('가입자관리');
   const [selectedSort, setSelectedSort] = useState("50명씩 정렬");
   const [currentPage,setCurrentPage] = useState(1);
   const totalPage = 32;
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value); 
+  };
+  const handleSearchClick = () => {
+    if (searchQuery) {
+      axios
+        .get(`/api/users/search`, { params: { query: searchQuery } })
+        .then((response) => {
+        })
+        .catch((error) => {
+          console.error("검색 오류:", error);
+        });
+    }
+  };
+  // useEffect(() => {
+  //   fetch(`https://api.example.com/users?page=${currentPage}&sort=${selectedSort}`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       // 데이터를 상태로 저장하는 로직
+  //     });
+  // }, [currentPage, selectedSort]);
   return (
     // 1) 전체를 세로로 쌓는 flex 컨테이너
     <div style={{ boxSizing: 'border-box' }}>
       <AdminHeader setAdminSelect={setAdminSelect} adminSelect={adminSelect} />
       
-      {adminSelect === 'Main' && <AdminMyPageMain />}
+      {adminSelect === 'Main' && <AdminMyPageMain/>}
       {adminSelect === '가입자관리' && (
-        <MainWrapper style={{overflowY:'scroll'}}>
-          <AdminDiv style={{ marginTop: '24px', paddingRight:'24px' }}>
+        <MainWrapper>
+          <AdminDiv style={{ paddingRight:'24px' }}>
             <S.TitleDiv>가입자 목록</S.TitleDiv>
             <S.SortTextDiv>가나다순 정렬</S.SortTextDiv>
             <S.SortSearchDiv>
@@ -100,10 +127,10 @@ const AdminSearch = () => {
                 5명씩 정렬
               </S.SortButton>
               <S.SearchInput type='text' placeholder='닉네임 또는 이메일로 검색하세요.'/>
-              <S.SearchImgDiv><S.SearchImg src='/assets/Admin/search-logo.svg'/></S.SearchImgDiv>
+              <S.SearchImgDiv onClick={handleSearchClick}><S.SearchImg src='/assets/Admin/search-logo.svg'/></S.SearchImgDiv>
             </S.SortSearchDiv>
-            {dummyData.map((user)=>(
-              <SearchUserComponent email={user.email} nickname={user.nickname}/>
+            {dummyData.map((user,i)=>(
+              <SearchUserComponent email={user.email} nickname={user.nickname} uuid={user.uuid} key={i}/>
             ))}
           </AdminDiv>
           <Pagination totalPage={totalPage} currentPage={currentPage} onPageChange={setCurrentPage}/>
