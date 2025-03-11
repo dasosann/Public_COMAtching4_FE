@@ -32,7 +32,7 @@ const AdminSendWarn = () => {
   return (
     <div>
       <AdminHeader setAdminSelect={setAdminSelect} adminSelect={adminSelect} />
-      <MainWrapper style={{ gap: '40px' }}>
+      <MainWrapper style={{ gap: '40px'}}>
         <AdminDiv height="226px">
           <S.TitleDiv style={{ marginBottom: '24px' }}>
             가입자 상세정보
@@ -53,9 +53,9 @@ const AdminSendWarn = () => {
             </S.EmailDiv>
           </div>
         </AdminDiv>
-        <AdminDiv>
+        <AdminDiv style={{gap:'16px'}}>
           <S.TitleDiv>전송할 경고 사유</S.TitleDiv>
-          <div>
+          <S.SendWarningDiv>
             <Downshift
               onChange={selection => setSelectedMenu(selection)}
               itemToString={item => (item ? item : '')}
@@ -74,7 +74,7 @@ const AdminSendWarn = () => {
                     {selectedMenu || "선택"}
                     <img src="/assets/arrowbottom.svg" alt="" />
                   </S.ToggleButton>
-                  <S.MenuList {...getMenuProps()}>
+                  <S.MenuList {...getMenuProps()} isOpen={isOpen}>
                     {isOpen &&
                       warningMenu.map((item, index) => (
                         <S.MenuItem
@@ -90,7 +90,7 @@ const AdminSendWarn = () => {
                 </S.DropDownContainer>
               )}
             </Downshift>
-          </div>
+          </S.SendWarningDiv>
         </AdminDiv>
       </MainWrapper>
     </div>
