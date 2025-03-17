@@ -1,16 +1,27 @@
-import React, { useState } from 'react';
-import { AdminHeader } from '../components/Admin/AdminHeader';
-import { AdminDiv, MainWrapper } from '../css/pages/Admin/AdminCSS';
-import { adminUserState } from '../Atoms';
-import S from '../css/pages/Admin/AdminUserDetail';
+import React, { useEffect, useState } from 'react';
+import { AdminHeader } from '../../components/Admin/AdminHeader';
+import { AdminDiv, MainWrapper } from '../../css/pages/Admin/AdminCSS';
+import { adminUserState } from '../../Atoms';
+import S from '../../css/pages/Admin/AdminUserDetail';
 import { useRecoilValue } from 'recoil';
 import { useLocation, useNavigate } from 'react-router-dom';
 const AdminUserDetail = () => {
       const [adminSelect, setAdminSelect] = useState('가입자관리');
+      const [isModalOpen, setIsModalOpen] = useState(false);
       let isBlacklisted = true;
       let gender = '남';
     const location = useLocation();
     const navigate = useNavigate();
+    useEffect(() => {
+        if (location.state?.warnSent) {
+          setIsModalOpen(true);
+          navigate(location.pathname, { replace: true, state: {} });
+        }
+      }, [location.state]);
+
+      const handleCloseModal = () => {
+        setIsModalOpen(false);
+      };
     return (
         <div>
             <AdminHeader setAdminSelect={setAdminSelect} adminSelect={adminSelect}/>
@@ -48,10 +59,18 @@ const AdminUserDetail = () => {
                     </S.ButtonWrapper>
                 </AdminDiv>
                 <S.SecondAdminDivWrapper style={{width:'100%'}}>
-                    <AdminDiv height='117px' style={{cursor:'pointer', flex:'1'}}><S.TitleDiv>결제 내역</S.TitleDiv><S.SubText>결제내역 확인</S.SubText></AdminDiv>
+                    <AdminDiv height='117px' style={{cursor:'pointer', flex:'1'}} onClick={()=>navigate(`${location.pathname}/PaymentHistory`)}><S.TitleDiv>결제 내역</S.TitleDiv><S.SubText>결제내역 확인</S.SubText></AdminDiv>
                     <AdminDiv height='117px' style={{cursor:'pointer', flex:'1'}}><S.TitleDiv>포인트 사용 내역</S.TitleDiv><S.SubText>포인트 사용내역 확인</S.SubText></AdminDiv>
                     <AdminDiv height='117px' style={{cursor:'pointer', flex:'1'}}><S.TitleDiv>포인트 조정</S.TitleDiv><S.SubText>포인트 수동조정</S.SubText></AdminDiv>
                 </S.SecondAdminDivWrapper>
+                {isModalOpen && (
+                    <S.Overlay>
+                      <S.ModalContainer>
+                        <S.ModalContent>해당 가입자에게 경고 메시지가 <br/>전송 되었습니다.</S.ModalContent>
+                        <S.ModalConfirm onClick={handleCloseModal}>확인</S.ModalConfirm>
+                      </S.ModalContainer>
+                    </S.Overlay>
+                )}
             </MainWrapper>
         </div>
     );

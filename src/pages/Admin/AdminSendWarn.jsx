@@ -1,12 +1,19 @@
 import React, { useRef, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { AdminHeader } from '../components/Admin/AdminHeader';
-import { AdminDiv, MainWrapper } from '../css/pages/Admin/AdminCSS';
-import S from '../css/pages/Admin/AdminSendWarnStyle';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { AdminHeader } from '../../components/Admin/AdminHeader';
+import { AdminDiv, MainWrapper } from '../../css/pages/Admin/AdminCSS';
+import S from '../../css/pages/Admin/AdminSendWarnStyle';
 import Downshift from 'downshift';
 import { ToggleButton } from '@mui/material';
-const ConfirmMessageComponent = ({nickname,warningMessage,setShowConfirm})=>{
 
+const ConfirmMessageComponent = ({nickname,warningMessage,setShowConfirm})=>{
+  const navigate= useNavigate();
+  const { uuid } = useParams(); // "/adminpage/user/0/SendWarnMessage"에서 0 추출
+  const handleSendButton = ()=>{
+    navigate(`/adminpage/user/${uuid}`,{
+      state: {warnSent : true},
+    });
+  }
   return (
       <S.WarningComponentDiv>
         <AdminDiv height="247px" style={{gap:'0px',padding:'0px'}}>
@@ -29,7 +36,7 @@ const ConfirmMessageComponent = ({nickname,warningMessage,setShowConfirm})=>{
           <S.SubText>왼쪽과 같은 형태로 위 가입자에게 경고 메시지가 전송됩니다.<br/>경고 메시지는 신중하게 전송해 주십시오.<br/>이에 동의하십니까?</S.SubText>
           <S.ButtonWrapper>
             <S.WarnButton style={{backgroundColor:'#ff775e'}} onClick={(()=>setShowConfirm(true))}>돌아가기</S.WarnButton>
-            <S.WarnButton style={{backgroundColor:'#dd272a'}} >전송하기</S.WarnButton>
+            <S.WarnButton style={{backgroundColor:'#dd272a'}} onClick={handleSendButton} >전송하기</S.WarnButton>
           </S.ButtonWrapper>
         </AdminDiv>
       </S.WarningComponentDiv>
@@ -42,7 +49,7 @@ const AdminSendWarn = () => {
   const [adminSelect, setAdminSelect] = useState('가입자관리');
   const [selectedMenu, setSelectedMenu] = useState(null);
   const [customReason, setCustomReason] = useState(""); // 직접 입력된 사유 관리
-  const [showConfirm, setShowConfirm] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(true);
   const [finalMessage, setFinalMessage] = useState("");
   const [finalNickname, setFinalNickname] = useState("");
   const warningMenu = [
