@@ -13,7 +13,7 @@ import Describe from "./pages/Describe.jsx";
 import "./App.css";
 import "./axiosConfig.jsx";
 import Matching from "./pages/Matching.jsx";
-import Adminpageunlogin from "./pages/Adminpage_unlogin.jsx";
+import Adminpageunlogin from "./pages/Admin/Adminpage_unlogin.jsx";
 import Heart from "./pages/Heart.jsx";
 import AdminRequestList from "./components/AdminRequestList.jsx";
 import Charge from "./pages/Charge.jsx";
@@ -27,14 +27,16 @@ import ProfileEdit  from "./pages/ProfileEdit.jsx"
 
 import SuccessPage from "./components/PaymentSuccess.jsx";
 import PaymentCallTest from "./components/PaymentCallTest.jsx";
-import Adminpage_MyPage from "./pages/Adminpage_MyPage.jsx";
-import AdminRegister from "./pages/AdminRegister.jsx";
-import AdminWebmail from "./pages/AdminWebmail.jsx";
-import AdminSearch from "./pages/AdminSearch.jsx";
-import AdminUserDetail from "./pages/AdminUserDetail.jsx";
+import Adminpage_MyPage from "./pages/Admin/Adminpage_MyPage.jsx";
+import AdminRegister from "./pages/Admin/AdminRegister.jsx";
+import AdminWebmail from "./pages/Admin/AdminWebmail.jsx";
+import AdminSearch from "./pages/Admin/AdminSearch.jsx";
+import AdminUserDetail from "./pages/Admin/AdminUserDetail.jsx";
 import AdminProtectedRoute from "./AdminProtectedRoute.jsx";
-import AdminUserWarningHistory from "./pages/AdminUserWarningHistory.jsx";
-import AdminSendWarn from "./pages/AdminSendWarn.jsx";
+import AdminUserWarningHistory from "./pages/Admin/AdminUserWarningHistory.jsx";
+import AdminSendWarn from "./pages/Admin/AdminSendWarn.jsx";
+import AdminPaymentHistory from "./pages/Admin/AdminPaymentHistory.jsx";
+import AdminPointManage from "./pages/Admin/AdminPointManage.jsx";
 
 
 export default function App() {
@@ -69,6 +71,9 @@ export default function App() {
               <Route path="user/:uuid" element={<AdminUserDetail />} />
               <Route path="user/:uuid/warnhistory" element={<AdminUserWarningHistory />} />
               <Route path="user/:uuid/SendWarnMessage" element={<AdminSendWarn/>} />
+              <Route path="user/:uuid/PaymentHistory" element={<AdminPaymentHistory/>} />
+              <Route path="user/:uuid/pointManage" element={<AdminPointManage/>} />
+
               {/* ... 등등 */}
             </Route>
             
@@ -80,7 +85,7 @@ export default function App() {
                 </AdminProtectedRoute>
               }
             >
-              <Route path="webmail-check" element={<AdminUserDetail />} />
+              <Route path="webmail-check" element={<AdminWebmail />} />
             </Route>
           
             <Route

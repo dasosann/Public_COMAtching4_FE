@@ -31,4 +31,5 @@ W.TimeText= styled.div`
     font-weight: 500;
 `
 
+
 export default W;

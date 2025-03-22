@@ -3,8 +3,8 @@ import React from 'react';
 import { useRecoilValue } from 'recoil';
 import { adminUserState } from './Atoms'; // 경로는 실제 프로젝트에 맞게 수정
 import { Navigate } from 'react-router-dom';
-import Adminpage_MyPage from './pages/Adminpage_MyPage';
-import AdminWebmail from './pages/AdminWebmail';
+import Adminpage_MyPage from './pages/Admin/Adminpage_MyPage';
+import AdminWebmail from './pages/Admin/AdminWebmail';
 
 const AdminProtectedRoute = ({ children, allowedAuthorities }) => {
   const { isChecked, authority } = useRecoilValue(adminUserState);
