@@ -210,32 +210,7 @@ function MainpageLogin() {
             />
           </button>
         </div>
-        <div className="button-group">
-          {userInfo.canRequestCharge ? (
-            <MyInfoButton
-              imgSrc={`../../assets/point.svg`}
-              infoText={`${userInfo.point}P`}
-              buttonText="잔여포인트"
-              handleCharge={handleCharge} 
-              // canRequestCharge가 true일 때 handleCharge 전달
-              // handleCharge={handleNotService}
-            />
-          ) : (
-            <MyInfoButton
-              imgSrc={`../../assets/point.svg`}
-              infoText={`${userInfo.point}P`}
-              buttonText="잔여포인트"
-              handleCharge={null} // canRequestCharge가 false일 때 handleCharge는 null
-            />
-          )}
-          <MyInfoButton
-            imgSrc={`../../assets/heart.svg`}
-            infoText={`${userInfo.pickMe}회`}
-            buttonText="내가 뽑힐 횟수"
-            handleCharge={handlehartCharge}
-            // handleCharge={handleNotService}
-          />
-        </div>
+        
 
         
         <div className="button-group">
