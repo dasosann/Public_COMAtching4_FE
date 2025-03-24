@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; // useNavigate 추가
-
+import { useState } from 'react';
 import Background from '../components/Background';
 import '../css/pages/mypage.css';
 import SupportSection from '../components/Mypage/SupportSection.jsx'

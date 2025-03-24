@@ -8,14 +8,16 @@ function ChatHeader({ nickname, age, major }) {
 
   // 모달에 넘길 프로필 데이터 (원하면 props로 받아서 바꿀 수도 있어요)
   const profileData = {
-    nickname: nickname,
-    age: age,
-    department: major,
-    mbti: 'ENTP',
-    interests: '인디음악',
-    favoriteSong: '잔나비 - 사랑하긴 했었나요 스쳐지나가',
-    introduction: '사진을 잘 찍어요 😉',
-    contactId: '@winterizcoming_',
+    nickname: "JaneDoe",
+    major: "컴퓨터공학과",
+    mbti: "INTJ",
+    age: 22,
+    admissionYear: 23,
+    contact_id: "@janedoe",
+    song: "IU - Love Poem",
+    comment: "안녕하세요!!",
+    hobby: ["여행"],
+    contactFrequency: "보통",
   };
 
   const handleBackClick = () => {

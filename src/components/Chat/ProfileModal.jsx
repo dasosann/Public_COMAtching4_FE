@@ -4,13 +4,13 @@ import '../../css/components/ProfileModal.css';
 
 function ProfileModal({ profileData, onClose }) {
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="profile-modal" onClick={(e) => e.stopPropagation()}>
+    <div className="profile-modal-overlay" onClick={onClose}>
+      <div className="profile-modal-container" onClick={(e) => e.stopPropagation()}>
         <ProfileCard profile={profileData} />
       </div>
-      <button className="close-button" onClick={onClose}>
-          <img src="/assets/Chat/x.svg" alt="close" />
-        </button>
+      <button className="profile-modal-close-button" onClick={onClose}>
+        <img src="/assets/Chat/x.svg" alt="close" />
+      </button>
     </div>
   );
 }

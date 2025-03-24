@@ -2,7 +2,7 @@ import { style } from '@vanilla-extract/css';
 
 export const totalUsersCounter = style({
   fontWeight: 600,
-  marginTop: '5px',
+  padding: "5px 20px",
 });
 
 export const totalUsersCounter_span = style({
