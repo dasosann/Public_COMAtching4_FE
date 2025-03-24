@@ -37,6 +37,10 @@ import AdminUserWarningHistory from "./pages/Admin/AdminUserWarningHistory.jsx";
 import AdminSendWarn from "./pages/Admin/AdminSendWarn.jsx";
 import AdminPaymentHistory from "./pages/Admin/AdminPaymentHistory.jsx";
 import AdminPointManage from "./pages/Admin/AdminPointManage.jsx";
+import AdminEventPage from "./pages/Admin/AdminEventPage.jsx";
+import EventFreeMatch from "./pages/Admin/EventFreeMatch.jsx";
+import EventRegisterComplete from "./pages/Admin/EventRegisterComplete.jsx";
+import EventDiscount from "./pages/Admin/EventDiscount.jsx";
 
 
 export default function App() {
@@ -86,6 +90,10 @@ export default function App() {
               }
             >
               <Route path="webmail-check" element={<AdminWebmail />} />
+              <Route path="myPage/event" element={<AdminEventPage/>} />
+              <Route path="myPage/event/free-match" element={<EventFreeMatch/>} />
+              <Route path="myPage/event/registercomplete" element={<EventRegisterComplete/>} />
+              <Route path="myPage/event/discount" element={<EventDiscount/>} />
             </Route>
           
             <Route

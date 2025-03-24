@@ -39,6 +39,7 @@ export const AdminDiv = styled.div`
   box-sizing: border-box;
   font-family: "Pretendard", sans-serif;
   gap: 8px;
+  cursor: pointer;
   @media (max-width:768px){
     justify-content: normal;
   }

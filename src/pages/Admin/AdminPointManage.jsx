@@ -41,12 +41,13 @@
             });
         };
         const handleSubmit = () => {
+            console.log("type", typeof(adjustedPoints), adjustedPoints)
             // 포인트가 0보다 크고, 사유가 50자 이상일 때만 실행
             if (reason.length < 50 && adjustedPoints === 0) {
                 alert("조정할 포인트가 0이 아니고 사유가 50자 이상이어야 합니다.");
                 return;
             }
-            else if (adjustedPoints>30000 && adjustedPoints<-30000){
+            else if (adjustedPoints>30000 || adjustedPoints<-30000){
                 console.log(adjustedPoints)
                 alert("포인트는 최대 30000까지 조절 가능합니다.")
                 return;
@@ -153,7 +154,7 @@
                         <Modal.ModalContainer>
                             <Modal.ModalContent>
                                 해당 가입자의 포인트를 <br/>정상적으로 조정하였습니다.<br/>
-                                {user.point}P -> {totalPoints}P
+                                {user.point}P {`->`} {totalPoints}P
                             </Modal.ModalContent>
                             <Modal.ModalConfirm>
                                 <Modal.ModalConfirmButton onClick={handleCloseSecondModal}>확인</Modal.ModalConfirmButton>

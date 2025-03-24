@@ -58,5 +58,11 @@ Modal.ModalConfirmButton = styled.div`
     height: 100%;
     cursor: pointer;
 `
-
+Modal.EventTextDiv = styled.div`
+  width: 343px;
+  height: 83px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
 export default Modal;
