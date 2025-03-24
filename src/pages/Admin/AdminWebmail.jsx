@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { AdminRegisterHeader } from '../components/Admin/AdminHeader';
-import { AdminDiv, MainWrapper } from '../css/pages/Admin/AdminCSS';
-import W from '../css/components/AdminWebmailStyle';
+import { AdminRegisterHeader } from '../../components/Admin/AdminHeader';
+import { AdminDiv, MainWrapper } from '../../css/pages/Admin/AdminCSS';
+import W from '../../css/components/AdminWebmailStyle';
 const EMAIL_VALID_DURATION = 180;
 const AdminWebmail = () => {
     const [values,setValues]=useState(Array(6).fill(''));

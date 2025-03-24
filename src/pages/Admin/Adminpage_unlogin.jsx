@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../css/pages/Adminpage.css";
+import "../../css/pages/Adminpage.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";

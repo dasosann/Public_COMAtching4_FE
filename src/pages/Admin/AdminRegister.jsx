@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { AdminRegisterHeader } from '../components/Admin/AdminHeader';
-import { AdminDiv, MainWrapper } from '../css/pages/Admin/AdminCSS';
-import R from '../css/pages/Admin/AdminRegister';
-import { adminUserState } from '../Atoms';
+import { AdminRegisterHeader } from '../../components/Admin/AdminHeader';
+import { AdminDiv, MainWrapper } from '../../css/pages/Admin/AdminCSS';
+import R from '../../css/pages/Admin/AdminRegister';
+import { adminUserState } from '../../Atoms';
 import { useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 const InputComponent = ({ name, title, placeholder, type, options, value, onChange }) => {
