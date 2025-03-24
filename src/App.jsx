@@ -41,6 +41,9 @@ import AdminEventPage from "./pages/Admin/AdminEventPage.jsx";
 import EventFreeMatch from "./pages/Admin/EventFreeMatch.jsx";
 import EventRegisterComplete from "./pages/Admin/EventRegisterComplete.jsx";
 import EventDiscount from "./pages/Admin/EventDiscount.jsx";
+import Chat from "./pages/Chat.jsx";
+import ChatRoom from "./pages/ChatRoom.jsx"
+
 
 
 export default function App() {
@@ -54,8 +57,13 @@ export default function App() {
             <Route path="/guide" element={<Guide />} />
             <Route path="/match-result" element={<Matchresult />} />
             <Route path="/check-result" element={<Checkresult />} />
+            <Route path="/chat" element={<Chat />} />
+            <Route path="/chat/:id" element={<ChatRoom />} />
             
             <Route path="/hobby" element={<Hobby />} />
+
+
+
             <Route path="/adminpage" element={<Adminpageunlogin />} />
             {/* <Route
               path="/adminpage/charge-requests"
@@ -72,6 +80,7 @@ export default function App() {
             >
               <Route path="myPage" element={<Adminpage_MyPage />} />
               <Route path="myPage/search" element={<AdminSearch />} />
+              
               <Route path="user/:uuid" element={<AdminUserDetail />} />
               <Route path="user/:uuid/warnhistory" element={<AdminUserWarningHistory />} />
               <Route path="user/:uuid/SendWarnMessage" element={<AdminSendWarn/>} />

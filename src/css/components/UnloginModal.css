@@ -1,0 +1,134 @@
+.unlogin-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 1000;
+
+    animation: fadeIn 1s ease forwards;
+}
+
+.unlogin-modal-container {
+    width: 100%;
+    height: 413px;
+    background-color: white;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    padding: 24px 20px 64px;
+    box-sizing: border-box;
+    position: relative;
+
+    transform: translateY(100%);
+    /* 처음엔 아래쪽에 위치 */
+    animation: slideUp 0.3s ease forwards;
+}
+
+.unlogin-modal-title {
+    font-weight: bold;
+    font-size: 20px;
+    text-align: left;
+}
+
+.unlogin-modal-subtitle {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #808080;
+    text-align: left;
+    line-height: 1.5;
+}
+
+.unlogin-modal-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+    gap: 20px;
+}
+
+.unlogin-modal-btn {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 8px;
+    padding: 10px 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.unlogin-modal-btn img {
+    width: 20px;
+    height: 20px;
+}
+
+.unlogin-modal-btn.kakao {
+    background-color: #FEE500;
+    color: #000;
+    border: none;
+}
+
+.unlogin-modal-btn.google {
+    background-color: #FFFFFF;
+    color: #797979;
+    border: 1px solid #DDD;
+}
+
+.unlogin-modal-btn.apple {
+    background-color: #000;
+    color: #FFFFFF;
+    border: none;
+}
+
+.unlogin-modal-email {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666666;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.unlogin-modal-email-link {
+    text-decoration: underline;
+    margin-left: 5px;
+    cursor: pointer;
+    margin-top: 23px;
+}
+
+.unlogin-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+.mts {
+    margin-top: 5px;
+}
+
+/* 모달 배경 페이드인 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* 모달 슬라이드업 */
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}

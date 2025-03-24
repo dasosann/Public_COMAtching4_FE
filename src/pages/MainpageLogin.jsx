@@ -10,8 +10,6 @@ import TotalUsersCounter from "../components/TotalUsersCounter";
 import BottomNavButton from "../components/BottomNavButton";
 import MyInfoButton from "../components/MyInfoButton";
 import ChargeButtonInfo from "../components/ChargeButtonInfo";
-
-import Footer from "../components/Footer";
 import TutorialSlides from "../components/TutorialSlides";
 import HartButtonInfo from "../components/HartButtonInfo";
 import Background from "../components/Background";
@@ -21,6 +19,8 @@ import Cookies from "js-cookie"; // js-cookie import 추가
 import EventModal from "../components/EventModal";
 import PointBalance from "../components/PointBalance";
 import MatchProfiles from "../components/Mainpage/MatchProfiles";
+import NavBar from '../components/Navbar.jsx';
+
 function MainpageLogin() {
   const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 훅 사용
   const [isAccountClicked, setIsAccountClicked] = useState(false);
@@ -155,41 +155,42 @@ function MainpageLogin() {
   const sampleProfiles = [
     {
       nickname: "JaneDoe",
-      school: "가톨릭대학교",
-      department: "컴퓨터공학과",
+      major: "컴퓨터공학과",
       mbti: "INTJ",
       age: 22,
       admissionYear: 23,
-      contactId: "@janedoe",
-      favoriteSong: "IU - Love Poem",
-      introduction: "안녕하세요!!",
-      interests: ["여행"],
+      contact_id: "@janedoe",
+      song: "IU - Love Poem",
+      comment: "안녕하세요!!",
+      hobby: ["해외여행"],
+      contactFrequency: "보통",
     },
     {
       nickname: "JohnSmith",
-      school: "고려대학교",
-      department: "경영학과",
+      major: "경영학과",
       mbti: "ENTP",
       age: 24,
       admissionYear: 21,
-      contactId: "@johnsmith",
-      favoriteSong: "Coldplay - Fix You",
-      introduction: "모험을 좋아하는 자유로운 영혼입니다. 새로운 도전을 즐깁니다!",
-      interests: ["영화 감상", "자전거", "요리"],
+      contact_id: "@johnsmith",
+      song: "Coldplay - Fix You",
+      comment: "새로운 도전을 즐깁니다!",
+      hobby: ["인디음악", "사랑"],
+      contactFrequency: "자주",
     },
     {
       nickname: "AliceKim",
-      school: "연세대학교",
-      department: "심리학과",
+      major: "심리학과",
       mbti: "INFJ",
       age: 23,
       admissionYear: 22,
-      contactId: "@alicekim",
-      favoriteSong: "BTS - Spring Day",
-      introduction: "사람들과 깊이 있는 대화를 나누는 걸 좋아해요. 심리학이 흥미로워요!",
-      interests: ["음악 감상", "글쓰기", "명상"],
+      contact_id: "@alicekim",
+      song: "BTS - Spring Day",
+      comment: "심리학이 흥미로워요!",
+      hobby: [  "영화"],
+      contactFrequency: "가끔",
     },
   ];
+  
   return (
     <div className="container">
       <HeaderMain />
@@ -210,32 +211,7 @@ function MainpageLogin() {
             />
           </button>
         </div>
-        <div className="button-group">
-          {userInfo.canRequestCharge ? (
-            <MyInfoButton
-              imgSrc={`../../assets/point.svg`}
-              infoText={`${userInfo.point}P`}
-              buttonText="잔여포인트"
-              handleCharge={handleCharge} 
-              // canRequestCharge가 true일 때 handleCharge 전달
-              // handleCharge={handleNotService}
-            />
-          ) : (
-            <MyInfoButton
-              imgSrc={`../../assets/point.svg`}
-              infoText={`${userInfo.point}P`}
-              buttonText="잔여포인트"
-              handleCharge={null} // canRequestCharge가 false일 때 handleCharge는 null
-            />
-          )}
-          <MyInfoButton
-            imgSrc={`../../assets/heart.svg`}
-            infoText={`${userInfo.pickMe}회`}
-            buttonText="내가 뽑힐 횟수"
-            handleCharge={handlehartCharge}
-            // handleCharge={handleNotService}
-          />
-        </div>
+        
 
         
         <div className="button-group">
@@ -255,12 +231,7 @@ function MainpageLogin() {
         </div>
         {/* <div  style={{ height: '50px' }}></div> */}
       </div>
-      <div className="logout-container">
-        <a href="#" onClick={handleLogout} className="logout-link">
-          로그아웃
-        </a>
-      </div>
-      <Footer/>
+      
       {/* <NavBar/> */}
       {showEventModal && userInfo.eventokay === false && (
         <EventModal
@@ -272,6 +243,7 @@ function MainpageLogin() {
       {showTutorial && (
         <TutorialSlides onComplete={() => setShowTutorial(false)} />
       )}
+      <NavBar/>
     </div>
   );
 }
