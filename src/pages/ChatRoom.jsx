@@ -14,6 +14,7 @@ const chatMessages = [
 
 function ChatRoom() {
     const [focused, setFocused] = useState(false);
+    const [inputValue, setInputValue] = useState('');
 
     return (
         <div>
@@ -32,7 +33,7 @@ function ChatRoom() {
 
             <div className="chat-input-container">
                 <div
-                    className={`chat-input-box ${focused ? 'focused' : ''}`}
+                    className={`chat-input-box ${(focused || inputValue.length > 0) ? 'focused' : ''}`}
                     onClick={() => setFocused(true)}
                     onBlur={() => setFocused(false)}
                 >
@@ -40,6 +41,8 @@ function ChatRoom() {
                     placeholder="메세지를 입력해주세요.."
                     className="chat-input"
                     rows={1}
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
                     onFocus={() => setFocused(true)}
                     onBlur={() => setFocused(false)}
                     onInput={(e) => {
@@ -48,10 +51,9 @@ function ChatRoom() {
                     }}
                     ></textarea>
 
-
-                    <div className={`send-button ${focused ? 'active' : ''}`}>
+                    <div className={`send-button ${(focused || inputValue.length > 0) ? 'active' : ''}`}>
                         <img 
-                            src={focused ? "/assets/Chat/send-active.svg" : "/assets/Chat/send-icon.svg"} 
+                            src={(focused || inputValue.length > 0) ? "/assets/Chat/send-active.svg" : "/assets/Chat/send-icon.svg"} 
                             alt="send" 
                             className="send-icon" 
                         />
