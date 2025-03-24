@@ -13,6 +13,8 @@ A.HeaderContainer = styled.div`
     box-sizing: border-box;
     background-color: #fff;
     border-bottom:1px solid #cdcdcd ;
+    z-index: 19999;           /* 헤더보다 위로 올리되, MainWrapper 안에서만 적용 */
+
 `
 A.HeaderMenu = styled.div`
     display: flex;

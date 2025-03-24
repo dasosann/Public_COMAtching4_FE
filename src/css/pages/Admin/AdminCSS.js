@@ -12,6 +12,7 @@ export const MainWrapper = styled.div`
   align-items: center;
   gap: 16px;
   flex: 1;
+  position: relative;
   @media (max-width: 768px) {
   padding: 16px 5vw; /* 모바일에서는 padding을 줄임 */
   width: 768px;
@@ -38,6 +39,7 @@ export const AdminDiv = styled.div`
   box-sizing: border-box;
   font-family: "Pretendard", sans-serif;
   gap: 8px;
+  cursor: pointer;
   @media (max-width:768px){
     justify-content: normal;
   }
