@@ -146,4 +146,48 @@ S.BlackListText= styled.span`
     color: #D91329;
     margin-left: 8px;
 `   
+S.Overlay = styled.div`
+  position: absolute;      /* MainWrapper 기준으로 배치하기 위해 absolute */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;           /* 헤더보다 위로 올리되, MainWrapper 안에서만 적용 */
+`;
+
+S.ModalContainer = styled.div`
+  width: 423px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  border-radius: 24px;
+  box-shadow: 1px 1px 20px rgba(196,196,196,0.3);
+  border: 1px solid rgba(255,255,255,0.3);
+  backdrop-filter: blur(10px);
+  align-items: center;
+`;
+S.ModalContent = styled.div`
+    height: 190px;
+    border-bottom: 1px solid #b3b3b3;
+    font-size: 24px;
+    font-weight: 400;
+    color: #000;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+`
+S.ModalConfirm = styled.div`
+    height: 56px;
+    color: #ff775e;
+    font-size: 20px;
+    font-weight: 500;
+    align-items: center;
+    display: flex;
+    cursor: pointer;
+`
 export default S;

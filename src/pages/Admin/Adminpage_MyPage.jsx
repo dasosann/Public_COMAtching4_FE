@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import {AdminHeader} from '../components/Admin/AdminHeader';
-import {AdminMyPageMain,AdminMyPageManage, AdminTeamManage} from '../components/Admin/AdminMyPageMain';
-import { adminUserState } from '../Atoms';
+import {AdminHeader} from '../../components/Admin/AdminHeader';
+import {AdminMyPageMain,AdminMyPageManage, AdminTeamManage} from '../../components/Admin/AdminMyPageMain';
+import { adminUserState } from '../../Atoms';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import AdminNotAllowed from '../components/Admin/AdminNotAllowed';
+import AdminNotAllowed from '../../components/Admin/AdminNotAllowed';
 import { useLocation, useNavigate } from 'react-router-dom';
 const Adminpage_MyPage = () => {
     const navigate = useNavigate();

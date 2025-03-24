@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { AdminHeader } from '../components/Admin/AdminHeader';
-import { AdminDiv, MainWrapper } from '../css/pages/Admin/AdminCSS';
-import S from '../css/pages/Admin/AdminSearch';
-import {AdminMyPageMain,AdminMyPageManage, AdminTeamManage} from '../components/Admin/AdminMyPageMain';
+import { AdminHeader } from '../../components/Admin/AdminHeader';
+import { AdminDiv, MainWrapper } from '../../css/pages/Admin/AdminCSS';
+import S from '../../css/pages/Admin/AdminSearch';
+import {AdminMyPageMain,AdminMyPageManage, AdminTeamManage} from '../../components/Admin/AdminMyPageMain';
 import {useNavigate } from 'react-router-dom';
 import axios from 'axios';
 const SearchUserComponent = ({nickname,email,uuid})=>{

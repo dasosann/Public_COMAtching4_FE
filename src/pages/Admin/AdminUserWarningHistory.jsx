@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { AdminHeader } from '../components/Admin/AdminHeader';
-import { AdminDiv, MainWrapper } from '../css/pages/Admin/AdminCSS';
-import W from '../css/pages/Admin/AdminUserWarningHistoryStyle';
+import { AdminHeader } from '../../components/Admin/AdminHeader';
+import { AdminDiv, MainWrapper } from '../../css/pages/Admin/AdminCSS';
+import W from '../../css/pages/Admin/AdminUserWarningHistoryStyle';
 // 컴포넌트에 props 나중에 추가해야함
 const UserWarningHistoryComponent = ()=>{
     return (
