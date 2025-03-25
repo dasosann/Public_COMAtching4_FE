@@ -38,7 +38,6 @@ const MatchPriorityModal = ({ modalOpen, toggleModal, togglePrioritySelection })
   const [priorities] = useRecoilState(priorityState);
   const matchState = useRecoilValue(MatchPickState);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [showBubble, setShowBubble] = useState(false);
   const [touchingItem, setTouchingItem] = useState(null);
   const [touchPos, setTouchPos] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -154,7 +153,6 @@ const MatchPriorityModal = ({ modalOpen, toggleModal, togglePrioritySelection })
                 <p>중요한 옵션을 여기 올려놓으세요!</p>
               </div>
             )}
-            {showBubble && <AnimatedBubble text="AI가 이걸 제일 중요하게 생각할게요!" />}
           </div>
 
           <div className="priority-buttons">
