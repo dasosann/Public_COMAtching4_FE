@@ -24,10 +24,16 @@ export const inputField = style({
 });
 
 export const checkButton = style({
-  width: '30%',
+  color:'#B3B3B3',
   height: '40px',
   backgroundColor: '#fff',
   border: '1px solid #ccc',
   borderRadius: '15px',
-  marginLeft: 'auto',
+  marginLeft: '15px',
+  fontSize:'14px',
+});
+export const verifiedButton = style({
+  backgroundColor: ' #d3d3d3', // 연한 회색
+  color: '#666',
+  cursor: 'default',
 });

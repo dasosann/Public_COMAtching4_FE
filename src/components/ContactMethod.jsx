@@ -3,13 +3,16 @@ import ContactMethodInput from "./ContactMethodInput";
 import ContactMethodPick from "./ContactMethodPick";
 import * as styles from  "../css/components/ContactMethod.css.ts";
 
-function ContactMethod({ user, handleChange, setIsContactVerified,setUser  }) {
+function ContactMethod({ user, isContactVerified,handleChange, setIsContactVerified,setUser  }) {
   return (
     <Fragment>
-      <ContactMethodPick user={user} setUser={setUser} />
+      <ContactMethodPick user={user} setUser={setUser}  
+        setIsContactVerified={setIsContactVerified}/>
 
       <ContactMethodInput
         user={user}
+        
+        isContactVerified={isContactVerified}
         setUser={setUser}
         handleChange={handleChange}
         setIsContactVerified={setIsContactVerified}
