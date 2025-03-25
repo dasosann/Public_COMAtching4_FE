@@ -14,6 +14,10 @@
     flex: 1;
     overflow-y: auto; /* ← 스크롤 가능하게 */
     padding-bottom: 90px; /* 하단 버튼 가리지 않게 여백 확보 */
+    
+  }
+  .match-modal-body {
+    -webkit-overflow-scrolling: touch;
   }
   
   .match-modal-content {

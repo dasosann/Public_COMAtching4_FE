@@ -47,7 +47,7 @@ const InterestModal = ({ modalOpen, toggleModal, handleHobbyClick, selectedHobby
             닫기
           </button>
         </div>
-        <div className="match-modal-body">
+        <div className="interest-modal-body">
           <p>상대방이 가졌음 하는 관심사를 골라주세요.</p>
           <p>중분류만 선택할 수 있어요.</p>
         </div>
