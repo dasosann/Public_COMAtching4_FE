@@ -64,10 +64,12 @@ const InterestModal = ({ modalOpen, toggleModal, handleHobbyClick, selectedHobby
               <p>{item.label}</p>
             </div>
           ))}
+          
+          
+          
         </div>
-
-
-        <div className="modal-button" onClick={handleConfirmSelection}>
+        
+        <div className="modals-button" onClick={handleConfirmSelection}>
           선택 완료
         </div>
       </div>

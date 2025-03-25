@@ -48,11 +48,16 @@ const MatchPriorityModal = ({ modalOpen, toggleModal, togglePrioritySelection })
 
   const handleCancelSelection = () => {
     setFadeOut(true);
+  
     setTimeout(() => {
       setSelectedItem(null);
+      setTouchingItem(null);  // ✅ 이 줄 추가
+      setIsDragging(false);   // ✅ 혹시 모를 상태 초기화
       setFadeOut(false);
-    }, 500); // 애니메이션 시간과 동일
+    }, 500);
   };
+  
+  
   useEffect(() => {
     if (modalOpen) {
       document.body.classList.add("modal-open");
