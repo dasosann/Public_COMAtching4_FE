@@ -5,6 +5,7 @@
     flex-direction: column;
     gap: 16px;
     overflow-y: auto;
+    height: calc(100vh - 200px); /* 헤더, 입력창 높이 등을 제외한 영역 */
 }
 
 .chat-input-container {

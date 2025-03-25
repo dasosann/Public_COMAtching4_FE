@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useRef,useEffect } from 'react';
 import ChatHeader from '../components/Chat/ChatHeader';
 import ChatMessage from '../components/Chat/ChatMessage.jsx';
 import Background from '../components/Background.jsx';
@@ -33,13 +33,21 @@ const chatMessages = [
 function ChatRoom() {
     const [focused, setFocused] = useState(false);
     const [inputValue, setInputValue] = useState('');
+    const chatBodyRef = useRef(null);
+
+    useEffect(() => {
+        if (chatBodyRef.current) {
+            chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
+        }
+    }, [chatMessages.length]);  
+    
 
     return (
         <div>
             <Background />
             <ChatHeader nickname="겨울이오길" age="22살" major="정보보안공학부" />
             
-            <div className="chat-body">
+            <div className="chat-body" ref={chatBodyRef}>
                 {chatMessages.map((chat) => (
                     <ChatMessage
                         key={chat.id}
