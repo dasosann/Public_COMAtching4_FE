@@ -6,6 +6,8 @@ Modal.setAppElement('#root');
 
 const TermsAgreementModal = ({ isOpen, onRequestClose, handleSubmit, registerCheck, setRegisterCheck }) => {
     const [isAgreementOpen, setIsAgreementOpen] = useState(false); // 개인정보 수집 안내 모달 상태
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
 
     const handleCheckboxChange = (e) => {
         const { id, checked } = e.target;
@@ -13,13 +15,17 @@ const TermsAgreementModal = ({ isOpen, onRequestClose, handleSubmit, registerChe
     };
 
     const handleSubmitClick = () => {
-        if (!registerCheck.terms1 || !registerCheck.terms2 || !registerCheck.terms3) {
+
+        if (isSubmitting) return;
+        if (!registerCheck.terms1 || !registerCheck.terms2) { // terms3 제거
             alert('필수 항목을 모두 선택해주세요.');
             return;
         }
-        onRequestClose(); // 모달을 닫습니다
-        handleSubmit(); // 전달받은 handleSubmit 함수를 호출합니다
+        onRequestClose();
+        handleSubmit();
+
     };
+    
 
     const handleOpenAgreement = () => {
         setIsAgreementOpen(true); // 약관 모달 열기
@@ -51,17 +57,20 @@ const TermsAgreementModal = ({ isOpen, onRequestClose, handleSubmit, registerChe
                             <li>
                                 <input type="checkbox" id="terms2" checked={registerCheck.terms2} onChange={handleCheckboxChange} />
                                 <label htmlFor="terms2">개인정보 수집 이용 동의 </label>
+                                <img className='agreement_right' src="/assets/Term.svg" alt="" onClick={handleOpenAgreement} /> {/* 이미지 클릭 이벤트 */}
                                 
                             </li>
-                            <li>
-                                <input type="checkbox" id="terms3" checked={registerCheck.terms3} onChange={handleCheckboxChange} />
-                                <label htmlFor="terms3">만 14세 이상입니다 </label>
-                            </li>
+                            
                         </ul>
                     </div>
-                    <button className="agree-button" onClick={handleSubmitClick}>
+                    <button
+                        className={`agree-button ${registerCheck.terms1 && registerCheck.terms2 ? '' : 'disabled'}`}
+                        onClick={handleSubmitClick}
+                        disabled={!registerCheck.terms1 || !registerCheck.terms2} // 체크 안 되어있으면 비활성화
+                        >
                         모두 동의하고 가입하기
                     </button>
+
                 </div>
             </Modal>
 

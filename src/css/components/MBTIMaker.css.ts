@@ -10,10 +10,11 @@ export const mbtiMaker = style({
   left: "0px", // 양쪽 여백 균등하게 설정 (40px 중 절반)
   display: "inline-block",
   borderRadius: "16px 16px 0 0", // 위쪽만 둥글게
-  padding: "16px 20px", // 적절한 패딩
+  
+  padding: "25px 20px", // 적절한 패딩
   boxShadow: "0px -2px 4px rgba(0, 0, 0, 0.1)", // 위쪽 그림자
   border: "1px solid rgba(255, 255, 255, 0.8)", // 테두리
-  backgroundColor: "transparent", // 배경색 제거
+  backgroundColor: "white", // 배경색 제거
   backdropFilter: "blur(50px)", // 선택적으로 배경 블러 유지
 });
 
@@ -38,6 +39,7 @@ export const mbtiMakerChooseButton = style({
   color: "#000000",
   fontSize: "18px",
   fontWeight: "bold",
+  opacity: '0.8',
 });
 
 export const selected = style({
@@ -47,6 +49,7 @@ export const selected = style({
   boxShadow: `inset 2px 2px 10px rgba(255, 119, 94, 0.5),
               inset 0px 4px 10px rgba(0, 0, 0, 0.15),
               inset 4px 4px 15px rgba(0, 0, 0, 0.2)`, // 내부 그림자
+              opacity: '1',
 });
 
 
@@ -60,6 +63,14 @@ export const mbtiMakerButtonTitle = style({
   height: "36px",
   borderRadius: "100px",
   marginRight: "15px",
+  
+});
+
+export const mbtiMakerButtonText = style({
+  fontWeight: "600",
+  marginLeft:'auto',
+  marginRight:'auto',
+  fontSize:'20px',
 });
 
 export const mbtiMakerSubmitButton = style({
@@ -73,4 +84,5 @@ export const mbtiMakerSubmitButton = style({
   marginLeft: "60%",
   boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.25)",
   marginBottom:"10px",
+  
 });

@@ -2,12 +2,14 @@ import React from "react";
 import ContactMethodButton from "./ContactMethodButton";
 import * as styles from "../css/components/ContactMethodPick.css.ts";
 
-function ContactMethodPick({ user, setUser }) {
+function ContactMethodPick({ user, setUser ,
+  setIsContactVerified}) {
   const handleContactMethod = (method) => {
     setUser((prev) => ({
       ...prev,
       contact: method,
     }));
+    setIsContactVerified(false);
   };
 
   return (

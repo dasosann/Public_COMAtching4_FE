@@ -3,7 +3,7 @@ import MyInput from "./MyInput";
 import * as styles from "../css/components/ContactMethodInput.css.ts";
 import axios from "../axiosConfig";
 
-function ContactMethodInput({ handleChange, setIsContactVerified,user, setUser  }) {
+function ContactMethodInput({ handleChange, isContactVerified,setIsContactVerified,user, setUser  }) {
   // 중복 여부 확인 함수
   // const checkIfExists = async () => {
     // contact_id가 @로 시작하면 @를 제거
@@ -37,6 +37,7 @@ function ContactMethodInput({ handleChange, setIsContactVerified,user, setUser  
         alert("카카오 ID 형식이 올바르지 않습니다.");
         return;
       }
+
       setUser(prevUser => ({ ...prevUser, contact_id_Verified: true }));
       alert('입력한 정보는 사용 가능합니다.');
       setIsContactVerified(true);
@@ -57,7 +58,7 @@ function ContactMethodInput({ handleChange, setIsContactVerified,user, setUser  
     // 중복 여부 확인
    
   };
-
+  console.log(isContactVerified);
   return (
     <div className={styles.contactInput}>
       <MyInput
@@ -71,9 +72,15 @@ function ContactMethodInput({ handleChange, setIsContactVerified,user, setUser  
         }
         className={styles.inputField}
       />
-      <button type="button" className={styles.checkButton} onClick={handleCheck}>
-        확인
+      <button
+        type="button"
+        className={`${styles.checkButton} ${isContactVerified ? styles.verifiedButton : ''}`}
+        onClick={handleCheck}
+        disabled={isContactVerified} // 인증됐으면 비활성화
+      >
+        {isContactVerified ? "확인완료" : "중복확인"}
       </button>
+
     </div>
   );
 }

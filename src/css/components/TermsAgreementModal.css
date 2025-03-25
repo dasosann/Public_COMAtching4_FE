@@ -14,11 +14,11 @@
     bottom: 0;
     left: 0px;
     right: 0;
-    height: 330px; /* Occupy the bottom half of the screen */
+    height: 270px; /* Occupy the bottom half of the screen */
     background-color: white;
     padding: 32px 20px;
-    border-top-left-radius: 50px;
-    border-top-right-radius: 50px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
     box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
     
 }
@@ -33,10 +33,13 @@
     font-size: 24px;
     font-weight: bold;
     margin-top: 0px;
+    margin-bottom: 10px;
 }
 .agreement_sub{
+    margin-top: 5px;
     font-size: 16px;
     color: #b3b3b3; /* Lighter grayscale color */
+    margin-bottom: 30px;
 }
 .agreement-section {
     flex-grow: 1;
@@ -61,11 +64,12 @@
     width: 24px;
     height: 24px;
     margin-right: 10px;
-    background: url('/assets/checked.svg') no-repeat center center;
+    background: url('/assets/unchecked.svg') no-repeat center center;
+    border-bottom:none;
     background-size: contain;
 }
 .agreement_desc li input[type="checkbox"]:checked {
-    background: url('/assets/unchecked.svg') no-repeat center center;
+    background: url('/assets/userinfo/checked.svg') no-repeat center center;
     background-size: contain;
     border: none;
 }
@@ -83,7 +87,16 @@
     font-size: 22px;
     font-weight: bold;
     margin: 25px 0px;
-}
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .agree-button.disabled {
+    background-color: black; /* 비활성화 상태 배경 */
+    background-image: none;
+    color: white; /* 글씨 흰색 */
+    cursor: not-allowed; /* 마우스 커서 변경 */
+  }
+  
 .terms-link {
     position: absolute;
     right: 60px;
@@ -95,8 +108,11 @@
 }
 .agreement_desc li label {
     position: relative;
+
 }
 .agreement_desc li label::after {
+    font-size: 12px;
+    font-weight: bold;
     content: ' 필수';
     color: lightgray; /* Set the color to light gray */
 }
@@ -156,4 +172,3 @@
     
     text-align: center; /* 텍스트를 가운데 정렬 */
 }
-
