@@ -187,7 +187,6 @@ const MatchPriorityModal = ({ modalOpen, toggleModal, togglePrioritySelection })
                 </div>
               ))}
           </div>
-
           <div
             className={`modal-button ${selectedItem ? "enabled" : "disabled"}`}
             onClick={() => {
@@ -199,6 +198,7 @@ const MatchPriorityModal = ({ modalOpen, toggleModal, togglePrioritySelection })
           >
             {selectedItem ? "선택 완료" : "옵션을 선택해주세요"}
           </div>
+
         </div>
       </div>
     </div>
