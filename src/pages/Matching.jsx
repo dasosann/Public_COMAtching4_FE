@@ -327,52 +327,7 @@ useEffect(() => {
           </div>
           <PointBalance amount={userPoint.point}/>
           
-          <div className="firstcontent_mbti">
-            <div className="match-title-mbti">
-              <div className="match-title-text">
-                우선순위 선택하기<span className="match-required-text match-required-text-red">추천</span>
-              </div>
-              <div className="match-title-inst-txt">
-                AI가 우선순위를 설정해서 골라줘요.
-              </div>
-              </div>
-              <button
-                type="button"
-                className={`${isPrioritySelected ? "match-premium-option-unclick-button" : "match-premium-option-clicks-button"}`}
-                onClick={() => {
-                  if (isPrioritySelected) {
-                    toggleModal(); // false → true 변경 시에만 모달 열기
-                  }
-                  else{
-                    togglePrioritySelection(); 
-                  }
-                  
-                  
-                }}
-                
-              >
-                
-                  {isPrioritySelected ? (
-                    // 선택되었을 때 새로운 UI 표시
-                    <div className="match-premium-option-cost">
-                      <img src="/assets/point.svg" alt="Selected" />
-                      300
-                    </div>
-                  ) : (
-                    // 기본 UI
-                    <>
-                      <img src="/assets/Match/priority_selected.svg" alt="cost" className="cost_icon" />
-                      
-                    </>
-                  )}
-                
-
-                
-              </button>
-              
-            
-            
-          </div>
+          
           <div className="matchcontent_mbti">
             <div className="match-title-mbti">
               <div className="match-title-text">
@@ -505,6 +460,57 @@ useEffect(() => {
             
           </div>
 
+          <div className="firstcontent_mbti">
+            <div className="match-title-mbti">
+              <div className="match-title-text">
+                중요한 옵션 선택하기<span className="match-required-text match-required-text-red">추천</span>
+              </div>
+              <div className="match-title-inst-txt">
+                AI에게 가장 중요한 옵션을 알려주세요!
+              </div>
+              </div>
+              <button
+                type="button"
+                className={`${isPrioritySelected ? "match-premium-option-unclick-button" : "match-premium-option-clicks-button"}`}
+                onClick={() => {
+                  
+                  if (!isButtonEnabled) {
+                    alert("먼저 모든 조건을 선택해주세요.");
+                    return;
+                  }
+                  if (isPrioritySelected ) {
+                    toggleModal(); // false → true 변경 시에만 모달 열기
+                  }
+                  else{
+                    togglePrioritySelection(); 
+                  }
+                  
+                  
+                }}
+                
+              >
+                
+                  {isPrioritySelected ? (
+                    // 선택되었을 때 새로운 UI 표시
+                    <div className="match-premium-option-cost">
+                      <img src="/assets/point.svg" alt="Selected" />
+                      300
+                    </div>
+                  ) : (
+                    // 기본 UI
+                    <>
+                      <img src="/assets/Match/priority_selected.svg" alt="cost" className="cost_icon" />
+                      
+                    </>
+                  )}
+                
+
+                
+              </button>
+              
+            
+            
+          </div>
           <div className="matchcontent_mbti">
             <div className="match-title-mbti">
               <div

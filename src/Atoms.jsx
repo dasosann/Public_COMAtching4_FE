@@ -119,12 +119,13 @@ export const checkresultState = atom({
 export const priorityState = atom({
   key: "priorityState",
   default: [
-    { id: "1", label: "MBTI" },
-    { id: "2", label: "관심사" },
-    { id: "3", label: "나이" },
-    { id: "4", label: "연락빈도" }
+    { id: "1", label: "MBTI", key: "mbti" },
+    { id: "2", label: "관심사", key: "hobby" },
+    { id: "3", label: "나이", key: "age" },
+    { id: "4", label: "연락빈도", key: "contact" }
   ],
 });
+
 
 export const profileEditState = atom({
   key: 'profileEditState',
