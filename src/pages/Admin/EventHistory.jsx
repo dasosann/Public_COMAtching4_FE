@@ -165,7 +165,7 @@ const EventHistory = () => {
             <AdminHeader setAdminSelect={setAdminSelect} adminSelect={adminSelect} />
             <MainWrapper>
                 <AdminDiv style={{paddingRight:'24px', height:'520px'}}>
-                    <L.TitleDiv>이벤트 히스토리리</L.TitleDiv>
+                    <L.TitleDiv>이벤트 히스토리</L.TitleDiv>
                     <L.SubTitle>진행한 이벤트의 히스토리</L.SubTitle>
                     <div style={{overflowY:'auto'}}>{eventList.map((data,i)=><EachEventHistoryComponent key={i} data={data}/>)}</div>
                 </AdminDiv> 
