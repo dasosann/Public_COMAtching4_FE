@@ -1,9 +1,11 @@
 import React from 'react';
 import M from '../../css/components/MasterManageComponentStyle';
+import { useNavigate } from 'react-router-dom';
 const OperatorManageComponent = () => {
+    const navigate = useNavigate();
     return (
         <M.MasterContainer>
-            <M.EachContainer>
+            <M.EachContainer onClick={()=>(navigate('/adminpage/myPage/search'))}>
                 <M.TitleText>가입자 검색 및 관리</M.TitleText>
                 <M.ContentText>결제내역 및 포인트 사용내역 열람, 포인트 조정, 블랙리스트 추가</M.ContentText>
             </M.EachContainer>

@@ -38,6 +38,7 @@ Modal.ModalContent = styled.div`
     align-items: center;
     justify-content: center;
     padding: 56px 40px 48px 40px;
+     
 `
 Modal.ModalConfirm = styled.div`
     width: 100%;
@@ -65,4 +66,7 @@ Modal.EventTextDiv = styled.div`
   align-items: center;
   justify-content: center;
 `
+
+
+
 export default Modal;

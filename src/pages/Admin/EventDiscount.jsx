@@ -79,8 +79,13 @@ const EventDiscount = () => {
         const startMin = parseInt(selectedMinutes, 10);
         const endHour = parseInt(endTime, 10);
         const endMin = parseInt(endMinutes, 10);
+        console.log(selectedDiscount)
         if (isNaN(startHour) || isNaN(startMin) || isNaN(endHour) || isNaN(endMin)) {
           alert("시간을 올바르게 선택해주세요.");
+          return;
+        }
+        if (selectedDiscount === "선택") {
+          alert("할인율을 선택해주세요.");
           return;
         }
         const startTotal = startHour * 60 + startMin;

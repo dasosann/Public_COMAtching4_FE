@@ -43,6 +43,8 @@ import EventRegisterComplete from "./pages/Admin/EventRegisterComplete.jsx";
 import EventDiscount from "./pages/Admin/EventDiscount.jsx";
 import Chat from "./pages/Chat.jsx";
 import ChatRoom from "./pages/ChatRoom.jsx"
+import EventListAndCancel from "./pages/Admin/EventListAndCancel.jsx";
+import EventHistory from "./pages/Admin/EventHistory.jsx";
 
 
 
@@ -103,6 +105,8 @@ export default function App() {
               <Route path="myPage/event/free-match" element={<EventFreeMatch/>} />
               <Route path="myPage/event/registercomplete" element={<EventRegisterComplete/>} />
               <Route path="myPage/event/discount" element={<EventDiscount/>} />
+              <Route path="myPage/event/list" element={<EventListAndCancel/>} />
+              <Route path="myPage/event/history" element={<EventHistory/>} />
             </Route>
           
             <Route
