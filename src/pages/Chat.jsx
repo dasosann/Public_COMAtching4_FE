@@ -37,6 +37,7 @@ function Chat() {
           </Link>
         ))}
       </div>
+      <div  style={{ height: '100px' }}></div>
     </div>
   );
 }

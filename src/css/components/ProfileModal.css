@@ -9,18 +9,20 @@
   justify-content: center;
   align-items: center;
   z-index: 999;
+  
 }
 
 .profile-modal-container {
   overflow-y: auto;
   width: 80%;
   position: relative; /* X버튼 위치 조절 위해 */
-  transform: translateY(-50px); /* 위로 이동 */
+  transform: translateY(-30px); /* 위로 이동 */
+  
 }
 
 .profile-modal-close-button {
   position: absolute;
-  bottom: -20px;
+  bottom: 120px;
   left: 50%;
   transform: translateX(-50%);
   width: 40px;

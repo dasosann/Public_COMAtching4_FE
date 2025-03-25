@@ -229,8 +229,10 @@ function MainpageLogin() {
             buttonText="가이드북"
           />
         </div>
-        {/* <div  style={{ height: '50px' }}></div> */}
+          <div  style={{ height: '50px' }}></div>
+          
       </div>
+
       
       {/* <NavBar/> */}
       {showEventModal && userInfo.eventokay === false && (

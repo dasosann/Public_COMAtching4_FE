@@ -47,6 +47,7 @@ const Mypage = () => {
       {/* 충전하기 버튼 클릭 시 모달 표시 */}
       {isModalOpen && <MainPaymentModal isOpen={isModalOpen} closeModal={() => setIsModalOpen(false)} />} 
       <NavBar/>
+      <div  style={{ height: '100px' }}></div>
     </div>
   );
 };
