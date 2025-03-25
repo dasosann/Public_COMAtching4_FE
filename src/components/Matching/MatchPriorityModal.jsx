@@ -14,6 +14,7 @@ const mbtiLabels = {
   P: "인식형",
 };
 
+
 const priorityMessages = {
   mbti: (value) => `${value}인 사람이면 좋겠어!`,
   hobby: (value) => `${value}에 관심이 많은 사람이면 좋겠어!`,
@@ -41,9 +42,18 @@ const MatchPriorityModal = ({ modalOpen, toggleModal, togglePrioritySelection })
   const [touchingItem, setTouchingItem] = useState(null);
   const [touchPos, setTouchPos] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
+  
+  const [fadeOut, setFadeOut] = useState(false);
 
   const dropZoneRef = useRef();
 
+  const handleCancelSelection = () => {
+    setFadeOut(true);
+    setTimeout(() => {
+      setSelectedItem(null);
+      setFadeOut(false);
+    }, 500); // 애니메이션 시간과 동일
+  };
   useEffect(() => {
     if (modalOpen) {
       document.body.classList.add("modal-open");
@@ -125,11 +135,15 @@ const MatchPriorityModal = ({ modalOpen, toggleModal, togglePrioritySelection })
           <div className="priority-drop-zone" ref={dropZoneRef}>
             {selectedItem ? (
               <>
-                <div className="selected-priority-box fade-in-top">Comatching AI 야, 이 옵션은 꼭 지켜줘!</div>
-                <div className="selected-priority2-box fade-in-bottom">{getMessage(selectedItem.key)}</div>
+                <div className={`selected-priority-box ${fadeOut ? "fade-out-top" : "fade-in-top"}`}>
+                  Comatching AI 야, 이 옵션은 꼭 지켜줘!
+                </div>
+                <div className={`selected-priority2-box ${fadeOut ? "fade-out-bottom" : "fade-in-bottom"}`}>
+                  {getMessage(selectedItem.key)}
+                </div>
                 <button
-                  className="cancel-selection-button fade-in-bottom"
-                  onClick={() => setSelectedItem(null)}
+                  className={`cancel-selection-button ${fadeOut ? "fade-out-bottom" : "fade-in-bottom"}`}
+                  onClick={handleCancelSelection}
                 >
                   선택 취소
                 </button>
