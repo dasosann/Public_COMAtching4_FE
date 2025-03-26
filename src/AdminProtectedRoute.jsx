@@ -7,17 +7,18 @@ import Adminpage_MyPage from './pages/Admin/Adminpage_MyPage';
 import AdminWebmail from './pages/Admin/AdminWebmail';
 
 const AdminProtectedRoute = ({ children, allowedAuthorities }) => {
-  const { isChecked, authority } = useRecoilValue(adminUserState);
+  const {role} = useRecoilValue(adminUserState);
+  console.log(role)
   // 1) 로그인 안 된 경우
-  if (isChecked==="") {
+  if (role==="") {
     alert("로그인 해주세요.");
     return <Navigate to="/adminpage" replace />;
   }
-  if (!isChecked && authority==='operator'){
+  if (role==='ROLE_SEMI_OPERATOR'){
     alert("관리자의 승인을 받아주세요")
     return <Adminpage_MyPage/>;
   }
-  if (!isChecked && authority==='admin'){
+  if (role==='ROLE_SEMI_ADMIN'){
     alert("관리자는 이메일 인증을 해주세요")
     return <AdminWebmail/>;
   }
@@ -25,7 +26,7 @@ const AdminProtectedRoute = ({ children, allowedAuthorities }) => {
 
   // 2) 권한 체크
   // allowedAuthorities가 비어있지 않고, 현재 authority가 목록에 포함되지 않으면 접근 불가
-  if (allowedAuthorities?.length > 0 && !allowedAuthorities.includes(authority)) {
+  if (allowedAuthorities?.length > 0 && !allowedAuthorities.includes(role)) {
     alert("권한이 없습니다. 접근이 제한됩니다.");
     return <Navigate to="/adminpage" replace />;
   }

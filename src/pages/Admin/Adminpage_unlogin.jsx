@@ -3,7 +3,6 @@ import "../../css/pages/Adminpage.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-
 function Adminpageunlogin() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [formData, setFormData] = useState({ accountId: "", password: "" });
@@ -24,30 +23,24 @@ function Adminpageunlogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "https://cuk.comatching.site/admin/login",
-        formData,
+      const response = await fetch(
+        "https://backend.comatching.site/admin/login",
         {
+          method:'POST',
           headers: {
             "Content-Type": "application/json",
           },
+          body: JSON.stringify(formData),
         }
       );
-      console.log(response);
-
+      const data = await response.json();
       // 로그인 응답 데이터에서 status 코드를 확인
-      if (response.data.status === 200) {
+      if (data.status === 200) {
         console.log("로그인 성공");
-        const token = response.headers["authorization"];
-
-        if (token && token.startsWith("Bearer ")) {
-          const tokenWithoutBearer = token.slice(7);
-          Cookies.set("Authorization", tokenWithoutBearer,{ path: "/", expires: 1/6 });
-        }
         navigate("/adminpage/myPage"); // 로그인 성공 시 페이지 이동
       } else {
-        console.log("로그인 실패:", response.data.message); // 로그인 실패 시 메시지 로깅
-        alert("로그인 실패: " + response.data.message); // 사용자에게 실패 메시지를 보여줍니다.
+        console.log("로그인 실패:", data.message); // 로그인 실패 시 메시지 로깅
+        alert("로그인 실패: " + data.message); // 사용자에게 실패 메시지를 보여줍니다.
       }
     } catch (error) {
       console.error("로그인 중 에러 발생:", error);

@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import '../css/components/PointBalance.css'; // 스타일을 분리하여 유지보수 가능하게 설정
 import { useLocation, useNavigate } from 'react-router-dom'; // React Router 사용
 import MainPaymentModal from './MainPaymentModal';
-
+import fetchRequest from '../fetchConfig';
+import { v4 as uuidv4 } from 'uuid';
 const PointBalance = ({ userAmount }) => {
     const hasSent = useRef(false); // 요청이 한 번만 보내졌는지 추적
     const [isModalOpen, setIsModalOpen] = useState(false); // 모달의 열림/닫힘 상태 관리
@@ -14,7 +15,7 @@ const PointBalance = ({ userAmount }) => {
     const sendParamsToBackend = async (paymentKey, orderId, amount, uniqueId) => {
       try {
         setIsLoading(true);
-        const response = await fetch("http://13.124.46.181:8080/payments/confirm", {
+        const response = await fetchRequest("/payments/confirm", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

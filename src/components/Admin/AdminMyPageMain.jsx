@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import M from '../../css/components/AdminMyPageMain'
 import MasterManageComponent from './MasterManageComponent';
 import OperatorManageComponent from './OperatorManageComponent';
@@ -6,16 +6,17 @@ import { adminUserState } from '../../Atoms';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { MainWrapper } from '../../css/pages/Admin/AdminCSS';
 const AdminMyPageMain = () => {
+    const { nickname, role,university,schoolEmail} = useRecoilValue(adminUserState);
     return (
         <M.MainWrapper>
             <M.MainContainer>
                 <M.MyInformText>내 정보</M.MyInformText>
                 <M.AuthorityText>모든 기능을 이용할 수 있습니다</M.AuthorityText>
                 <div style={{gap:'19px', display:'flex', flexDirection:'column'}}>
-                    <M.DefaultText>이름 : <M.AccentText>박승원</M.AccentText></M.DefaultText>
-                    <M.DefaultText>권한 : <M.AccentText>관리자</M.AccentText></M.DefaultText>
-                    <M.DefaultText>소속 : 가톨릭대학교</M.DefaultText>
-                    <M.DefaultText>웹메일 : swp@catholic.ac.kr</M.DefaultText>
+                    <M.DefaultText>이름 : <M.AccentText>{nickname}</M.AccentText></M.DefaultText>
+                    <M.DefaultText>권한 : <M.AccentText>{role}</M.AccentText></M.DefaultText>
+                    <M.DefaultText>소속 : {university}</M.DefaultText>
+                    <M.DefaultText>웹메일 : {schoolEmail}</M.DefaultText>
                  </div>
 
             </M.MainContainer>
@@ -23,12 +24,11 @@ const AdminMyPageMain = () => {
     );
 };
 const AdminMyPageManage = ()=>{
-    // const {authority} = useRecoilValue(adminUserState);
-    const authority = "관리자"
+    const {role} = useRecoilValue(adminUserState);
     return (
         <MainWrapper>
-              {authority === '오퍼레이터' && <OperatorManageComponent />}
-              {authority === '관리자' && <MasterManageComponent />}
+              {role === 'ROLE_OPERATOR' && <OperatorManageComponent />}
+              {role === 'ROLE_ADMIN' && <MasterManageComponent />}
         </MainWrapper>
     )
 }

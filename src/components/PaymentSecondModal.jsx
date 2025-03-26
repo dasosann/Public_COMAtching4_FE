@@ -3,13 +3,14 @@ import P from '../css/components/PaymentSecondModalStyle.js';
 import TossBuyPointComponent from './TossBuyPointComponent.jsx';
 import 'aos/dist/aos.css'; // AOS 스타일 시트 불러오기
 import { PaymentCheckoutPage } from './TossPaymentAPI.jsx';
+import fetchRequest from '../fetchConfig.jsx';
 const PaymentSecondModal = ({ isOpen, closeModal, pointPrice, productName, discount, closeSecondModal,point }) => {
+  const [isChecked, setIsChecked] = useState(false);
+  const [paymentData, setPaymentData] = useState(null); // 결제 데이터 저장
   if (!isOpen) return null;
   const amount = Number(pointPrice.replace(/,/g, '')); // 콤마를 제거하고 숫자로 변환
   // 이미지 상태 관리
   console.log(amount)
-  const [isChecked, setIsChecked] = useState(false);
-  const [paymentData, setPaymentData] = useState(null); // 결제 데이터 저장
   // 이미지 클릭 핸들러
   const handleImageClick = () => {
     setIsChecked((prev) => !prev); // 기존 상태를 반전시켜 이미지 변경
@@ -17,7 +18,7 @@ const PaymentSecondModal = ({ isOpen, closeModal, pointPrice, productName, disco
   const handleTossButtonClick = async() => {
     console.log("point",point);
     try {
-      const response = await fetch('http://13.124.46.181:8080/payments/order', {
+      const response = await fetchRequest('/payments/order', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -59,6 +60,7 @@ const PaymentSecondModal = ({ isOpen, closeModal, pointPrice, productName, disco
       </P.AgreePointRule>
       <img src= {isChecked ? "/assets/MainPayment/active_toss_button.svg" : "/assets/MainPayment/unactive_toss_button.svg" }
         onClick={isChecked? handleTossButtonClick: undefined}
+        alt='토스버튼'
       />
        {paymentData && (
         <PaymentCheckoutPage

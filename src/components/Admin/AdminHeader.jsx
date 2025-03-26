@@ -2,6 +2,8 @@ import React from 'react';
 import A from '../../css/components/AdminHeader';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { selected } from '../../css/components/MBTIMaker.css';
+import { useRecoilValue } from 'recoil';
+import { adminUserState } from '../../Atoms';
 
 const AdminHeader = ({ adminSelect, setAdminSelect }) => {
   const navigate = useNavigate();
@@ -17,6 +19,7 @@ const AdminHeader = ({ adminSelect, setAdminSelect }) => {
     setAdminSelect("가입자자관리");
     navigate("/adminpage/myPage", {state: {selectedTab:"가입자관리"}})
   }
+  const {nickname, role, university} = useRecoilValue(adminUserState);
   return (
     <A.HeaderContainer>
       <A.HeaderImg src="/assets/Admin/header_logo.svg" alt="코매칭 로고" onClick={()=>navigate("/adminpage",{replace:true})} />
@@ -52,8 +55,8 @@ const AdminHeader = ({ adminSelect, setAdminSelect }) => {
 
       <A.HeaderProfile>
         <div style={{ display:'flex', flexDirection:"column", fontWeight:'500' }}>
-          <div style={{ color:'#808080' }}>가톨릭대학교</div>
-          <div>관리자 박승원님</div>
+          <div style={{ color:'#808080' }}>{university}</div>
+          <div>{role} {nickname}님</div>
         </div>
         <img src="/assets/Admin/under-triangle.svg" alt="코매칭 로고" />
       </A.HeaderProfile>
