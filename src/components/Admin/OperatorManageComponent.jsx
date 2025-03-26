@@ -21,7 +21,6 @@ const OperatorManageComponent = () => {
                 <M.TitleText>블랙리스트 확인 및 해제</M.TitleText>
                 <M.ContentText>블랙리스트 조회와 해제</M.ContentText>
             </M.EachContainer>
-            
         </M.MasterContainer>
     );
 };

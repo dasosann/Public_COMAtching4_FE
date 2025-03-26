@@ -14,26 +14,26 @@ function Checkresult() {
   
   const [currentIndex, setCurrentIndex] = useState(0); // 현재 표시된 사용자 인덱스
 
-  useEffect(() => {
-    // 결과 데이터를 가져오는 비동기 함수
-    const fetchData = async () => {
-      try {
-        const response = await instance.get("/auth/user/api/history/matching");
+  // useEffect(() => {
+  //   // 결과 데이터를 가져오는 비동기 함수
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await instance.get("/auth/user/api/history/matching");
         
-        if (response.status === 200 && response.data.code === "GEN-000") {
-          setIsReview(response.data.data); // 응답 데이터 설정
+  //       if (response.status === 200 && response.data.code === "GEN-000") {
+  //         setIsReview(response.data.data); // 응답 데이터 설정
           
-        } else if (response.data.code === "HIS-001") {
-          alert("결과가 남아있지 않습니다.");
-          navigate("/");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  //       } else if (response.data.code === "HIS-001") {
+  //         alert("결과가 남아있지 않습니다.");
+  //         navigate("/");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
 
-    fetchData(); // 비동기 함수 호출
-  }, [navigate, setIsReview]);
+  //   fetchData(); // 비동기 함수 호출
+  // }, [navigate, setIsReview]);
 
   const handleNextUser = () => {
     if (currentIndex < isReview.length - 1) {

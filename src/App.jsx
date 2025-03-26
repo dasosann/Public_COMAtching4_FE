@@ -65,7 +65,7 @@ export default function App() {
             <Route path="/hobby" element={<Hobby />} />
 
 
-
+            <Route path="/adminpage/register"element={<AdminRegister />}/>
             <Route path="/adminpage" element={<Adminpageunlogin />} />
             {/* <Route
               path="/adminpage/charge-requests"
@@ -75,7 +75,7 @@ export default function App() {
             <Route
               path="/adminpage/*"
               element={
-                <AdminProtectedRoute allowedAuthorities={["admin", "operator"]}>
+                <AdminProtectedRoute allowedAuthorities={["ROLE_ADMIN", "ROLE_OPERATOR"]}>
                   <Outlet />
                 </AdminProtectedRoute>
               }
@@ -95,12 +95,11 @@ export default function App() {
             <Route
               path="/adminpage/*"
               element={
-                <AdminProtectedRoute allowedAuthorities={["admin"]}>
+                <AdminProtectedRoute allowedAuthorities={["ROLE_ADMIN"]}>
                   <Outlet />
                 </AdminProtectedRoute>
               }
             >
-              <Route path="webmail-check" element={<AdminWebmail />} />
               <Route path="myPage/event" element={<AdminEventPage/>} />
               <Route path="myPage/event/free-match" element={<EventFreeMatch/>} />
               <Route path="myPage/event/registercomplete" element={<EventRegisterComplete/>} />
@@ -108,12 +107,16 @@ export default function App() {
               <Route path="myPage/event/list" element={<EventListAndCancel/>} />
               <Route path="myPage/event/history" element={<EventHistory/>} />
             </Route>
-          
             <Route
-              path="/adminpage/register"
-              element={<AdminRegister />}
-            />
-            
+              path="/adminpage/*"
+              element={
+                <AdminProtectedRoute allowedAuthorities={["ROLE_SEMI_ADMIN"]}>
+                  <Outlet />
+                </AdminProtectedRoute>
+              }
+            >
+              <Route path="webmail-check" element={<AdminWebmail />} />
+            </Route>
             
 
             <Route path="/loading" element={<Loading />} />

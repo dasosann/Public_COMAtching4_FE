@@ -8,17 +8,14 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const Adminpage_MyPage = () => {
     const navigate = useNavigate();
     const [adminSelect, setAdminSelect] = useState("Main");
-    const {isChecked} = useRecoilValue(adminUserState);
-    const {authority} = useRecoilValue(adminUserState);
+    const {role} = useRecoilValue(adminUserState);
     const location = useLocation();
     useEffect(() => {
     if (location.state?.selectedTab) {
         setAdminSelect(location.state.selectedTab);
     }
     }, [location.state]);
-    if(!isChecked && authority==="operator" ){
-        console.log("authority:", authority);
-        console.log("isChecked:", isChecked, "typeof:", typeof isChecked);
+    if(role==="ROLE_SEMI_OPERATOR"){
         return (
             <>
                 <AdminHeader setAdminSelect={setAdminSelect} adminSelect={adminSelect}/>
@@ -26,17 +23,20 @@ const Adminpage_MyPage = () => {
             </>
         )
     }
-    else if(!isChecked && authority==="admin"){
+    else if(role==="ROLE_SEMI_ADMIN"){
         navigate("/adminpage/webmail-check",{replace:true})
+        return;
     }
-    return (
+    else{
+        return (
             <div>
                 <AdminHeader setAdminSelect={setAdminSelect} adminSelect={adminSelect}/>
                 {adminSelect === 'Main' && <AdminMyPageMain />} 
                 {adminSelect === '가입자관리' && <AdminMyPageManage />} 
                 {adminSelect === '팀관리' && <AdminTeamManage />}
             </div>
-    );
+        );
+    }
 };
 
 export default Adminpage_MyPage;

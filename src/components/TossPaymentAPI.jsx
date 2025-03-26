@@ -54,8 +54,8 @@ async function requestPayment() {
       amount: { currency, value: amount },
       orderId: orderId, // 고유 주문번호
       orderName: orderName,
-      successUrl: window.location.origin + "/test?status=success",
-      failUrl: window.location.origin + "/test?status=fail",
+      successUrl: window.location.href + "?status=success",
+      failUrl: window.location.href + "?status=fail",
       customerEmail: email,
       customerName: username,
       // customerMobilePhone: "01012341234",r
