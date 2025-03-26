@@ -5,12 +5,14 @@ import TotalUsersCounter from "../components/TotalUsersCounter.jsx";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Background from "../components/Background.jsx";
-import HeaderMain from "../components/HeaderMain.jsx";
+import UnloginModal from "../components/Mainpage/UnloginModal.jsx";
+import HeaderUnlogin from "../components/Mainpage/Header.jsx";
 // 로그인 되지 않은 메인페이지입니다.
 function MainpageUnLogin() {
   const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 훅 사용
   const [numParticipants, setNumParticipants] = useState(null); // 참가자 수를 저장할 상태 변수
-
+  const [showModal, setShowModal] = useState(false); // 모달 상태
+  
   // 카카오 로그인 핸들러
   // 일반적인 형식과 다를텐데 아래 링크로 이동시켜서 백엔드에서 카카오 로그인을 처리한뒤
   // Redirection페이지로 옮겨서 role을 확인하는 과정을 거쳤습니다.
@@ -20,10 +22,7 @@ function MainpageUnLogin() {
     // alert("서비스 종료 ㅠㅠㅠㅠ");
   };
   
-  // 서비스 이용법 안내 페이지로 이동하는 핸들러
-  const handleVisitGuide = () => {
-    navigate("/guide");
-  };
+  
 
   // 참가자 수를 가져오는 비동기 함수
   useEffect(() => {
@@ -46,14 +45,8 @@ function MainpageUnLogin() {
   return (
     <div className="container">
       <Background />
-      <div className="margin_top"></div>
-      <div className="bubble-counter">
-          <TotalUsersCounter
-            font_size="16px"
-            numParticipants={numParticipants}
-          />
-      </div>
-      <HeaderMain />
+      
+      <HeaderUnlogin />
       <div className="greeting-message">
         반갑습니다<br></br>
         코매칭이라면 당신은<br></br>
@@ -62,7 +55,10 @@ function MainpageUnLogin() {
       
       <div  style={{ marginTop: '69px' }}>
         <div className="bubble" >
-          ⚡️10초만에 빠른 가입⚡️
+            <TotalUsersCounter
+              font_size="16px"
+              numParticipants={775}
+            />
         </div>
         <button className="kakao-login" onClick={handleLogin}>
             <div className="kakao-login-element">
@@ -74,14 +70,13 @@ function MainpageUnLogin() {
             </div>
         </button>
       </div>
-      <div className="help-text">이용에 도움이 필요하신가요?</div>
+      <div className="help-text">또는</div>
         <div>
-          <a className="privacy-button" onClick={handleVisitGuide}>
-            서비스 이용법 안내
+          <a className="privacy-button"  onClick={() => setShowModal(true)}>
+            다른방법 로그인
           </a>
         </div>  
-        <Footer /> 
-        
+        {showModal && <UnloginModal onClose={() => setShowModal(false)} />}
     </div>
   );
 }

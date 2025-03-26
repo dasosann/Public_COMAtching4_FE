@@ -47,7 +47,7 @@ const InterestModal = ({ modalOpen, toggleModal, handleHobbyClick, selectedHobby
             닫기
           </button>
         </div>
-        <div className="match-modal-body">
+        <div className="interest-modal-body">
           <p>상대방이 가졌음 하는 관심사를 골라주세요.</p>
           <p>중분류만 선택할 수 있어요.</p>
         </div>
@@ -64,10 +64,12 @@ const InterestModal = ({ modalOpen, toggleModal, handleHobbyClick, selectedHobby
               <p>{item.label}</p>
             </div>
           ))}
+          
+          
+          
         </div>
-
-
-        <div className="modal-button" onClick={handleConfirmSelection}>
+        
+        <div className="modals-button" onClick={handleConfirmSelection}>
           선택 완료
         </div>
       </div>
