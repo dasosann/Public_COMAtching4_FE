@@ -31,13 +31,13 @@ const InputComponent = ({ name, title, placeholder, type, options, value, onChan
 const AdminRegister = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        userId: "",
+        accountId: "",
         password: "",
         confirmPassword: "",
-        email: "",
-        name: "",
+        schoolEmail: "",
+        nickname: "",
         university: "",
-        authority: ""
+        role:"",
     });
 
     // 🔹 입력값 변경 핸들러
@@ -48,9 +48,9 @@ const AdminRegister = () => {
     
 
     // 🔹 폼 제출 핸들러
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const requiredFields = ["userId", "password", "confirmPassword", "email", "name", "university", "authority"];
+        const requiredFields = ["accountId", "password", "confirmPassword", "schoolEmail", "nickname", "university", "role"];
         for(const field of requiredFields){
             if(!formData[field]||formData[field].trim()===""){
                 alert(`${field} 입력이 누락되었습니다.`);
@@ -62,30 +62,37 @@ const AdminRegister = () => {
             alert("비밀번호가 다릅니다 다시 입력해주세요")
             return ;
         }
-        if(formData.authority==="관리자"){
-            alert("회원가입이 완료되었습니다.")
-            navigate("/adminpage",{state:{email:formData.email}});
-        }else if(formData.authority==="오퍼레이터"){
-            alert("오퍼레이터 가입이 완료되었습니다. 관리자의 승인이 필요합니다")
-            navigate("/adminpage")
+        try{
+            const response = await fetch("https://backend.comatching.site/admin/register",{
+                method:"POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData)
+            });
+            const data = await response.json();
+            if(response.ok){
+                if(formData.role === "관리자"){
+                    alert("회원가입이 완료되었습니다.");
+                    navigate("/adminpage", { state: { email: formData.schoolEmail } });
+                } else if(formData.role === "오퍼레이터"){
+                    alert("오퍼레이터 가입이 완료되었습니다. 관리자의 승인이 필요합니다.");
+                    navigate("/adminpage");
+                }
+            } else{
+                alert(`회원가입 실패: ${data.message}`);
+            }
+        }catch(error){
+            console.error("회원 가입 요청 중 에러 발생",error);
+            alert("회원가입 중 오류가 발생했습니다. 다시 시도해 주세요.");
         }
-        // 🚀 API 요청 예시 (백엔드 연결 시)
-        // fetch("/api/register", {
-        //     method: "POST",
-        //     headers: { "Content-Type": "application/json" },
-        //     body: JSON.stringify(formData)
-        // }).then(response => response.json())
-        //   .then(data => console.log(data))
-        //   .catch(error => console.error("Error:", error));
     };
     const inputFields = [
-        {name:"userId", title: "아이디", placeholder: "아이디를 입력해주세요.", type: "text" },
+        {name:"accountId", title: "아이디", placeholder: "아이디를 입력해주세요.", type: "text" },
         {name:"password", title: "비밀번호", placeholder: "비밀번호를 입력해주세요.", type: "password" },
         {name:"confirmPassword", title: "비밀번호 확인", placeholder: "비밀번호를 다시 한 번 입력해주세요.", type: "password" },
-        {name:"email", title: "학교 웹메일", placeholder: "웹메일을 입력해주세요.", type: "email" },
+        {name:"schoolEmail", title: "학교 웹메일", placeholder: "웹메일을 입력해주세요.", type: "email" },
         {}, // 빈 칸 (div 추가)
         {}, // 빈 칸 (div 추가)
-        {name:"name", title: "이름", placeholder: "실명을 입력해주세요.", type: "text" },
+        {name:"nickname", title: "이름", placeholder: "실명을 입력해주세요.", type: "text" },
         {
             name: "university",
             title: "소속 대학",
@@ -93,7 +100,7 @@ const AdminRegister = () => {
             options: ["가톨릭대학교", "부천대학교", "동양미래대학교", "성공회대학교"]
         },
         {
-            name: "authority",
+            name: "role",
             title: "신청 권한",
             placeholder: "선택",
             options: ["관리자","오퍼레이터"]
