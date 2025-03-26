@@ -12,6 +12,9 @@ const ProfileEdit = () => {
   // 프로필 정보 상태 관리
   
   const [profile, setProfile] = useRecoilState(profileEditState);
+  const [originalProfile, setOriginalProfile] = useState(profile);
+  const isFormModified = JSON.stringify(profile) !== JSON.stringify(originalProfile);
+
 
   const [editingField, setEditingField] = useState(null);
 
@@ -75,7 +78,6 @@ const ProfileEdit = () => {
   };
   
   
-  console.log(profile);
   const isFormComplete =
   Object.values(profile).every(value => value !== "") &&
   profile.selectedMBTIEdit.length === 4; // ✅ 문자열 길이로 MBTI 4개 선택 여부 확인
@@ -253,11 +255,12 @@ const ProfileEdit = () => {
 
       
       <button
-        className={`profile-submit-button ${isFormComplete ? 'active' : 'inactive'}`}
-        disabled={!isFormComplete}
+        className={`profile-submit-button ${isFormComplete && isFormModified ? 'active' : 'inactive'}`}
+        disabled={!isFormComplete || !isFormModified}
       >
         수정하기
       </button>
+
       <SchoolSelectModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       <InterestSelectModal 
         isOpen={isInterestModalOpen} 
