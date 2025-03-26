@@ -38,60 +38,104 @@ const EventFreeMatch = () => {
       setShowModal(false)
     }
     const handleConfirm = () => {
-        // '오늘'인 경우에만 현재 시간과 비교합니다.
-        const startHour = parseInt(selectedTime, 10);
-        const startMin = parseInt(selectedMinutes, 10);
-        const endHour = parseInt(endTime, 10);
-        const endMin = parseInt(endMinutes, 10);
-        if (isNaN(startHour) || isNaN(startMin) || isNaN(endHour) || isNaN(endMin)) {
-          alert("시간을 올바르게 선택해주세요.");
-          return;
-        }
-        const startTotal = startHour * 60 + startMin;
-        const endTotal = endHour * 60 + endMin;
-        if (selectedDate === "오늘") {
-          const now = new Date();
-          const currentHour = now.getHours();         // 0~23
-          const currentMinute = now.getMinutes();
-          const currentTotal = currentHour * 60 + currentMinute;
-          // 현재 시간보다 이전인지 확인
-          if (startTotal < currentTotal) {
-            setErrorMessage(
-              <>
-                이벤트 시작 시각은 현재 시각보다 <br />
-                이전으로 설정할 수 없습니다.
-              </>
-            );
-            setShowModal(true);
-            return;
-          }
-        }
-        if (startTotal >= endTotal) {
-          setErrorMessage(<>이벤트 시작 시간이 종료 시간보다 <br/> 같거나 늦을 수 없습니다.</>)
+      // 시간 선택이 올바른지 체크
+      const startHour = parseInt(selectedTime, 10);
+      const startMin = parseInt(selectedMinutes, 10);
+      const endHour = parseInt(endTime, 10);
+      const endMin = parseInt(endMinutes, 10);
+    
+      if (isNaN(startHour) || isNaN(startMin) || isNaN(endHour) || isNaN(endMin)) {
+        alert("시간을 올바르게 선택해주세요.");
+        return;
+      }
+    
+      const startTotal = startHour * 60 + startMin;
+      const endTotal = endHour * 60 + endMin;
+    
+      if (selectedDate === "오늘") {
+        const now = new Date();
+        const currentHour = now.getHours();         // 0~23
+        const currentMinute = now.getMinutes();
+        const currentTotal = currentHour * 60 + currentMinute;
+        // 현재 시간보다 이전인지 확인
+        if (startTotal < currentTotal) {
+          setErrorMessage(
+            <>
+              이벤트 시작 시각은 현재 시각보다 <br />
+              이전으로 설정할 수 없습니다.
+            </>
+          );
           setShowModal(true);
           return;
         }
-        const startTimeCombined = `${selectedTime}:${selectedMinutes}`;
-        const endTimeCombined = `${endTime}:${endMinutes}`;
-        const eventData = {
-          selectedDate,
-          startTime: startTimeCombined,
-          endTime: endTimeCombined,
-          // 필요한 다른 데이터들...
-        };
-
-//   fetch('/api/event', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(eventData)
-//   })
-//     .then(response => response.json())
-//     .then(data => console.log(data))
-//     .catch(error => console.error('Error:', error));
-        navigate('/adminpage/myPage/event/registercomplete')
-};
+      }
+    
+      // 시작 시간이 종료 시간보다 같거나 늦을 수 없도록 체크
+      if (startTotal >= endTotal) {
+        setErrorMessage(<>이벤트 시작 시간이 종료 시간보다 <br /> 같거나 늦을 수 없습니다.</>);
+        setShowModal(true);
+        return;
+      }
+    
+      // 선택된 날짜와 시간 결합
+      const today = new Date();
+      let selectedDateObject;
+    
+      if (selectedDate === "오늘") {
+        selectedDateObject = new Date(today); // 오늘 날짜
+      } else if (selectedDate === "내일") {
+        selectedDateObject = new Date(today);
+        selectedDateObject.setDate(today.getDate() + 1); // 내일 날짜
+      } else if (selectedDate === "모레") {
+        selectedDateObject = new Date(today);
+        selectedDateObject.setDate(today.getDate() + 2); // 모레 날짜
+      }
+    
+      selectedDateObject.setHours(startHour, startMin, 0, 0); // 초는 0으로 설정
+      const startISOString = new Date(selectedDateObject).toISOString(); // UTC 기준으로 설정
+    
+      // 한국 시간 (UTC+9) 맞추기
+      const timeZoneOffset = 9 * 60 * 60 * 1000; // 한국은 UTC +9 (밀리초 단위)
+      const startKoreanTime = new Date(new Date(startISOString).getTime() + timeZoneOffset);
+    
+      // 종료 시간 계산
+      const endDateObject = new Date(selectedDateObject);
+      endDateObject.setHours(endHour, endMin, 0, 0); // 종료 시간 설정
+      const endISOString = new Date(endDateObject).toISOString(); // UTC 기준으로 설정
+    
+      // 한국 시간 (UTC+9) 맞추기
+      const endKoreanTime = new Date(new Date(endISOString).getTime() + timeZoneOffset);
+    
+      // UTC+9 시간으로 변환된 ISO 형식의 날짜 문자열
+      const formattedStartTime = startKoreanTime.toISOString().slice(0, 19); // "2025-03-25T19:49:41"
+      const formattedEndTime = endKoreanTime.toISOString().slice(0, 19); // "2025-03-25T19:49:41"
+    
+      console.log(formattedStartTime); // "2025-03-25T19:49:41"
+      console.log(formattedEndTime); // "2025-03-25T19:49:41"
+    
+      const eventData = {
+        eventType: "DISCOUNT",
+        start: formattedStartTime,  // 한국 시간으로 변환된 ISO 시간
+        end: formattedEndTime,      // 한국 시간으로 변환된 ISO 시간
+        // 필요한 다른 데이터들...
+      };
+    
+      // fetch로 데이터 전송
+      fetch('/admin/event/register/discount', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(eventData),
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Event created:', data);
+          navigate('/adminpage/myPage/event/registercomplete');
+        })
+        .catch(error => console.error('Error:', error));
+    };
+    
     return (
         <div>
             <AdminHeader setAdminSelect={setAdminSelect} adminSelect={adminSelect} />
