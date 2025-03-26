@@ -195,7 +195,7 @@ function MainpageLogin() {
     <div className="container">
       <HeaderMain />
       <Background />
-      <PointBalance amount={userInfo.point}/>
+      <PointBalance userAmount={userInfo.point}/>
       <MatchProfiles profiles={sampleProfiles}/>
       <div className="Mainpage__Login">
         

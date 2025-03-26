@@ -38,12 +38,12 @@ const AdminEventPage = () => {
                         </AdminDiv>
                     </E.FlexWrapper>
                     <E.FlexWrapper>
-                        <AdminDiv>
+                        <AdminDiv  onClick={()=>navigate('/adminpage/myPage/event/list')}>
                             <E.TitleDiv>이벤트 예약목록 및 취소</E.TitleDiv>
                             <E.SubDiv>두 이벤트 예약 리스트 통합 예약 내역 및 취소</E.SubDiv>
                         </AdminDiv>
                         <AdminDiv>
-                            <E.TitleDiv>이벤트 히스토리</E.TitleDiv>
+                            <E.TitleDiv onClick={()=>navigate('/adminpage/myPage/event/history')}>이벤트 히스토리</E.TitleDiv>
                             <E.SubDiv>지금까지 진행한 과거 이벤트의 히스토리</E.SubDiv>
                         </AdminDiv>
                     </E.FlexWrapper>

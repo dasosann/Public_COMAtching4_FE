@@ -149,12 +149,14 @@ S.ButtonContainer =styled.div`
      border-top:1px solid #b3b3b3;
 `
 S.StyledButton =styled.button`
+    font-family: "Pretendard", sans-serif;
     cursor:default ;
     border: none;
     flex: 1;
     background-color: #fff;
     border-radius: 0px;
     color:#ff775e;
+    font-weight: 500;
     height: 56px;
 `
 S.StyledDiv= styled.div`
@@ -176,6 +178,7 @@ S.ButtonWrapper =styled.div`
     width: 100%;
 `
 S.WarnButton =styled.button`
+    font-family: "Pretendard", sans-serif;
     flex: 1;
     height: 48px;
     color: #fff;
