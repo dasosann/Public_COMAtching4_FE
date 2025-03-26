@@ -1,94 +1,50 @@
-@keyframes slideGradient {
-  from {
-    background-position: -100% 0;
-  }
-  to {
-    background-position: 100% 0;
-  }
-}
 
-.circle-icon {
-  width: 48px;
-  height: 48px;
-  background-color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  margin: 16px 0px 0px 0px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
-}
 
-.content {
-  background-color: white;
+
+.contents {
+  background-color: rgba(255, 255, 255, 0.452);
   padding: 20px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
-  margin-top: 14px;
+  margin-top: 30px;
+  width: 90%;
+  
+  border: 1px solid #0000000e;
 }
 
 .LoadingText {
-  width: 100%;
+  width: 90%;
+  height: 120px;
+  
+  
   font-family: "Pretendard", sans-serif;
-  font-size: 16px;
-  font-weight: bold;
-  color: #737373;
+  font-size: 16px; /* 글자 크게 해서 효과 잘 보이게 */
+  font-weight: 700;
   text-align: left;
   margin: 10px 0px 30px 0px;
-}
 
-.LoadingBar {
-  width: 100%;
-  height: 160px;
-  margin: auto;
-}
-
-.GradientBar {
+  /* Gradient 배경 */
   background: linear-gradient(
     90deg,
-    #FFF0F7 0%,
-    #F57DB2 50%,
-    #FFF0F7 100%
+    #d3d3d3 0%,   /* 밝은 회색 */
+    #a9a9a9 25%,  /* 진한 회색 */
+    #808080 52%,  /* 더 진한 회색 */
+    #d3d3d3 75%,  
+    #f5f5f5 100%  /* 아주 밝은 회색 */
   );
-  background-size: 200% 100%;
-  animation: slideGradient 1.25s linear infinite reverse;
-  width: 100%;
-  height: 15px;
-  border-radius: 4px;
-  margin: 5px 0px;
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent; /* 글자 색 투명 */
+  -webkit-text-fill-color: transparent; /* 사파리 호환성 */
+  
+  animation: gradientMove 3.2s linear infinite;
 }
 
-.firstloadingbar {
-  animation-delay: 0s;
-  margin-top: 140px;
-}
-
-.secondloadingbar {
-  animation-delay: 0.3s;
-  position: relative;
-  top: -130px;
-}
-
-.thirdloadingbar {
-  animation-delay: 0.5s;
-  margin-top: -10px;
-  width: 50%;
-}
-.firstloadingbar {
-  animation-delay: 0s;
-  margin-top: 10px;
-}
-
-.secondloadingbar {
-  animation-delay: 0.3s;
-  margin-top: 10px;
-  /* position: relative;
-  top: -130px; */
-}
-
-.thirdloadingbar {
-  animation-delay: 0.5s;
-  margin-top: 10px;
-  width: 50%;
+@keyframes gradientMove {
+  0% {
+    background-position: 200% 100%;
+  }
+  100% {
+    background-position: 40% 50%;
+  }
 }

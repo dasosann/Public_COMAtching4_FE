@@ -8,13 +8,9 @@ import "../css/pages/MainpageLogin.css";
 import { useNavigate } from "react-router-dom";
 import TotalUsersCounter from "../components/TotalUsersCounter";
 import BottomNavButton from "../components/BottomNavButton";
-import MyInfoButton from "../components/MyInfoButton";
-import ChargeButtonInfo from "../components/ChargeButtonInfo";
 import TutorialSlides from "../components/TutorialSlides";
-import HartButtonInfo from "../components/HartButtonInfo";
 import Background from "../components/Background";
 import instance from "../axiosConfig";
-import AccountButtonInfo from "../components/AccountButtonInfo";
 import Cookies from "js-cookie"; // js-cookie import 추가
 import EventModal from "../components/EventModal";
 import PointBalance from "../components/PointBalance";
