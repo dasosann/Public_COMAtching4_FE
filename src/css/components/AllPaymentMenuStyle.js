@@ -7,6 +7,7 @@ P.Container = styled.div`
     flex-direction: column;
     font-family: "Pretendard", sans-serif;
     text-align: left;
+    box-sizing: border-box;
 `
 P.PopularText = styled.div`
     font-size: 16px;
