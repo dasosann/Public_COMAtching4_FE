@@ -26,6 +26,7 @@ function Userinfo() {
         major: null,
         contactVerified: true
     });
+    const [isUsernameVisible, setIsUsernameVisible] = useState(false);
 
     // useEffect(() => {
     //     if (!user.mbti || user.mbti === "") {
@@ -35,7 +36,6 @@ function Userinfo() {
     // }, [user.mbti, navigate]);
     
     useEffect(() => {
-        console.log("📝 user 상태 변경됨:", user);
     }, [user]); // user 값이 변경될 때마다 실행
 
     // 모든 필드 채워졌는지 확인하는 함수
@@ -45,7 +45,7 @@ const checkAllFieldsFilled = () => {
         "age",
         "gender",
         "contactFrequency",
-        
+        "username",
         "song",
         "comment",
         "admissionYear"
@@ -136,7 +136,7 @@ useEffect(() => {
                         ...prevUser,
                         comment: value
                     }));
-                    setIsCommentVisible(true); // 'comment' 필드가 표시되도록 설정
+                    setIsUsernameVisible(true); // ✅ 장점 입력 시 username 보이게 설정
                     
                 }
 
@@ -169,6 +169,12 @@ useEffect(() => {
                 break;
             default:
                 break;
+            case "username":
+                if (value.length > 10) {
+                    errorMessage = "닉네임은 최대 10자까지 가능합니다.";
+                }
+                break;
+
         }
 
         if (errorMessage) {
@@ -197,13 +203,12 @@ useEffect(() => {
         if (e && e.preventDefault) {
             e.preventDefault();
         }
-
         const requiredFields = [
             "major",
             "age",
             "gender",
             "contactFrequency",
-            
+            "username",
             "song",
             "comment",
             "admissionYear"
@@ -225,9 +230,11 @@ useEffect(() => {
             contactFrequency: user.contactFrequency,
             hobby: user.hobby,
             song: user.song,
+            username:user.username,
             comment: user.comment,
             admissionYear: user.admissionYear
         };
+        console.log("postdata",postData)
         // const postData = {     contact_id: "@diwqdqn",     major: "컴퓨터정보공학과과",
         // age: 20,     mbti: "esfj",     gender: "남성",     contactFrequency: "보통통",
         // hobby: ["운동"],     song: "영시시",     comment: "친하게지내요요",     admissionYear:
@@ -295,6 +302,25 @@ useEffect(() => {
             <form className="form_container" onSubmit={handleSubmit}>
 
                 <div className="form-inner-content">
+                {
+                        isUsernameVisible  && (
+                            <div>
+                                <label>
+                                    <h3 className="commet_title">
+                                        코매칭에서 사용할 닉네임</h3>
+                                    <div className="music">
+                                        <MyInput
+                                            name="username"
+                                            value={user.username}
+                                            onChange={handleChange}
+                                            placeholder="닉네임은 최대 6자 입니다."
+                                            className="username-input"
+                                            maxLength={10}/>
+                                    </div>
+                                </label>
+                            </div>
+                        )
+                    }
                     {
                         isCommentVisible && (
                             <div>
