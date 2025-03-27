@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import instance from "../axiosConfig"; // axiosConfig 인스턴스 불러오기
 import {useRecoilState} from "recoil";
 import {userState, selectedMBTIState} from "../Atoms";
 import {useNavigate} from "react-router-dom";
@@ -14,6 +13,7 @@ import Background from "../components/Background";
 import Modal from "react-modal"; // Import react-modal
 import TermsAgreementModal from "../components/TermsAgreementModal";
 import ProgressNav from "../components/ProgressNav";
+import instance from "../axiosConfig.jsx";
 Modal.setAppElement("#root");
 
 function Userinfo() {
@@ -26,6 +26,7 @@ function Userinfo() {
         major: null,
         contactVerified: true
     });
+    const [isUsernameVisible, setIsUsernameVisible] = useState(false);
 
     // useEffect(() => {
     //     if (!user.mbti || user.mbti === "") {
@@ -35,7 +36,6 @@ function Userinfo() {
     // }, [user.mbti, navigate]);
     
     useEffect(() => {
-        console.log("📝 user 상태 변경됨:", user);
     }, [user]); // user 값이 변경될 때마다 실행
 
     // 모든 필드 채워졌는지 확인하는 함수
@@ -45,7 +45,7 @@ const checkAllFieldsFilled = () => {
         "age",
         "gender",
         "contactFrequency",
-        
+        "username",
         "song",
         "comment",
         "admissionYear"
@@ -111,7 +111,6 @@ useEffect(() => {
 
     const [isGenderSelectable, setIsGenderSelectable] = useState(false);
     const [isContactVerified, setIsContactVerified] = useState(false);
-    const [isSongInputVisible, setIsSongInputVisible] = useState(false);
     const [isCommentVisible, setIsCommentVisible] = useState(false);
     const [isFiveChars, setIsFiveChars] = useState(false);
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -136,7 +135,7 @@ useEffect(() => {
                         ...prevUser,
                         comment: value
                     }));
-                    setIsCommentVisible(true); // 'comment' 필드가 표시되도록 설정
+                    setIsUsernameVisible(true); // ✅ 장점 입력 시 username 보이게 설정
                     
                 }
 
@@ -169,6 +168,12 @@ useEffect(() => {
                 break;
             default:
                 break;
+            case "username":
+                if (value.length > 10) {
+                    errorMessage = "닉네임은 최대 10자까지 가능합니다.";
+                }
+                break;
+
         }
 
         if (errorMessage) {
@@ -197,13 +202,12 @@ useEffect(() => {
         if (e && e.preventDefault) {
             e.preventDefault();
         }
-
         const requiredFields = [
             "major",
             "age",
             "gender",
             "contactFrequency",
-            
+            "username",
             "song",
             "comment",
             "admissionYear"
@@ -225,32 +229,21 @@ useEffect(() => {
             contactFrequency: user.contactFrequency,
             hobby: user.hobby,
             song: user.song,
+            username:user.username,
             comment: user.comment,
             admissionYear: user.admissionYear
         };
-        // const postData = {     contact_id: "@diwqdqn",     major: "컴퓨터정보공학과과",
-        // age: 20,     mbti: "esfj",     gender: "남성",     contactFrequency: "보통통",
-        // hobby: ["운동"],     song: "영시시",     comment: "친하게지내요요",     admissionYear:
-        // 21, };
-        // try {
-        //     console.log("Request Data:", postData);
-        //     // BASE_URL과 엔드포인트가 합쳐진 URL로 요청
-        //     const response = await fetchWithAuth("/api/users/signup", {
-        //         method: "POST",
-        //         body: JSON.stringify(postData)
-        //     });
+        console.log("postdata",postData)
+        try {
+            const response = await instance.post("/auth/social/api/user/info", postData);
+            console.log("✅ 사용자 정보 전송 성공:", response.data);
 
-        //     if (response.ok) {
-        //         alert("가입이 완료되었습니다.");
-        //         navigate("/");
-        //     } else {
-        //         alert("가입 실패");
-        //     }
-        // } catch (error) {
-        //     console.error("오류 발생:", error);
-        //     alert("서버 오류가 발생했습니다.");
-        //     navigate('/');
-        // }
+            alert("가입이 완료되었습니다!");
+            navigate("/"); // 원하는 페이지로 이동
+        } catch (error) {
+            console.error("❌ 사용자 정보 전송 실패:", error);
+            alert("서버 오류가 발생했습니다. 다시 시도해주세요.");
+        }
 
     };
 
@@ -295,6 +288,25 @@ useEffect(() => {
             <form className="form_container" onSubmit={handleSubmit}>
 
                 <div className="form-inner-content">
+                {
+                        isUsernameVisible  && (
+                            <div>
+                                <label>
+                                    <h3 className="commet_title">
+                                        코매칭에서 사용할 닉네임</h3>
+                                    <div className="music">
+                                        <MyInput
+                                            name="username"
+                                            value={user.username}
+                                            onChange={handleChange}
+                                            placeholder="닉네임은 최대 6자 입니다."
+                                            className="username-input"
+                                            maxLength={10}/>
+                                    </div>
+                                </label>
+                            </div>
+                        )
+                    }
                     {
                         isCommentVisible && (
                             <div>

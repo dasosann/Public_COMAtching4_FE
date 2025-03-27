@@ -45,9 +45,8 @@ import Chat from "./pages/Chat.jsx";
 import ChatRoom from "./pages/ChatRoom.jsx"
 import EventListAndCancel from "./pages/Admin/EventListAndCancel.jsx";
 import EventHistory from "./pages/Admin/EventHistory.jsx";
-
-
-
+import MainpageLogin from "./pages/MainpageLogin.jsx";
+import MainpageUnLogin from "./pages/MainpageUnLogin.jsx";
 export default function App() {
   return (
     <RecoilRoot>
@@ -55,7 +54,8 @@ export default function App() {
         <OpenExternalBrowser />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Mainpage />} />
+            <Route path="/" element={<MainpageUnLogin />} />
+            <Route path="/login" element={<MainpageLogin />} />
             <Route path="/guide" element={<Guide />} />
             <Route path="/match-result" element={<Matchresult />} />
             <Route path="/check-result" element={<Checkresult />} />
