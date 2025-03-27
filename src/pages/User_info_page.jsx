@@ -266,7 +266,7 @@ function Userinfo() {
       const response = await instance.post("/auth/social/api/user/info", postData);
       console.log("등록 성공", response.data);
       // 성공 후 리디렉션 또는 알림
-      navigate("/success"); // 성공 페이지 예시
+      navigate("/login"); // 성공 페이지 예시
     } catch (error) {
       console.error("등록 실패", error);
       alert("등록 중 오류가 발생했습니다.");

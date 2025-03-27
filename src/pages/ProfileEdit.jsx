@@ -47,19 +47,20 @@ const ProfileEdit = () => {
           const userData = data;
   
           const newProfile = {
-            username: userData.username,
+            nickname: userData.username,
             age: userData.age,
-            university: userData.university,
-            major: userData.major,
-            contactId: userData.contactId,
-            song: userData.song,
-            mbti: userData.mbti,
-            hobbies: userData.hobbies,
+            school: userData.university,
+            department: userData.major,
+            contact_id: userData.contactId,
+            favoriteSong: userData.song,
+            selectedMBTIEdit: userData.mbti,
+            interests: userData.hobbies,
             contactFrequency: userData.contactFrequency,
             gender: userData.gender,
-            comment: userData.comment,
+            introduction: userData.comment,
             schoolAuth: userData.schoolAuth,
             schoolEmail: userData.schoolEmail,
+            ageOption: userData.contactFrequency, // ✅ 버튼 상태 저장용 (필요 시 조정)
           };
   
           setProfile(newProfile);
