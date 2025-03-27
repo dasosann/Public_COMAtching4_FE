@@ -8,6 +8,7 @@ import { profileEditState } from '../Atoms.jsx';
 import { useRecoilState } from 'recoil';
 import InterestSelectModal from '../components/InterestSelectModal.jsx';
 import ContactEditModal from '../components/ContactEditModal.jsx';
+import instance from '../axiosConfig.jsx';
 const ProfileEdit = () => {
   // 프로필 정보 상태 관리
   
@@ -36,8 +37,42 @@ const ProfileEdit = () => {
     };
   }, [isInterestModalOpen]);
 
+  // 페이지 진입 시 백엔드 API 호출
+  useEffect(() => {
+    instance.get('/auth/api/user/info')
+      .then((response) => {
+        const { status, data } = response.data;
+        console.log(response)
+        if (status === 200) {
+          const userData = data;
+  
+          const newProfile = {
+            username: userData.username,
+            age: userData.age,
+            university: userData.university,
+            major: userData.major,
+            contactId: userData.contactId,
+            song: userData.song,
+            mbti: userData.mbti,
+            hobbies: userData.hobbies,
+            contactFrequency: userData.contactFrequency,
+            gender: userData.gender,
+            comment: userData.comment,
+            schoolAuth: userData.schoolAuth,
+            schoolEmail: userData.schoolEmail,
+          };
+  
+          setProfile(newProfile);
+          setOriginalProfile(newProfile);
+        }
+      })
+      .catch((error) => {
+        console.error('프로필 정보 불러오기 실패:', error);
+      });
+  }, [setProfile]);
+
   const handleEditClick = (field) => {
-    if (field !== 'school' && field !== 'department') {
+    if (field !== 'university' && field !== 'major') {
       setEditingField(field);
     }
   };
@@ -52,7 +87,7 @@ const ProfileEdit = () => {
   const handleAgeSelection = (value) => {
     setProfile((prev) => ({
       ...prev,
-      ageOption: prev.ageOption === value ? "" : value, // 선택 취소 로직
+      contactFrequency: prev.contactFrequency === value ? "" : value, // 선택 취소 로직
     }));
   };
   
@@ -72,7 +107,7 @@ const ProfileEdit = () => {
 
       return { 
         ...prevProfile, 
-        selectedMBTIEdit: newMBTI.join("").replace(/X/g, '') // ✅ 배열을 다시 문자열로 변환하고 'X' 제거
+        mbti: newMBTI.join("").replace(/X/g, '') // ✅ 배열을 다시 문자열로 변환하고 'X' 제거
       };
     });
   };
@@ -80,7 +115,7 @@ const ProfileEdit = () => {
   
   const isFormComplete =
   Object.values(profile).every(value => value !== "") &&
-  profile.selectedMBTIEdit.length === 4; // ✅ 문자열 길이로 MBTI 4개 선택 여부 확인
+  profile.mbti.length === 4; // ✅ 문자열 길이로 MBTI 4개 선택 여부 확인
 
 
   return (
