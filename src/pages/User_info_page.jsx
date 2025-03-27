@@ -217,20 +217,23 @@ function Userinfo() {
 
   const handleSubmit = async (e) => {
     if (e && e.preventDefault) {
-        e.preventDefault();
-      }
+      e.preventDefault();
+    }
+  
     const requiredFields = [
       "major",
       "year",
       "month",
       "day",
       "gender",
+      "university",
       "contactFrequency",
       "username",
       "song",
       "comment",
       "admissionYear",
     ];
+  
     for (let field of requiredFields) {
       if (
         !user[field] ||
@@ -241,9 +244,9 @@ function Userinfo() {
         return;
       }
     }
-
+  
     const postData = {
-        contactId: user.contact_id,
+      contactId: user.contact_id,
       major: user.major,
       year: user.year,
       month: user.month,
@@ -258,9 +261,18 @@ function Userinfo() {
       comment: user.comment,
       admissionYear: user.admissionYear,
     };
-    console.log(postData);
-    // API 호출 등의 작업 추가
+  
+    try {
+      const response = await instance.post("/auth/social/api/user/info", postData);
+      console.log("등록 성공", response.data);
+      // 성공 후 리디렉션 또는 알림
+      navigate("/success"); // 성공 페이지 예시
+    } catch (error) {
+      console.error("등록 실패", error);
+      alert("등록 중 오류가 발생했습니다.");
+    }
   };
+  
 
   const openModal = () => {
     setModalIsOpen(true);
