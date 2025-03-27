@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-
+// 젠킨스 테스트
 // baseURL 설정
 const baseURL = "https://backend.comatching.site";  // 여기에 기본 URL을 설정합니다.
 
