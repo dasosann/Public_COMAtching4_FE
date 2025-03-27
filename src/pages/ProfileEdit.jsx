@@ -39,10 +39,10 @@ const ProfileEdit = () => {
 
   // 페이지 진입 시 백엔드 API 호출
   useEffect(() => {
-    instance.get('/auth/api/user/info')
+    instance.get('/auth/user/api/info')
       .then((response) => {
         const { status, data } = response.data;
-        console.log(response)
+        console.log("response",response);
         if (status === 200) {
           const userData = data;
   
