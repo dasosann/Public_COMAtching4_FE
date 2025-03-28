@@ -65,7 +65,7 @@ export const adminUserState = atom({
     acountId: "",  
     schoolEmail:"",
     nickname: "",           
-    role: "",
+    role: "ROLE_ADMIN",
     university:"",
     universityAuth:"",
   },

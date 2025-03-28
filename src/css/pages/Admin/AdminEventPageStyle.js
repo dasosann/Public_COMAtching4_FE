@@ -16,6 +16,9 @@ E.FlexWrapper = styled.div`
     gap: 16px ;
     width: 100%;
 `
+E.RedSpan = styled.span`
+    color: #d91329;
+`
 E.SubDiv = styled.div`
     font-size: 16px;
     font-weight: 500;
