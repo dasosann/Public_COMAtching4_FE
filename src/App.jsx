@@ -131,7 +131,6 @@ export default function App() {
             <Route path="/event" element={<EventModal />} />
 
             <Route path="/test" element={<PaymentCallTest />} />
-
             {/* <Route path="/test" element={<MainPaymentModal />} /> */}
 
             <Route path="/mypage" element={<Mypage />} />
