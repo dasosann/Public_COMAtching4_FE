@@ -22,15 +22,7 @@ const NoticeReservation = () => {
     const handleMinutesSelect = (value) => setSelectedMinutes(value);
     const hours = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, '0'));
     const minutes = Array.from({ length: 6 }, (_, i) => String(i * 10).padStart(2, '0'));
-    const remainingEvents = location.state ? location.state.remainingEvents : 0;  // 기본값 0 사용
-    const hearts = [];
-    for (let i = 0; i < 4; i++) {
-        if (i < remainingEvents) {
-            hearts.push(<img key={i} src="/assets/Admin/full-heart.svg" alt="꽉찬 하트" style={{ margin: '0 4px' }} />);
-        } else {
-            hearts.push(<img key={i} src="/assets/Admin/empty-heart.svg" alt="빈 하트" style={{ margin: '0 4px' }} />);
-        }
-    }
+    
     const handleDateClick = (date) => {
         setSelectedDate(date);
     };
@@ -61,7 +53,7 @@ const NoticeReservation = () => {
         if (startTotal < currentTotal) {
           setErrorMessage(
             <>
-              이벤트 시작 시각은 현재 시각보다 <br />
+              공지사항 시작 시각은 현재 시각보다 <br />
               이전으로 설정할 수 없습니다.
             </>
           );
@@ -72,7 +64,7 @@ const NoticeReservation = () => {
     
       // 시작 시간이 종료 시간보다 같거나 늦을 수 없도록 체크
       if (startTotal >= endTotal) {
-        setErrorMessage(<>이벤트 시작 시간이 종료 시간보다 <br /> 같거나 늦을 수 없습니다.</>);
+        setErrorMessage(<>시작 시간이 종료 시간보다 <br /> 같거나 늦을 수 없습니다.</>);
         setShowModal(true);
         return;
       }
@@ -113,39 +105,38 @@ const NoticeReservation = () => {
       console.log(formattedStartTime); // "2025-03-25T19:49:41"
       console.log(formattedEndTime); // "2025-03-25T19:49:41"
     
-      const eventData = {
-        eventType: "DISCOUNT",
-        start: formattedStartTime,  // 한국 시간으로 변환된 ISO 시간
-        end: formattedEndTime,      // 한국 시간으로 변환된 ISO 시간
-        // 필요한 다른 데이터들...
-      };
+      // const eventData = {
+      //   eventType: "DISCOUNT",
+      //   start: formattedStartTime,  // 한국 시간으로 변환된 ISO 시간
+      //   end: formattedEndTime,      // 한국 시간으로 변환된 ISO 시간
+      //   // 필요한 다른 데이터들...
+      // };
     
-      // fetch로 데이터 전송
-      fetch('/admin/event/register/discount', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(eventData),
-      })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Event created:', data);
-          navigate('/adminpage/myPage/event/registercomplete');
-        })
-        .catch(error => console.error('Error:', error));
+      // // fetch로 데이터 전송
+      // fetch('/admin/event/register/discount', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(eventData),
+      // })
+      //   .then(response => response.json())
+      //   .then(data => {
+      //     console.log('Event created:', data);
+      //     navigate('/adminpage/myPage/event/registercomplete');
+      //   })
+      //   .catch(error => console.error('Error:', error));
+      navigate("/adminpage/myPage/notice/complete")
     };
     
     return (
         <div>
             <AdminHeader setAdminSelect={setAdminSelect} adminSelect={adminSelect} />
             <MainWrapper>
-                <AdminDiv style={{cursor:'default'}}>
-                    <E.TitleDiv>매칭 기회 제공 이벤트 예약</E.TitleDiv>
-                    <E.SubTitleDiv>현재 잔여 이벤트 횟수는 {remainingEvents}회입니다.</E.SubTitleDiv>
-                    <div style={{display:'flex', justifyContent:'center'}}>
-                        {hearts}
-                    </div>
+                <AdminDiv style={{cursor:'default', paddingTop:'26px',paddingRight:'24px'}}>
+                    <E.TitleDiv>공지사항 등록</E.TitleDiv>
+                    <E.SubTitleDiv>아래에 공지 내용을 입력해주세요.</E.SubTitleDiv>
+                    <E.NoticeInput/>
                 </AdminDiv>
                 <AdminDiv style={{padding:'24px', cursor:'default'}}>
                     <E.FlexWrapper>
@@ -155,7 +146,7 @@ const NoticeReservation = () => {
                             </E.DateButton>
                         ))}
                     </E.FlexWrapper>
-                    <E.TitleDiv>이벤트 시간설정</E.TitleDiv>
+                    <E.TitleDiv>공지 시간설정</E.TitleDiv>
                     <E.FlexWrapper style={{marginTop:'8px', marginBottom:'24px'}}>
                         <Dropdown
                             options={hours}
@@ -188,9 +179,7 @@ const NoticeReservation = () => {
                     </E.FlexWrapper>
                     <E.MatchText>
                         <div>
-                            교내 가입자 전원에게&nbsp;
-                            <E.MatchSpan>매칭 1회의 기회</E.MatchSpan>
-                            를 제공합니다.
+                            교내 가입자 전체에게 팝업 형태로 공지합니다.
                         </div>
                         <E.ConfirmButton onClick={handleConfirm}>확인</E.ConfirmButton>
                     </E.MatchText>
