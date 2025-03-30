@@ -54,7 +54,7 @@ const PointBalance = ({ userAmount }) => {
       if (status === "success") {
         // 1) 서버에 paymentKey, orderId, amount를 검증 요청
         // 2) 검증 성공 시, 모달을 열어서 "결제 성공" 표시
-        navigate('/', { replace: true }); 
+        navigate('/login', { replace: true }); 
         setIsModalOpen(true);
         if (amount) {
           setAmount(amount);
@@ -66,7 +66,7 @@ const PointBalance = ({ userAmount }) => {
           sendParamsToBackend(paymentKey, orderId, amount, uniqueId);
         }
       } else if (status === "fail") {
-        navigate('/', { replace: true }); 
+        navigate('/login', { replace: true }); 
         setIsModalOpen(true);
         setPaymentStatus("fail");
       }
