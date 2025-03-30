@@ -14,7 +14,37 @@ function Adminpageunlogin() {
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
+  const fetchUserInfo = async () => {
+    try {
+      // /auth/operator/info 엔드포인트로 사용자 정보를 가져온다고 가정
+      // 백엔드가 GET인지, credentials가 필요한지 등을 상황에 맞게 설정
+      const response = await fetchRequest("/auth/operator/info", {
+        method: "GET",
+        credentials: "include",
+      });
 
+      if (!response.ok) {
+        throw new Error(`사용자 정보 조회 실패 (status: ${response.status})`);
+      }
+
+      const userData = await response.json();
+      console.log("사용자 정보 조회 성공:", userData);
+
+      // 응답 데이터 구조에 맞춰 adminUserState에 저장
+      // 여기서는 예시로, userData 구조를 가정
+      setAdminUser({
+        acountId: userData.accountId || "",
+        schoolEmail: userData.schoolEmail || "",
+        nickname: userData.nickname || "",
+        role: userData.role || "",
+        university: userData.university || "",
+        universityAuth: userData.universityAuth || "",
+      });
+    } catch (error) {
+      console.error("사용자 정보 요청 중 에러 발생:", error);
+      alert("사용자 정보를 불러오는 중 오류가 발생했습니다.");
+    }
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -41,6 +71,7 @@ function Adminpageunlogin() {
       if (statusCode==302) {
         // 2xx 구간 => 로그인 성공
         console.log("로그인 성공");
+        await fetchUserInfo();
       } else {
         alert("로그인 실패: "); // 사용자에게 실패 메시지를 보여줍니다.
       }

@@ -53,13 +53,7 @@ const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,am
       setIsSecondModalOpen(false);
     }
   }, [paymentStatus]);
-  const isDimmed = isSecondModalOpen || paymentStatus === 'success' || paymentStatus === 'fail' || isChargeListModalOpen;
-  // 결과 모달들 중 하나가 닫힐 때, 메인 모달 전체를 닫을지 vs 결과 모달만 닫을지 결정 가능
-  const handleCloseResultModal = () => {
-    // 예: 결과 모달 닫는 동시에 메인 모달까지 닫기
-    setPaymentStatus(null);
-    // 만약 "결과 모달만 닫고 MainPaymentModal은 계속 열어두겠다"면 closeModal() 대신 따로 상태 관리
-  };
+  
   const openChargeHistoryModal = () => {
     setIsChargeListModalOpen(true);
   };
@@ -73,7 +67,7 @@ const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,am
   return (
     <div>
       <P.ModalWrapper show={isOpen} isSecondModalOpen={isSecondModalOpen} data-aos="fade-up">
-        <P.ModalContent onClick={(e) => e.stopPropagation()} isDimmed={isDimmed}>
+        <P.ModalContent onClick={(e) => e.stopPropagation()}>
           <div style={{position:'sticky', zIndex:'1', top:'0', backgroundColor:'white', paddingTop:'24px', paddingBottom:'23px'}}>
             <P.Header>
               <P.ChargePointText>포인트 충전</P.ChargePointText>
@@ -93,12 +87,7 @@ const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,am
           closeAllModal = {closeModal}
           />
         )}
-        {paymentStatus === 'success' && (
-        <PaymentSuccessModal onClose={handleCloseResultModal} amount={amount} />
-        )}
-        {paymentStatus === 'fail' && (
-        <WrongRequestModal onClose={handleCloseResultModal} />
-        )}
+       
         
       </P.ModalWrapper>
 

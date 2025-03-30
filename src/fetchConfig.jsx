@@ -23,10 +23,8 @@ const fetchRequest = async (path, options = {}) => {
       // 인증 실패 시 로그인 페이지로 리다이렉트
       if (response.status === 401 && (errorData.code === "SEC-001" || errorData.code === "SEC-002")) {
         alert("세션이 만료되었습니다. 다시 로그인해 주세요.");
-        window.location.href = "/"; // 로그인 페이지로 리다이렉트
-      } else {
-        // 그 외의 에러 처리
-      }
+        window.location.href = "/adminpage"; // 로그인 페이지로 리다이렉트
+      } 
       return Promise.reject(new Error(`Error: ${response.status}`));
     }
 
