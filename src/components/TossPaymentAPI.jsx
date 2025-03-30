@@ -37,7 +37,7 @@ export function PaymentCheckoutPage({amount, orderName, currency, customerKey, o
     fetchPayment();
   }, [clientKey, customerKey]);
   useEffect(() => {
-    console.log("payement",payment)
+    console.log("payment",payment)
     if (payment) {
       // payment 객체가 준비되면 바로 결제 요청
       requestPayment();

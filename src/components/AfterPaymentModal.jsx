@@ -20,11 +20,13 @@ const WrongRequestModal = ({ onClose }) => {
 
 const PaymentSuccessModal = ({ onClose ,amount }) => {
   return (
-    <P.ModalWrapper style={{height:"223px"}}>
-      <P.PaymentTitle>결제 알림</P.PaymentTitle>
-      <P.PaymentBody>{formattedTime}<br/>{amount}포인트 충전 성공 </P.PaymentBody>
-      <P.ConfirmButton onClick={onClose}>확인</P.ConfirmButton>
-    </P.ModalWrapper>
+    <P.ModalOverlay>
+      <P.ModalWrapper style={{height:"223px"}}>
+        <P.PaymentTitle>결제 알림</P.PaymentTitle>
+        <P.PaymentBody>{formattedTime}<br/>{amount}포인트 충전 성공 </P.PaymentBody>
+        <P.ConfirmButton onClick={onClose}>확인</P.ConfirmButton>
+      </P.ModalWrapper>
+    </P.ModalOverlay>
   );
 };
 

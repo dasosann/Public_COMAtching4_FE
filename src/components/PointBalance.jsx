@@ -1,87 +1,96 @@
 import React, { useEffect, useRef, useState } from 'react';
-import '../css/components/PointBalance.css'; // 스타일을 분리하여 유지보수 가능하게 설정
-import { useLocation, useNavigate } from 'react-router-dom'; // React Router 사용
+import '../css/components/PointBalance.css'; 
+import { useLocation, useNavigate } from 'react-router-dom';
 import MainPaymentModal from './MainPaymentModal';
 import fetchRequest from '../fetchConfig';
 import { v4 as uuidv4 } from 'uuid';
+import { ClipLoader } from 'react-spinners';
+import { PaymentSuccessModal, WrongRequestModal } from './AfterPaymentModal';
+
 const PointBalance = ({ userAmount }) => {
-    const hasSent = useRef(false); // 요청이 한 번만 보내졌는지 추적
-    const [isModalOpen, setIsModalOpen] = useState(false); // 모달의 열림/닫힘 상태 관리
-    const [paymentStatus, setPaymentStatus] = useState(false); // 'success' | 'fail' | null 등
-    const [amount, setAmount] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const location = useLocation();
-    const navigate = useNavigate(); // 네비게이션 함수
-    const sendParamsToBackend = async (paymentKey, orderId, amount, uniqueId) => {
-      try {
-        setIsLoading(true);
-        const response = await fetchRequest("/payments/confirm", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Idempotency-Key" : uniqueId,
-          },
-          body: JSON.stringify({
-            paymentKey: paymentKey,
-            orderId : orderId,
-            amount : amount,
-          }),
-          credentials:"include",
-        });
-        if(response.ok){
-          const data = await response.json();
-          console.log("백엔드 응답 정상적:", data);
-          setPaymentStatus('success')
-          
-        }else{
-          const errorData = await response.json();
-          console.error("벡엔드 응답 오류 발생:", errorData);
-          setPaymentStatus("fail");
-        }
-      } catch (error) {
-        console.error("백엔드로 데이터 전송 실패:", error);
-      }finally{
-        setIsLoading(false);
-      }
-    };
-    useEffect(() => {
-      const searchParams = new URLSearchParams(location.search);
-      const status = searchParams.get("status"); // success or fail
-      const paymentKey = searchParams.get("paymentKey");
-      const orderId = searchParams.get("orderId");
-      const amount = searchParams.get("amount");
-  
-      if (status === "success") {
-        // 1) 서버에 paymentKey, orderId, amount를 검증 요청
-        // 2) 검증 성공 시, 모달을 열어서 "결제 성공" 표시
-        navigate('/login', { replace: true }); 
-        setIsModalOpen(false);
-        if (amount) {
-          setAmount(amount);
-        }
-        if (paymentKey && orderId && amount&&!hasSent.current) {
-          const uniqueId = uuidv4();
-          console.log(uniqueId); // 예: d2eebf8f-6c19-4b5e-b501-d6c7b7de5a1e
-          hasSent.current = true;
-          sendParamsToBackend(paymentKey, orderId, amount, uniqueId);
-        }
-      } else if (status === "fail") {
-        navigate('/login', { replace: true }); 
-        setIsModalOpen(true);
+  const hasSent = useRef(false); 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState(false); 
+  const [amount, setAmount] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const sendParamsToBackend = async (paymentKey, orderId, amount, uniqueId) => {
+    try {
+      setIsLoading(true);
+      const response = await fetchRequest("/payments/confirm", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Idempotency-Key": uniqueId,
+        },
+        body: JSON.stringify({
+          paymentKey,
+          orderId,
+          amount,
+        }),
+        credentials: "include",
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log("백엔드 응답 정상:", data);
+        setPaymentStatus('success');
+      } else {
+        const errorData = await response.json();
+        console.error("백엔드 응답 오류:", errorData);
         setPaymentStatus("fail");
       }
-    }, [location,navigate]);
-  // const handleChargeClick = () => {
-  //   navigate('/charge'); 
-  // };
+    } catch (error) {
+      console.error("백엔드로 데이터 전송 실패:", error);
+      setPaymentStatus("fail");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const status = searchParams.get("status"); 
+    const paymentKey = searchParams.get("paymentKey");
+    const orderId = searchParams.get("orderId");
+    const amountQuery = searchParams.get("amount");
+
+    if (status === "success") {
+      navigate('/login', { replace: true }); 
+      setIsModalOpen(false);
+
+      if (amountQuery) {
+        setAmount(amountQuery);
+      }
+      // 처음 한 번만 서버에 검증 요청
+      if (paymentKey && orderId && amountQuery && !hasSent.current) {
+        hasSent.current = true;
+        const uniqueId = uuidv4();
+        console.log("uniqueId:", uniqueId);
+        sendParamsToBackend(paymentKey, orderId, amountQuery, uniqueId);
+      }
+    } else if (status === "fail") {
+      navigate('/login', { replace: true }); 
+      setIsModalOpen(true);
+      setPaymentStatus("fail");
+    }
+  }, [location, navigate]);
+
   const openModal = () => {
     setIsModalOpen(true);
   };
 
-  // 모달 닫기
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  // 결과 모달이 닫힐 때 처리
+  const handleCloseResultModal = () => {
+    // 예시: 결과 모달만 닫고, paymentStatus 초기화
+    setPaymentStatus(null);
+  };
+
   return (
     <div>
       <div className="point-balance">
@@ -92,13 +101,41 @@ const PointBalance = ({ userAmount }) => {
         </div>
         <button className="charges-button" onClick={openModal}>충전하기</button>
       </div>
-        <MainPaymentModal
-          isOpen={isModalOpen}
-          closeModal={closeModal}
-          paymentStatus={paymentStatus}
-          setPaymentStatus={setPaymentStatus}
-          amount={amount}
-        />
+
+      <MainPaymentModal
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        paymentStatus={paymentStatus}
+        setPaymentStatus={setPaymentStatus}
+        amount={amount}
+      />
+
+      {/* 로딩 스피너 표시 */}
+      {isLoading && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0, left: 0,
+            right: 0, bottom: 0,
+            background: "rgba(0,0,0,0.3)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 999,
+          }}
+        >
+          <ClipLoader size={80} color="#ffffff" />
+        </div>
+      )}
+
+      {/* 결제 결과 모달 (성공/실패) */}
+      {paymentStatus === 'success' && (
+        <PaymentSuccessModal onClose={handleCloseResultModal} amount={amount} />
+      )}
+
+      {paymentStatus === 'fail' && (
+        <WrongRequestModal onClose={handleCloseResultModal} />
+      )}
     </div>
   );
 };
