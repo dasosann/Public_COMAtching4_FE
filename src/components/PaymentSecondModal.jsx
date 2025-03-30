@@ -31,7 +31,7 @@ const PaymentSecondModal = ({ isOpen, closeModal, pointPrice, productName, disco
       }
 
       const data = await response.json(); // 응답받은 데이터
-      console.log(data)
+      console.log("받아온 data" , data)
       // 응답받은 데이터를 PaymentCheckoutPage에 전달
       setPaymentData(data);
 
