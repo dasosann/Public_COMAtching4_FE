@@ -3,11 +3,14 @@ import "../../css/pages/Adminpage.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { useSetRecoilState } from "recoil";
+import { adminUserState } from "../../Atoms";
+import fetchRequest from "../../fetchConfig";
 function Adminpageunlogin() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [formData, setFormData] = useState({ accountId: "", password: "" });
   const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 훅 사용
-
+  const setAdminUser = useSetRecoilState(adminUserState);
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
@@ -23,8 +26,9 @@ function Adminpageunlogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        "https://backend.comatching.site/admin/login",
+      console.log(formData)
+      const response = await fetchRequest(
+        "/admin/login",
         {
           method:'POST',
           headers: {
@@ -33,14 +37,12 @@ function Adminpageunlogin() {
           body: JSON.stringify(formData),
         }
       );
-      const data = await response.json();
-      // 로그인 응답 데이터에서 status 코드를 확인
-      if (data.status === 200) {
+      const statusCode = response.status;
+      if (statusCode==302) {
+        // 2xx 구간 => 로그인 성공
         console.log("로그인 성공");
-        navigate("/adminpage/myPage"); // 로그인 성공 시 페이지 이동
       } else {
-        console.log("로그인 실패:", data.message); // 로그인 실패 시 메시지 로깅
-        alert("로그인 실패: " + data.message); // 사용자에게 실패 메시지를 보여줍니다.
+        alert("로그인 실패: "); // 사용자에게 실패 메시지를 보여줍니다.
       }
     } catch (error) {
       console.error("로그인 중 에러 발생:", error);
