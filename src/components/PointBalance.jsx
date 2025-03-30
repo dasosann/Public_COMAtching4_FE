@@ -55,7 +55,7 @@ const PointBalance = ({ userAmount }) => {
         // 1) 서버에 paymentKey, orderId, amount를 검증 요청
         // 2) 검증 성공 시, 모달을 열어서 "결제 성공" 표시
         navigate('/login', { replace: true }); 
-        setIsModalOpen(true);
+        setIsModalOpen(false);
         if (amount) {
           setAmount(amount);
         }
