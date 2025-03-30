@@ -92,8 +92,7 @@ const AdminRegister = () => {
 
             const data = await response.json();
             console.log("회원가입 응답:", data);
-
-            if(response.ok){
+            if(data.status===200){
                 // 2xx 성공 구간
                 if(formData.role === "관리자"){
                     alert("회원가입이 완료되었습니다.");
@@ -102,10 +101,13 @@ const AdminRegister = () => {
                     alert("오퍼레이터 가입이 완료되었습니다. 관리자의 승인이 필요합니다.");
                     navigate("/adminpage");
                 }
-            } else if(response.status === 400 ) {
+            } else if(data.status === 400 && formData.role==="관리자" ) {
                 // 4xx 에러 구간
                 alert("이미 해당 학교에 최고 관리자가 존재합니다.");
-            } else {
+            } else if(data.status === 400 && formData.role ==="오퍼레이터"){
+                alert("중복된 계정의 사용자가 존재합니다.")
+            }
+             else {
                 // 그 외 에러 (서버 에러 등)
                 alert(`회원가입 실패: ${data.message || '에러가 발생했습니다.'}`);
             }
