@@ -263,6 +263,7 @@ function Userinfo() {
     };
   
     try {
+      console.log("postData",postData)
       const response = await instance.post("/auth/social/api/user/info", postData);
       console.log("등록 성공", response.data);
       // 성공 후 리디렉션 또는 알림
