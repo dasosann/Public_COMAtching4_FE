@@ -45,7 +45,7 @@ const ProfileEdit = () => {
         const { status } = responseData;
         const userData = responseData.data?.data;
   
-        console.log("responsese", response);
+        console.log("responsese", userData);
   
         if (status === 200 && userData) {
           const newProfile = {
