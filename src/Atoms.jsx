@@ -62,6 +62,7 @@ export const userState = atom({
 export const adminUserState = atom({
   key: "adminUserState",
   default: {
+    loading:true,
     acountId: "",  
     schoolEmail:"",
     nickname: "",           
