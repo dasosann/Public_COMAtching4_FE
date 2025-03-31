@@ -3,7 +3,7 @@ import "../../css/pages/Adminpage.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { adminUserState } from "../../Atoms";
 import fetchRequest from "../../fetchConfig";
 function Adminpageunlogin() {
@@ -11,11 +11,13 @@ function Adminpageunlogin() {
   const [formData, setFormData] = useState({ accountId: "", password: "" });
   const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 훅 사용
   const setAdminUser = useSetRecoilState(adminUserState);
+  const adminUser = useRecoilValue(adminUserState);
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
   const fetchUserInfo = async () => {
     try {
+      setAdminUser((prev) => ({ ...prev, loading: true }));
       // /auth/operator/info 엔드포인트로 사용자 정보를 가져온다고 가정
       // 백엔드가 GET인지, credentials가 필요한지 등을 상황에 맞게 설정
       const response = await fetchRequest("/auth/semi/info", {
@@ -42,6 +44,7 @@ function Adminpageunlogin() {
     } catch (error) {
       console.error("사용자 정보 요청 중 에러 발생:", error);
       alert("사용자 정보를 불러오는 중 오류가 발생했습니다.");
+      setAdminUser((prev) => ({ ...prev, loading: false }));
     }
   };
   const handleChange = (e) => {
@@ -75,7 +78,11 @@ function Adminpageunlogin() {
         // 필요 시 redirectUrl 처리
         if (data.redirectUrl) {
           console.log(data.redirectUrl)
-          window.location.href = data.redirectUrl;
+          console.log("현재 adminUserState:", adminUser);
+          setTimeout(() => {
+            window.location.href = data.redirectUrl;
+          }, 10000); // 3초 후 리다이렉트
+          
         }
         // 또는 navigate("/somewhere");
       } else {
