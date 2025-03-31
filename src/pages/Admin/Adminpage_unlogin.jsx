@@ -28,16 +28,16 @@ function Adminpageunlogin() {
 
       const userData = await response.json();
       console.log("사용자 정보 조회 성공:", userData);
-
+      
       // 응답 데이터 구조에 맞춰 adminUserState에 저장
       // 여기서는 예시로, userData 구조를 가정
       setAdminUser({
-        acountId: userData.accountId || "",
-        schoolEmail: userData.schoolEmail || "",
-        nickname: userData.nickname || "",
-        role: userData.role || "",
-        university: userData.university || "",
-        universityAuth: userData.universityAuth || "",
+        acountId: userData.data.accountId || "",
+        schoolEmail: userData.data.schoolEmail || "",
+        nickname: userData.data.nickname || "",
+        role: userData.data.role || "",
+        university: userData.data.university || "",
+        universityAuth: userData.data.universityAuth || "",
       });
     } catch (error) {
       console.error("사용자 정보 요청 중 에러 발생:", error);
