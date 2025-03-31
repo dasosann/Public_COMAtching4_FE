@@ -59,7 +59,7 @@ const ProfileEdit = () => {
             department: userData.major ?? '',
             contact_id: userData.contactId ?? '',
             favoriteSong: userData.song ?? '',
-            selectedMBTIEdit: userData.mbti ?? '',
+            mbti: userData.mbti ?? '',
             interests: userData.hobbies ?? [],
             contactFrequency: userData.contactFrequency ?? '',
             gender: userData.gender ?? '',
@@ -101,7 +101,7 @@ const ProfileEdit = () => {
   // MBTI 선택 함수 수정
   const handleMBTISelection = (type) => {
     setProfile((prevProfile) => {
-      let newMBTI = prevProfile.selectedMBTIEdit.split(""); // ✅ 문자열을 배열로 변환
+      let newMBTI = prevProfile.mbti.split(""); // ✅ 문자열을 배열로 변환
 
       const categoryIndex =
         type === "E" || type === "I" ? 0 :
@@ -237,7 +237,7 @@ const ProfileEdit = () => {
           <span className="profile-edit-name">MBTI</span>
           <div className="margin"></div>
           <MBTISection 
-            user={profile.selectedMBTIEdit} // 배열을 문자열로 변환
+            user={profile.mbti} // 배열을 문자열로 변환
             onClick={handleMBTISelection}
             name="MBTIButton" 
           />

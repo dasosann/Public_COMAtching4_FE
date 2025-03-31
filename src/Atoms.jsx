@@ -140,7 +140,7 @@ export const profileEditState = atom({
     department: "",
     contact_id: "",
     favoriteSong: "",
-    selectedMBTIEdit: "",
+    mbti: "",
     interests: [],
     contactFrequency: "",
     gender: "",
