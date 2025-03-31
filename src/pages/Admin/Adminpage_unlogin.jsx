@@ -71,6 +71,7 @@ function Adminpageunlogin() {
         // 여기서만 await response.json()을 안전하게 시도
         const data = await response.json();
         console.log("로그인 성공, data:", data);
+        await fetchUserInfo();
         // 필요 시 redirectUrl 처리
         if (data.redirectUrl) {
           console.log(data.redirectUrl)
