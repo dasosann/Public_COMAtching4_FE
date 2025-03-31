@@ -249,24 +249,24 @@ const ProfileEdit = () => {
           <div className="margin"></div>
           <div className="profile-edit-button-group">
             <AgeButton
-              formData={profile.ageOption}
-              value="YOUNGER"
-              text="연하"
-              onClick={() => handleAgeSelection("YOUNGER", "ageOption")}
+              formData={profile.contactFrequency}
+              value="적음"
+              text="적음"
+              onClick={() => handleAgeSelection("적음", "contactFrequency")}
               isClickable={true}
             />
             <AgeButton
-              formData={profile.ageOption}
-              value="EQUAL"
-              text="동갑"
-              onClick={() => handleAgeSelection("EQUAL", "ageOption")}
+              formData={profile.contactFrequency}
+              value="보통"
+              text="보통"
+              onClick={() => handleAgeSelection("보통", "contactFrequency")}
               isClickable={true}
             />
             <AgeButton
-              formData={profile.ageOption}
-              text="연상"
-              value="OLDER"
-              onClick={() => handleAgeSelection("OLDER", "ageOption")}
+              formData={profile.contactFrequency}
+              text="많음"
+              value="많음"
+              onClick={() => handleAgeSelection("많음", "contactFrequency")}
               isClickable={true}
             />
           </div>
