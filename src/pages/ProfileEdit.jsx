@@ -41,34 +41,36 @@ const ProfileEdit = () => {
   useEffect(() => {
     instance.get('/auth/user/api/info')
       .then((response) => {
-        const { status, data } = response.data.data;
-        console.log("response",response);
-        if (status === 200) {
-          const userData = data;
+        const responseData = response.data;
+        const { status } = responseData;
+        const userData = responseData.data?.data;
   
+        console.log("response", response);
+  
+        if (status === 200 && userData) {
           const newProfile = {
-            nickname: userData.username,
-            age: userData.age,
-            school: userData.university,
-            department: userData.major,
-            contact_id: userData.contactId,
-            favoriteSong: userData.song,
-            selectedMBTIEdit: userData.mbti,
-            interests: userData.hobbies,
-            contactFrequency: userData.contactFrequency,
-            gender: userData.gender,
-            introduction: userData.comment,
-            schoolAuth: userData.schoolAuth,
-            schoolEmail: userData.schoolEmail,
-            ageOption: userData.contactFrequency, // ✅ 버튼 상태 저장용 (필요 시 조정)
-          };
+            nickname: userData.username ?? '',
+            age: userData.age ?? '',
+            school: userData.university ?? '',
+            department: userData.major ?? '',
+            contact_id: userData.contactId ?? '',
+            favoriteSong: userData.song ?? '',
+            selectedMBTIEdit: userData.mbti ?? '',
+            interests: userData.hobbies ?? [],
+            contactFrequency: userData.contactFrequency ?? '',
+            gender: userData.gender ?? '',
+            introduction: userData.comment ?? '',
+            schoolAuth: userData.schoolAuth ?? false,
+            schoolEmail: userData.schoolEmail ?? '',
+            ageOption: userData.contactFrequency ?? '',
+          }
   
-          setProfile(newProfile);
-          setOriginalProfile(newProfile);
+          setProfile(newProfile)
+          setOriginalProfile(newProfile)
         }
       })
       .catch((error) => {
-        console.error('프로필 정보 불러오기 실패:', error);
+        console.error('프로필 정보 불러오기 실패:', error)
       });
   }, [setProfile]);
 
