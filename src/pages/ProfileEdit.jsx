@@ -41,7 +41,7 @@ const ProfileEdit = () => {
   useEffect(() => {
     instance.get('/auth/user/api/info')
       .then((response) => {
-        const { status, data } = response.data;
+        const { status, data } = response.data.data;
         console.log("response",response);
         if (status === 200) {
           const userData = data;
