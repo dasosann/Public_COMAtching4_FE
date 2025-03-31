@@ -45,12 +45,6 @@ const ProfileEdit = () => {
         const { status } = responseData;
         const userData = responseData.data;
         
-        console.log("userData", userData);
-  
-        console.log("response", response.data);
-  
-        console.log("responsese", response.data.data);
-  
         if (status === 200 && userData) {
           const newProfile = {
             nickname: userData.username ?? '',
@@ -120,10 +114,18 @@ const ProfileEdit = () => {
   };
   
   
+  const requiredFields = [
+    'nickname', 'age', 'school', 'department','contactFrequency',
+    'contact_id', 'favoriteSong', 'mbti', 'interests', 'introduction'
+  ];
+  
   const isFormComplete =
-  Object.values(profile).every(value => value !== "") &&
-  profile.mbti.length === 4; // ✅ 문자열 길이로 MBTI 4개 선택 여부 확인
-
+    requiredFields.every(key => {
+      const value = profile[key];
+      return value !== null && value !== '' && !(Array.isArray(value) && value.length === 0);
+    }) &&
+    profile.mbti.length === 4;
+  
 
   return (
     <div className="profile-edit-container">
