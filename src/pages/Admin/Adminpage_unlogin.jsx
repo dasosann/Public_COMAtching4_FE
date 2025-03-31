@@ -20,7 +20,6 @@ function Adminpageunlogin() {
       // 백엔드가 GET인지, credentials가 필요한지 등을 상황에 맞게 설정
       const response = await fetchRequest("/auth/operator/info", {
         method: "GET",
-        credentials: "include",
       });
 
       if (!response.ok) {
@@ -68,10 +67,16 @@ function Adminpageunlogin() {
         }
       );
       const statusCode = response.status;
-      if (statusCode==302) {
-        // 2xx 구간 => 로그인 성공
-        console.log("로그인 성공");
-        await fetchUserInfo();
+      if (statusCode >= 200 && statusCode < 300) {
+        // 여기서만 await response.json()을 안전하게 시도
+        const data = await response.json();
+        console.log("로그인 성공, data:", data);
+        // 필요 시 redirectUrl 처리
+        if (data.redirectUrl) {
+          console.log(data.redirectUrl)
+          window.location.href = data.redirectUrl;
+        }
+        // 또는 navigate("/somewhere");
       } else {
         alert("로그인 실패: "); // 사용자에게 실패 메시지를 보여줍니다.
       }
