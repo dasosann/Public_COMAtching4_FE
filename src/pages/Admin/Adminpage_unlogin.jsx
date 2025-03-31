@@ -18,7 +18,7 @@ function Adminpageunlogin() {
     try {
       // /auth/operator/info 엔드포인트로 사용자 정보를 가져온다고 가정
       // 백엔드가 GET인지, credentials가 필요한지 등을 상황에 맞게 설정
-      const response = await fetchRequest("/auth/operator/info", {
+      const response = await fetchRequest("/auth/semi/info", {
         method: "GET",
       });
 
