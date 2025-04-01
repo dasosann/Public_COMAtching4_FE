@@ -3,7 +3,7 @@ import "../../css/pages/Adminpage.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { adminUserState } from "../../Atoms";
 import fetchRequest from "../../fetchConfig";
 function Adminpageunlogin() {
@@ -11,6 +11,7 @@ function Adminpageunlogin() {
   const [formData, setFormData] = useState({ accountId: "", password: "" });
   const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 훅 사용
   const setAdminUser = useSetRecoilState(adminUserState);
+  const adminUser = useRecoilValue(adminUserState);
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
@@ -28,17 +29,17 @@ function Adminpageunlogin() {
 
       const userData = await response.json();
       console.log("사용자 정보 조회 성공:", userData);
-      
-      // 응답 데이터 구조에 맞춰 adminUserState에 저장
-      // 여기서는 예시로, userData 구조를 가정
-      setAdminUser({
+      const adminProfile = {
         acountId: userData.data.accountId || "",
         schoolEmail: userData.data.schoolEmail || "",
         nickname: userData.data.nickname || "",
         role: userData.data.role || "",
         university: userData.data.university || "",
         universityAuth: userData.data.universityAuth || "",
-      });
+      }
+      // 응답 데이터 구조에 맞춰 adminUserState에 저장
+      // 여기서는 예시로, userData 구조를 가정
+      setAdminUser(adminProfile);
     } catch (error) {
       console.error("사용자 정보 요청 중 에러 발생:", error);
       alert("사용자 정보를 불러오는 중 오류가 발생했습니다.");
@@ -75,6 +76,7 @@ function Adminpageunlogin() {
         // 필요 시 redirectUrl 처리
         if (data.redirectUrl) {
           console.log(data.redirectUrl)
+          console.log("현재 adminUserState:", adminUser);
           window.location.href = data.redirectUrl;
         }
         // 또는 navigate("/somewhere");

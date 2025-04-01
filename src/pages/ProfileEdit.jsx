@@ -41,34 +41,34 @@ const ProfileEdit = () => {
   useEffect(() => {
     instance.get('/auth/user/api/info')
       .then((response) => {
-        const { status, data } = response.data;
-        console.log("response",response);
-        if (status === 200) {
-          const userData = data;
-  
+        const responseData = response.data;
+        const { status } = responseData;
+        const userData = responseData.data;
+        
+        if (status === 200 && userData) {
           const newProfile = {
-            nickname: userData.username,
-            age: userData.age,
-            school: userData.university,
-            department: userData.major,
-            contact_id: userData.contactId,
-            favoriteSong: userData.song,
-            selectedMBTIEdit: userData.mbti,
-            interests: userData.hobbies,
-            contactFrequency: userData.contactFrequency,
-            gender: userData.gender,
-            introduction: userData.comment,
-            schoolAuth: userData.schoolAuth,
-            schoolEmail: userData.schoolEmail,
-            ageOption: userData.contactFrequency, // ✅ 버튼 상태 저장용 (필요 시 조정)
-          };
+            nickname: userData.username ?? '',
+            age: userData.age ?? '',
+            school: userData.university ?? '',
+            department: userData.major ?? '',
+            contact_id: userData.contactId ?? '',
+            favoriteSong: userData.song ?? '',
+            mbti: userData.mbti ?? '',
+            interests: userData.hobbies ?? [],
+            contactFrequency: userData.contactFrequency ?? '',
+            gender: userData.gender ?? '',
+            introduction: userData.comment ?? '',
+            schoolAuth: userData.schoolAuth ?? false,
+            schoolEmail: userData.schoolEmail ?? '',
+            ageOption: userData.contactFrequency ?? '',
+          }
   
-          setProfile(newProfile);
-          setOriginalProfile(newProfile);
+          setProfile(newProfile)
+          setOriginalProfile(newProfile)
         }
       })
       .catch((error) => {
-        console.error('프로필 정보 불러오기 실패:', error);
+        console.error('프로필 정보 불러오기 실패:', error)
       });
   }, [setProfile]);
 
@@ -95,7 +95,7 @@ const ProfileEdit = () => {
   // MBTI 선택 함수 수정
   const handleMBTISelection = (type) => {
     setProfile((prevProfile) => {
-      let newMBTI = prevProfile.selectedMBTIEdit.split(""); // ✅ 문자열을 배열로 변환
+      let newMBTI = prevProfile.mbti.split(""); // ✅ 문자열을 배열로 변환
 
       const categoryIndex =
         type === "E" || type === "I" ? 0 :
@@ -114,10 +114,18 @@ const ProfileEdit = () => {
   };
   
   
+  const requiredFields = [
+    'nickname', 'age', 'school', 'department','contactFrequency',
+    'contact_id', 'favoriteSong', 'mbti', 'interests', 'introduction'
+  ];
+  
   const isFormComplete =
-  Object.values(profile).every(value => value !== "") &&
-  profile.mbti.length === 4; // ✅ 문자열 길이로 MBTI 4개 선택 여부 확인
-
+    requiredFields.every(key => {
+      const value = profile[key];
+      return value !== null && value !== '' && !(Array.isArray(value) && value.length === 0);
+    }) &&
+    profile.mbti.length === 4;
+  
 
   return (
     <div className="profile-edit-container">
@@ -231,7 +239,7 @@ const ProfileEdit = () => {
           <span className="profile-edit-name">MBTI</span>
           <div className="margin"></div>
           <MBTISection 
-            user={profile.selectedMBTIEdit} // 배열을 문자열로 변환
+            user={profile.mbti} // 배열을 문자열로 변환
             onClick={handleMBTISelection}
             name="MBTIButton" 
           />
@@ -243,24 +251,24 @@ const ProfileEdit = () => {
           <div className="margin"></div>
           <div className="profile-edit-button-group">
             <AgeButton
-              formData={profile.ageOption}
-              value="YOUNGER"
-              text="연하"
-              onClick={() => handleAgeSelection("YOUNGER", "ageOption")}
+              formData={profile.contactFrequency}
+              value="적음"
+              text="적음"
+              onClick={() => handleAgeSelection("적음", "contactFrequency")}
               isClickable={true}
             />
             <AgeButton
-              formData={profile.ageOption}
-              value="EQUAL"
-              text="동갑"
-              onClick={() => handleAgeSelection("EQUAL", "ageOption")}
+              formData={profile.contactFrequency}
+              value="보통"
+              text="보통"
+              onClick={() => handleAgeSelection("보통", "contactFrequency")}
               isClickable={true}
             />
             <AgeButton
-              formData={profile.ageOption}
-              text="연상"
-              value="OLDER"
-              onClick={() => handleAgeSelection("OLDER", "ageOption")}
+              formData={profile.contactFrequency}
+              text="많음"
+              value="많음"
+              onClick={() => handleAgeSelection("많음", "contactFrequency")}
               isClickable={true}
             />
           </div>

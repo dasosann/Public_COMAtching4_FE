@@ -7,10 +7,9 @@ import Adminpage_MyPage from './pages/Admin/Adminpage_MyPage';
 import AdminWebmail from './pages/Admin/AdminWebmail';
 
 const AdminProtectedRoute = ({ children, allowedAuthorities }) => {
-  const {role} = useRecoilValue(adminUserState);
-  console.log(role)
-  // 1) 로그인 안 된 경우
-  if (role==="") {
+  const { role } = useRecoilValue(adminUserState);
+  // 1) 로그인 안 된 경우 (role === "")
+  if (!role) {
     alert("로그인 해주세요.");
     return <Navigate to="/adminpage" replace />;
   }
