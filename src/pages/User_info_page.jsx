@@ -384,34 +384,35 @@ function Userinfo() {
             <div>
               <h3>연락빈도</h3>
               <div className="match-select-button">
-                <button
-                  type="button"
-                  className={`form-AgeMaker ${
-                    user.contactFrequency === "자주" ? "selected" : ""
-                  }`}
-                  onClick={() => handleAgeClick("자주")}
-                >
-                  적음
-                </button>
-                <button
-                  type="button"
-                  className={`form-AgeMaker ${
-                    user.contactFrequency === "보통" ? "selected" : ""
-                  }`}
-                  onClick={() => handleAgeClick("보통")}
-                >
-                  중간
-                </button>
-                <button
-                  type="button"
-                  className={`form-AgeMaker ${
-                    user.contactFrequency === "가끔" ? "selected" : ""
-                  }`}
-                  onClick={() => handleAgeClick("가끔")}
-                >
-                  많음
-                </button>
-              </div>
+              <button
+                type="button"
+                className={`form-AgeMaker ${
+                  user.contactFrequency === "NOT_FREQUENT" ? "selected" : ""
+                }`}
+                onClick={() => handleAgeClick("NOT_FREQUENT")}
+              >
+                적음
+              </button>
+              <button
+                type="button"
+                className={`form-AgeMaker ${
+                  user.contactFrequency === "NORMAL" ? "selected" : ""
+                }`}
+                onClick={() => handleAgeClick("NORMAL")}
+              >
+                중간
+              </button>
+              <button
+                type="button"
+                className={`form-AgeMaker ${
+                  user.contactFrequency === "FREQUENT" ? "selected" : ""
+                }`}
+                onClick={() => handleAgeClick("FREQUENT")}
+              >
+                많음
+              </button>
+            </div>
+
             </div>
           )}
 
