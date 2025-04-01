@@ -39,7 +39,7 @@ export const userState = atom({
     username: "",
     major: "",
     age: null,
-    admissionYear: null,  // 입학년도
+    admissionYear: null,  // 입학년도f
     song: "",
     mbti: "",
     point: 0,
@@ -62,7 +62,6 @@ export const userState = atom({
 export const adminUserState = atom({
   key: "adminUserState",
   default: {
-    loading:true,
     acountId: "",  
     schoolEmail:"",
     nickname: "",           
