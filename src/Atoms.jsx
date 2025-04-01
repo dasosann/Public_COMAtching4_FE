@@ -39,7 +39,7 @@ export const userState = atom({
     username: "",
     major: "",
     age: null,
-    admissionYear: null,  // 입학년도
+    admissionYear: null,  // 입학년도f
     song: "",
     mbti: "",
     point: 0,
