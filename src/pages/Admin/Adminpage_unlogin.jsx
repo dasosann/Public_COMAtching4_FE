@@ -3,7 +3,7 @@ import "../../css/pages/Adminpage.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { adminUserState } from "../../Atoms";
 import fetchRequest from "../../fetchConfig";
 function Adminpageunlogin() {
@@ -11,6 +11,7 @@ function Adminpageunlogin() {
   const [formData, setFormData] = useState({ accountId: "", password: "" });
   const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 훅 사용
   const setAdminUser = useSetRecoilState(adminUserState);
+  const adminUser = useRecoilValue(adminUserState);
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
@@ -75,6 +76,7 @@ function Adminpageunlogin() {
         // 필요 시 redirectUrl 처리
         if (data.redirectUrl) {
           console.log(data.redirectUrl)
+          console.log("현재 adminUserState:", adminUser);
           window.location.href = data.redirectUrl;
         }
         // 또는 navigate("/somewhere");
