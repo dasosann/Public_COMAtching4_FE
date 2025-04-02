@@ -15,7 +15,7 @@ const AdminProtectedRoute = ({ children, allowedAuthorities }) => {
   }
   if (role==='ROLE_SEMI_OPERATOR'){
     alert("관리자의 승인을 받아주세요")
-    return <Adminpage_MyPage/>;
+    return <Adminpage_MyPage/> ;
   }
   if (role==='ROLE_SEMI_ADMIN'){
     alert("관리자는 이메일 인증을 해주세요")
