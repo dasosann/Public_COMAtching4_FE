@@ -24,10 +24,6 @@ const SchoolSelectModal = ({ isOpen, onClose }) => {
       onClose();
     }
   };
-  console.log(profile)
-
-  console.log(isVerified, school, department, major);
-
   const isFormComplete = isVerified && school && department && major;
 
   if (!isOpen) return null;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import majorCategories from "../../data/majorCategories.jsx";
 import MajorSelectorElement from "../MajorSelectorElement";
 import * as styles from "../../css/components/MajorSelector.css.ts"; // Vanilla Extract 스타일 임포트
-
+import instance from "../../axiosConfig.jsx";
 const MajorChange = ({ school, setSchool, department, setDepartment, major, setMajor, setIsVerified }) => {
   
   const [email, setEmail] = useState("");
@@ -10,6 +10,7 @@ const MajorChange = ({ school, setSchool, department, setDepartment, major, setM
   const [verificationCode, setVerificationCode] = useState("");
   const [timer, setTimer] = useState(300);
   const [isCodeVerified, setIsCodeVerified] = useState(false);
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
     let interval;
@@ -28,13 +29,55 @@ const MajorChange = ({ school, setSchool, department, setDepartment, major, setM
   };
 
   const handleVerifyClick = () => {
-    setShowVerification(true);
-    setTimer(300);
+    if (!isValidEmail(email)) {
+      alert("올바른 학교 이메일 형식을 입력해주세요. (예: example@catholic.ac.kr)");
+      return;
+    }
+    try {
+      const res = instance.post(`/auth/user/api/auth/school?schoolEmail=${email}`);
+      const token = res.data?.data?.token;
+      if (token) {
+        setToken(token);
+        setShowVerification(true);
+        setTimer(300);
+      } else {
+        alert("토큰이 유효하지 않습니다.");
+      }
+    } catch (err) {
+      console.error("인증 요청 실패:", err);
+      alert("인증 메일 전송에 실패했습니다.");
+    }
   };
 
-  const handleVerificationComplete = () => {
-    setIsCodeVerified(true);
-    setIsVerified(true);
+  // 인증번호 확인 요청
+const handleVerificationComplete = async () => {
+  if (!token || verificationCode.trim() === "") {
+    alert("인증번호를 입력해주세요.");
+    return;
+  }
+
+  try {
+    const res = await instance.post("/auth/user/api/auth/school/code", {
+      token,
+      code: verificationCode,
+    });
+
+    if (res.data?.code === "GEN-000") {
+      setIsCodeVerified(true);
+      setIsVerified(true);
+    } else {
+      alert("인증번호가 올바르지 않습니다.");
+    }
+  } catch (err) {
+    console.error("인증 확인 실패:", err);
+    alert("서버 오류로 인증에 실패했습니다.");
+  }
+};
+
+  const isValidEmail = (email) => {
+    // 학교 웹메일 도메인을 포함한 정규식 예시 (ex. cuk.ac.kr)
+    const regex = /^[a-zA-Z0-9._%+-]+@catholic\.ac\.kr$/;
+    return regex.test(email);
   };
 
   const handleSchoolChange = (e) => {
@@ -85,7 +128,7 @@ const MajorChange = ({ school, setSchool, department, setDepartment, major, setM
             type="email" 
             className={styles.emailInput} 
             value={email} 
-            placeholder="example@cuk.ac.kr"
+            placeholder="example@catholic.ac.kr"
             onChange={(e) => setEmail(e.target.value)} 
           />
           <button className={styles.verifyButton} onClick={handleVerifyClick}>
@@ -117,6 +160,7 @@ const MajorChange = ({ school, setSchool, department, setDepartment, major, setM
             <button 
               className={styles.verifyButton} 
               onClick={handleVerificationComplete}
+              disabled={isCodeVerified || timer <= 0} // 👈 추가
             >
               {isCodeVerified ? "인증 완료" : "확인"}
             </button>
