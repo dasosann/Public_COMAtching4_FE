@@ -79,7 +79,7 @@ function Adminpageunlogin() {
         if (data.redirectUrl) {
           console.log(data.redirectUrl)
           console.log("현재 adminUserState:", adminUser);
-          navigate(data.redirectUrl);
+          navigate("/adminpage/mypage");
         }
         // 또는 navigate("/somewhere");
       } else {

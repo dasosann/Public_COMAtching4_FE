@@ -25,6 +25,7 @@ const AdminMyPageMain = () => {
 };
 const AdminMyPageManage = ()=>{
     const {role} = useRecoilValue(adminUserState);
+    console.log("role", role)
     return (
         <MainWrapper>
               {role === 'ROLE_OPERATOR' && <OperatorManageComponent />}
