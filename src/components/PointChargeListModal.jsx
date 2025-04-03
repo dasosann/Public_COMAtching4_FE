@@ -5,6 +5,7 @@ import P from '../css/components/MainPaymentModalStyle';
 import MyPointChargeWithoutChargeList from './MyPointChargeWithoutChargeList';
 import PointInformationFooter from './PointInformationFooter';
 import EachChargeListComponent from './EachChargeListComponent';
+import fetchRequest from '../fetchConfig';
 
 // ISO 형식의 날짜를 "YYYY-MM-DD HH:mm" 형식으로 변환하는 함수
 const formatDateTime = (isoString) => {
@@ -30,7 +31,7 @@ const PointChargeListModal = ({ isOpen, onClose, closeAllModal }) => {
   const [chargeHistory, setChargeHistory] = useState([]);
 
   useEffect(() => {
-    fetch('http://13.124.46.181:8080/payments/history')
+    fetchRequest('/payments/history')
       .then((response) => {
         if (!response.ok) {
           throw new Error('네트워크 응답에 문제가 있습니다.');
