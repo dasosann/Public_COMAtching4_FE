@@ -27,7 +27,7 @@ const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,am
   
   // 두 번째 모달 열기
   const openSecondModal=()=>{
-    console.log("isOpen", isOpen)
+    // console.log("isOpen", isOpen)
     setIsSecondModalOpen(true);
   }
   const closeSecondModal = () => setIsSecondModalOpen(false);
@@ -66,7 +66,7 @@ const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,am
 
   return (
     <div>
-      <P.ModalWrapper show={isOpen} isSecondModalOpen={isSecondModalOpen} data-aos="fade-up">
+      <P.ModalWrapper show={isSecondModalOpen} data-aos="fade-up">
         <P.ModalContent onClick={(e) => e.stopPropagation()}>
           <div style={{position:'sticky', zIndex:'1', top:'0', backgroundColor:'white', paddingTop:'24px', paddingBottom:'23px'}}>
             <P.Header>
