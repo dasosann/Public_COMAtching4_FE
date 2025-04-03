@@ -41,6 +41,7 @@ const PointChargeListModal = ({ isOpen, onClose, closeAllModal }) => {
       .then((result) => {
         // 백엔드 응답이 {status, code, data} 형식이므로 data 프로퍼티를 사용
         if (result.status === 200 && result.data) {
+          console.log("백엔드에서 가져온 결제내역",result.data)
           setChargeHistory(result.data);
         } else {
           console.error('유효하지 않은 응답입니다:', result);
@@ -58,7 +59,7 @@ const PointChargeListModal = ({ isOpen, onClose, closeAllModal }) => {
         <P.ChargePointText>충전 내역</P.ChargePointText>
         <P.CloseButton onClick={handleClose}>닫기</P.CloseButton>
       </C.Header>
-      <MyPointChargeWithoutChargeList />
+      <MyPointChargeWithoutChargeList  />
       <div style={{ overflow: "auto", height: '400px', marginTop: '23px' }}>
         {chargeHistory && chargeHistory.length > 0 ? (
           chargeHistory.map((item, index) => (
@@ -66,10 +67,11 @@ const PointChargeListModal = ({ isOpen, onClose, closeAllModal }) => {
               key={index}
               productName={item.productName}
               orderStatus={item.orderStatus}
-              amount={formatAmount(item.amount)}
+              amount={formatAmount(item.price)}
               date={formatDateTime(item.approvedAt)}  // "YYYY-MM-DD HH:mm" 형식으로 변환하여 전달
               status={item.cancelReason}
               tossPaymentMethod={item.tossPaymentMethod}
+              orderId = {item.orderId}
             />
           ))
         ) : (
