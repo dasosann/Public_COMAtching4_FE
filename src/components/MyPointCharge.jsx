@@ -2,8 +2,9 @@ import React from 'react';
 import M from '../css/components/MyPointChargeStyle';
 import PopularPaymentMenu from './PopularPaymentMenu';
 import { useRecoilState } from 'recoil';
+import { userState } from '../Atoms';
 const MyPointCharge = ({onOpenChargeHistory}) => {
-    const [point, setPoint] = useRecoilState(point);
+    const [point, setPoint] = useRecoilState(userState);
     return (
         <M.Container>
             <img src='/assets/MainPayment/coin.svg'/>
