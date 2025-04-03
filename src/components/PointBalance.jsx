@@ -6,6 +6,8 @@ import fetchRequest from '../fetchConfig';
 import { v4 as uuidv4 } from 'uuid';
 import { ClipLoader } from 'react-spinners';
 import { PaymentSuccessModal, WrongRequestModal } from './AfterPaymentModal';
+import { userState } from '../Atoms';
+import { useRecoilState } from 'recoil';
 
 const PointBalance = ({ userAmount }) => {
   const hasSent = useRef(false); 
@@ -15,7 +17,22 @@ const PointBalance = ({ userAmount }) => {
   const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-
+  const [user, setUser] = useRecoilState(userState); // Recoil 상태 사용
+  const fetchUserPoints = async () => {
+    try {
+      const response = await fetchRequest("/auth/user/api/points", {
+        method: "GET",
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setUser((prev) => ({ ...prev, point: data.data || 0 })); // 백엔드에서 point 반환 가정
+      } else {
+        console.error("포인트 조회 실패");
+      }
+    } catch (error) {
+      console.error("포인트 조회 중 오류:", error);
+    }
+  };
   const sendParamsToBackend = async (paymentKey, orderId, amount, uniqueId) => {
     try {
       setIsLoading(true);
@@ -36,6 +53,7 @@ const PointBalance = ({ userAmount }) => {
         const data = await response.json();
         console.log("백엔드 응답 정상:", data);
         setPaymentStatus('success');
+        await fetchUserPoints();
       } else {
         const errorData = await response.json();
         console.error("백엔드 응답 오류:", errorData);
