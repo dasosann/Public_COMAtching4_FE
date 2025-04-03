@@ -86,39 +86,36 @@ function MainpageLogin() {
   
 
   // 사용자 정보를 가져오는 비동기 함수
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await instance.get("/auth/user/api/info"); // instance로 요청
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await instance.get("/auth/user/api/info"); // instance로 요청
         
-  //       if (response.status === 200) {
-  //         setUserInfo((prev) => ({
-  //           ...prev,
-  //           username: response.data.data.username,
-  //           major: response.data.data.major,
-  //           age: response.data.data.age,
-  //           song: response.data.data.song,
-  //           mbti: response.data.data.mbti,
-  //           point: response.data.data.point,
-  //           pickMe: response.data.data.pickMe,
-  //           hobby:response.data.data.hobbies,
-  //           comment:response.data.data.comment,
-  //           contact_frequency:response.data.data.contactFrequency,
-  //           contact_id: response.data.data.contactId,
-  //           canRequestCharge: response.data.data.canRequestCharge,
-  //           numParticipants: response.data.data.participations,
-  //           eventokay: response.data.data.event1,
-  //         }));
-  //       }
-  //     } catch (error) {
-  //       Cookies.remove("Authorization");
-  //       Cookies.remove("RefreshToken");
-  //       console.error("Error fetching data:", error);
-  //       window.location.reload();
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
+        if (response.status === 200) {
+          setUserInfo((prev) => ({
+            ...prev,
+            username: response.data.data.username,
+            major: response.data.data.major,
+            age: response.data.data.age,
+            song: response.data.data.song,
+            mbti: response.data.data.mbti,
+            point: response.data.data.point,
+            pickMe: response.data.data.pickMe,
+            hobby:response.data.data.hobbies,
+            comment:response.data.data.comment,
+            contact_frequency:response.data.data.contactFrequency,
+            contact_id: response.data.data.contactId,
+            canRequestCharge: response.data.data.canRequestCharge,
+            numParticipants: response.data.data.participations,
+            // eventokay: response.data.data.event1,
+          }));
+        }
+      }catch(error){
+        console.log("사용자정보 가져오는 중 오류 발생",error)
+      } 
+    };
+    fetchData();
+  }, []);
   const handleNotService = () => {
     alert("해당 서비스는 9/12일 10:00에 오픈됩니다 축제까지 기다려주세요!");
   };
