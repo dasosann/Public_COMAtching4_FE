@@ -28,16 +28,19 @@ function Adminpageunlogin() {
       }
 
       const userData = await response.json();
-      console.log("사용자 정보 조회 성공:", userData);
+      console.log("사용자 정보 조회 성공:", userData); 
       console.log("사용자 정보 파고들기", userData.data);
-          const adminProfile = {
-          acountId: userData.data.accountId || "",
-          schoolEmail: userData.data.schoolEmail || "",
-          nickname: userData.data.nickname || "",
-          role: userData.data.role || "",
-          university: userData.data.university || "",
-          universityAuth: userData.data.universityAuth || "",
-        }
+      const adminProfile = {
+        accountId: userData?.data?.accountId || "", // 안전하게 값에 접근
+        schoolEmail: userData?.data?.schoolEmail || "",
+        nickname: userData?.data?.nickname || "",
+        role: userData?.data?.role || "",
+        university: userData?.data?.university || "",
+        universityAuth: userData?.data?.universityAuth || "",
+      };
+      
+      console.log(adminProfile);
+      
         setAdminUser(adminProfile);
         setOriginalAdminUser(adminProfile);
         console.log(adminUser)
