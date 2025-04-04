@@ -109,6 +109,7 @@ function MainpageLogin() {
             numParticipants: response.data.data.participations,
             // eventokay: response.data.data.event1,
           }));
+          console.log("로그인할떄 유저정보", userInfo)
         }
       }catch(error){
         console.log("사용자정보 가져오는 중 오류 발생",error)
