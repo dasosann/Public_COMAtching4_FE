@@ -24,7 +24,8 @@ function MainpageLogin() {
   const [isPointClicked, setIsPointClicked] = useState(false); // 포인트 충전 요청 토글 클릭 상태를 저장하는 상태 변수
   const [isHeartClicked, setIsHeartClicked] = useState(false); // 하트 충전 요청 토글 클릭 상태를 저장하는 상태 변수
   const [showTutorial, setShowTutorial] = useState(false); // Show tutorial on login
-  const [userInfo, setUserInfo] = useRecoilState(userState);
+  const [userInfo, setUserInfo] = useState({ username: '', point: 0 }); 
+  
   // 충전 요청 상태를 관리하는 Recoil 상태(너무 자주 못누르게 하기 위해서 임시방편이였습니다. 회의를 통해 방식 수정이 필요합니다)
   const [chargeclick, setchargeclick] = useRecoilState(charge);
   const [showEventModal, setShowEventModal] = useState(false);
@@ -121,7 +122,9 @@ function MainpageLogin() {
     const fetchPoint = async()=>{
       try{
         const response = await fetchRequest('/api/user/api/points')
+        console.log(response);
         const data = await response.json();
+        console.log("data", data)
         if(data.status===200){
           setUserInfo((prev)=>({
             ...prev,
