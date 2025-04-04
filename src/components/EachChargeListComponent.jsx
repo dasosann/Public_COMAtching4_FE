@@ -1,10 +1,10 @@
 import React from 'react';
 import E from '../css/components/EachChargeListComponentStyle'
-const EachChargeListComponent = ({date, productName, amount, status}) => {
+const EachChargeListComponent = ({date, productName, amount, status,orderId}) => {
     return (
         <div>
             <E.ComponentWrapper>
-                <E.TimeText>{date}</E.TimeText>
+                <E.TimeText>{date} | {orderId}</E.TimeText>
                 <E.BodyWrapper>
                     <E.BodyText>{productName}</E.BodyText>
                     <E.BodyText>결제금액&nbsp;:&nbsp;{amount}원</E.BodyText>

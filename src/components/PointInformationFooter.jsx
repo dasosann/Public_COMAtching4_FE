@@ -2,7 +2,7 @@
     import P from '../css/components/PointInformationFooterStyle';
     const PointInformationFooter = () => {
         return (
-            <P.StyledDiv style={{marginTop:'23px'}}>
+            <P.StyledDiv style={{marginTop:'23px', marginBottom:'0'}}>
                 <span>이용 안내</span>
                     <li>충전된 포인트의 소멸시효 기한은 충전 후 5년입니다.</li>
                     <li>1포인트는 1원입니다.</li>
