@@ -9,7 +9,7 @@ import { PaymentSuccessModal, WrongRequestModal } from './AfterPaymentModal';
 import { userState } from '../Atoms';
 import { useRecoilState } from 'recoil';
 
-const PointBalance = ({ userAmount }) => {
+const PointBalance = () => {
   const hasSent = useRef(false); 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState(false); 
@@ -17,7 +17,7 @@ const PointBalance = ({ userAmount }) => {
   const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const [user, setUser] = useRecoilState(userState); // Recoil 상태 사용
+  const [userInfo, setUserInfo] = useRecoilState(userState); // Recoil 상태 사용
   const fetchUserPoints = async () => {
     try {
       const response = await fetchRequest("/auth/user/api/points", {
@@ -25,7 +25,10 @@ const PointBalance = ({ userAmount }) => {
       });
       if (response.ok) {
         const data = await response.json();
-        setUser((prev) => ({ ...prev, point: data.data || 0 })); // 백엔드에서 point 반환 가정
+        setUserInfo((prev)=>({
+          ...prev,
+          point: data.data,
+        })); // 백엔드에서 point 반환 가정
       } else {
         console.error("포인트 조회 실패");
       }
@@ -94,7 +97,9 @@ const PointBalance = ({ userAmount }) => {
       setPaymentStatus("fail");
     }
   }, [location, navigate]);
-
+  useEffect(() => {
+    fetchUserPoints(); // ✅ 페이지 진입 시 포인트 불러오기
+  }, []);
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -115,7 +120,7 @@ const PointBalance = ({ userAmount }) => {
         <div className="left-section">
           <img src="/assets/point.svg" alt="Point Icon" className="point-icon" />
           <span className="point-text">보유 포인트</span>
-          <span className="amount">{userAmount} P</span>
+          <span className="amount">{userInfo.point} P</span>
         </div>
         <button className="charges-button" onClick={openModal}>충전하기</button>
       </div>

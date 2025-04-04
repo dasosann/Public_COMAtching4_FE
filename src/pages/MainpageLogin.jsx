@@ -16,6 +16,7 @@ import EventModal from "../components/EventModal";
 import PointBalance from "../components/PointBalance";
 import MatchProfiles from "../components/Mainpage/MatchProfiles";
 import NavBar from '../components/Navbar.jsx';
+import fetchRequest from "../fetchConfig.jsx";
 
 function MainpageLogin() {
   const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 훅 사용
@@ -23,8 +24,9 @@ function MainpageLogin() {
   const [isPointClicked, setIsPointClicked] = useState(false); // 포인트 충전 요청 토글 클릭 상태를 저장하는 상태 변수
   const [isHeartClicked, setIsHeartClicked] = useState(false); // 하트 충전 요청 토글 클릭 상태를 저장하는 상태 변수
   const [showTutorial, setShowTutorial] = useState(false); // Show tutorial on login
-  const [userInfo, setUserInfo] = useRecoilState(userState);
-  const [userInfo, setUserInfo] = useRecoilState(userState);
+  const [userInfo, setUserInfo] = useRecoilState(userState); 
+  // const [userPoint, setUserPoint] = useState(0); 
+  
   // 충전 요청 상태를 관리하는 Recoil 상태(너무 자주 못누르게 하기 위해서 임시방편이였습니다. 회의를 통해 방식 수정이 필요합니다)
   const [chargeclick, setchargeclick] = useRecoilState(charge);
   const [showEventModal, setShowEventModal] = useState(false);
@@ -117,16 +119,7 @@ function MainpageLogin() {
   //   };
   //   fetchData();
   // }, []);
-  useEffect(()=>{
-    const fetchPoint = async()=>{
-      try{
-        const points = 
-      }
-    }
-  })
-  useEffect(() => {
-    console.log("userInfo 변경됨", userInfo);
-  }, [userInfo]);
+
   const handleNotService = () => {
     alert("해당 서비스는 9/12일 10:00에 오픈됩니다 축제까지 기다려주세요!");
   };
@@ -199,7 +192,7 @@ function MainpageLogin() {
     <div className="container">
       <HeaderMain />
       <Background />
-      <PointBalance userAmount={userInfo.point}/>
+      <PointBalance/>
       <MatchProfiles profiles={sampleProfiles}/>
       <div className="Mainpage__Login">
         
