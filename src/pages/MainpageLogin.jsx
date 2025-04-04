@@ -24,6 +24,7 @@ function MainpageLogin() {
   const [isHeartClicked, setIsHeartClicked] = useState(false); // 하트 충전 요청 토글 클릭 상태를 저장하는 상태 변수
   const [showTutorial, setShowTutorial] = useState(false); // Show tutorial on login
   const [userInfo, setUserInfo] = useRecoilState(userState);
+  const [userInfo, setUserInfo] = useRecoilState(userState);
   // 충전 요청 상태를 관리하는 Recoil 상태(너무 자주 못누르게 하기 위해서 임시방편이였습니다. 회의를 통해 방식 수정이 필요합니다)
   const [chargeclick, setchargeclick] = useRecoilState(charge);
   const [showEventModal, setShowEventModal] = useState(false);
@@ -86,36 +87,43 @@ function MainpageLogin() {
   
 
   // 사용자 정보를 가져오는 비동기 함수
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await instance.get("/auth/user/api/info"); // instance로 요청
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await instance.get("/auth/user/api/info"); // instance로 요청
         
-        if (response.status === 200) {
-          setUserInfo((prev) => ({
-            ...prev,
-            username: response.data.data.username,
-            major: response.data.data.major,
-            age: response.data.data.age,
-            song: response.data.data.song,
-            mbti: response.data.data.mbti,
-            point: response.data.data.point,
-            pickMe: response.data.data.pickMe,
-            hobby:response.data.data.hobbies,
-            comment:response.data.data.comment,
-            contact_frequency:response.data.data.contactFrequency,
-            contact_id: response.data.data.contactId,
-            canRequestCharge: response.data.data.canRequestCharge,
-            numParticipants: response.data.data.participations,
-            // eventokay: response.data.data.event1,
-          }));
-        }
-      }catch(error){
-        console.log("사용자정보 가져오는 중 오류 발생",error)
-      } 
-    };
-    fetchData();
-  }, []);
+  //       if (response.status === 200) {
+  //         setUserInfo((prev) => ({
+  //           ...prev,
+  //           username: response.data.data.username,
+  //           major: response.data.data.major,
+  //           age: response.data.data.age,
+  //           song: response.data.data.song,
+  //           mbti: response.data.data.mbti,
+  //           point: response.data.data.point,
+  //           pickMe: response.data.data.pickMe,
+  //           hobby:response.data.data.hobbies,
+  //           comment:response.data.data.comment,
+  //           contact_frequency:response.data.data.contactFrequency,
+  //           contact_id: response.data.data.contactId,
+  //           canRequestCharge: response.data.data.canRequestCharge,
+  //           numParticipants: response.data.data.participations,
+  //           // eventokay: response.data.data.event1,
+  //         }));
+  //       }
+  //     }catch(error){
+  //       console.log("사용자정보 가져오는 중 오류 발생",error)
+  //     } 
+  //   };
+  //   fetchData();
+  // }, []);
+  useEffect(()=>{
+    const fetchPoint = async()=>{
+      try{
+        const points = 
+      }
+    }
+  })
   useEffect(() => {
     console.log("userInfo 변경됨", userInfo);
   }, [userInfo]);
