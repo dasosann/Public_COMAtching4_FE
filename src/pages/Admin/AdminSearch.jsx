@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AdminHeader } from '../../components/Admin/AdminHeader';
 import { AdminDiv, MainWrapper } from '../../css/pages/Admin/AdminCSS';
 import S from '../../css/pages/Admin/AdminSearch';
 import {AdminMyPageMain,AdminMyPageManage, AdminTeamManage} from '../../components/Admin/AdminMyPageMain';
 import {useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import fetchRequest from '../../fetchConfig';
 const SearchUserComponent = ({nickname,email,uuid})=>{
   const navigate = useNavigate();
   return(
@@ -17,7 +18,9 @@ const SearchUserComponent = ({nickname,email,uuid})=>{
             <S.TitleSpan>E-mail :</S.TitleSpan>
             <S.EmailSpan>&nbsp;{email}</S.EmailSpan>
           </div>
-          <S.DetailButton onClick={()=>navigate(`/adminpage/user/${uuid}`)}>상세정보 보기</S.DetailButton>
+          <S.DetailButton onClick={()=>navigate(`/adminpage/user/${uuid}`, {
+            state: {nickname,email}
+          })}>상세정보 보기</S.DetailButton>
       </S.EmailDiv>
     </S.UserComponentWrapper>
   )
@@ -65,15 +68,11 @@ const Pagination = ({totalPage,currentPage,onPageChange})=>{
   
 }
 const AdminSearch = () => {
-  const dummyData = Array.from({ length: 32 }, (_, i) => ({
-    nickname: `User${i + 1}`,
-    email: `user${i + 1}@example.com`,
-    uuid : i
-  }));
   const [searchQuery, setSearchQuery] = useState(""); // 검색어 상태
   const [adminSelect, setAdminSelect] = useState('가입자관리');
   const [selectedSort, setSelectedSort] = useState("50명씩 정렬");
   const [currentPage,setCurrentPage] = useState(1);
+  const [userData, setUserData] = useState([]);
   const totalPage = 32;
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value); 
@@ -89,13 +88,15 @@ const AdminSearch = () => {
         });
     }
   };
-  // useEffect(() => {
-  //   fetch(`https://api.example.com/users?page=${currentPage}&sort=${selectedSort}`)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       // 데이터를 상태로 저장하는 로직
-  //     });
-  // }, [currentPage, selectedSort]);
+  useEffect(() => {
+    fetchRequest('/auth/operator/user-list')
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        console.log(data.data.content)
+        setUserData(data.data.content);
+      });
+  }, []);
   return (
     // 1) 전체를 세로로 쌓는 flex 컨테이너
     <div style={{ boxSizing: 'border-box' }}>
@@ -129,8 +130,8 @@ const AdminSearch = () => {
               <S.SearchInput type='text' placeholder='닉네임 또는 이메일로 검색하세요.'/>
               <S.SearchImgDiv onClick={handleSearchClick}><S.SearchImg src='/assets/Admin/search-logo.svg'/></S.SearchImgDiv>
             </S.SortSearchDiv>
-            {dummyData.map((user,i)=>(
-              <SearchUserComponent email={user.email} nickname={user.nickname} uuid={user.uuid} key={i}/>
+            {userData.map((user,i)=>(
+              <SearchUserComponent email={user.email} nickname={user.username} uuid={user.uuid} key={i}/>
             ))}
           </AdminDiv>
           <Pagination totalPage={totalPage} currentPage={currentPage} onPageChange={setCurrentPage}/>
