@@ -109,7 +109,6 @@ function MainpageLogin() {
             numParticipants: response.data.data.participations,
             // eventokay: response.data.data.event1,
           }));
-          console.log("로그인할떄 유저정보", userInfo)
         }
       }catch(error){
         console.log("사용자정보 가져오는 중 오류 발생",error)
@@ -117,6 +116,9 @@ function MainpageLogin() {
     };
     fetchData();
   }, []);
+  useEffect(() => {
+    console.log("userInfo 변경됨", userInfo);
+  }, [userInfo]);
   const handleNotService = () => {
     alert("해당 서비스는 9/12일 10:00에 오픈됩니다 축제까지 기다려주세요!");
   };
