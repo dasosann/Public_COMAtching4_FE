@@ -5,13 +5,13 @@ import { AdminDiv, MainWrapper } from '../../css/pages/Admin/AdminCSS';
 import { useParams } from 'react-router-dom';
 import fetchRequest from '../../fetchConfig';
 import Spinner from '../../components/Admin/Spinner';
-const PaymentHistoryComponent = ({ status, orderNumber, chargePoint, paymentMethod, amount, paymentTime }) => {
+const PaymentHistoryComponent = ({ cancelReason, orderId, point, tossPaymentMethod, price, approvedAt }) => {
     return (
         <P.ComponentWrapper>
             <P.PaymentStatusDiv>
             <div style={{display:'flex'}}>
                 <div style={{display: 'flex', gap: '8px', alignItems: 'center'}}>
-                  {status === "Completed" ? (
+                  {cancelReason === "정상 결제" ? (
                     <>
                       <P.Circle backgroundColor="#3fea3a" />
                       <P.StatusText color="#3fea3a">결제 성공</P.StatusText>
@@ -23,25 +23,25 @@ const PaymentHistoryComponent = ({ status, orderNumber, chargePoint, paymentMeth
                     </>
                   )}
                 </div>
-                <P.DateText>{paymentTime}</P.DateText>
+                <P.DateText>{approvedAt}</P.DateText>
             </div>
-            <P.OrderNumberText>{orderNumber}</P.OrderNumberText>
+            <P.OrderNumberText>{orderId}</P.OrderNumberText>
             </P.PaymentStatusDiv>
             <P.ComponentSecondDiv>
                 <div style={{display:'flex',alignItems:'center'}}>
                     <img src="/assets/MainPayment/coin.svg" alt="코인" style={{width:'32px',height:'32px', marginRight:'1.5px'}}/>
                     <P.DefaultSpan>결제액&nbsp;&nbsp;: </P.DefaultSpan>
-                    <P.DefaultSpan style={{width:'100px', textAlign:'center'}}>{amount} </P.DefaultSpan>
+                    <P.DefaultSpan style={{width:'100px', textAlign:'center'}}>{price} </P.DefaultSpan>
                     <P.DefaultSpan>원</P.DefaultSpan>
                 </div>
                 <div style={{display:'flex', alignItems:'center', height:'32px'}}>
                     <P.DefaultSpan>충전 포인트&nbsp;&nbsp;: </P.DefaultSpan>
-                    <P.DefaultSpan style={{width:'120px', textAlign:'center'}}>{chargePoint} </P.DefaultSpan>
+                    <P.DefaultSpan style={{width:'120px', textAlign:'center'}}>{point} </P.DefaultSpan>
                     <P.DefaultSpan>P</P.DefaultSpan>
                 </div>
                 <div style={{display:'flex', alignItems:'center'}}>
                     <P.DefaultSpan>결제수단&nbsp;&nbsp;: </P.DefaultSpan>
-                    <P.DefaultSpan style={{width:'172px', textAlign:'center'}}>{paymentMethod} </P.DefaultSpan>
+                    <P.DefaultSpan style={{width:'172px', textAlign:'center'}}>{tossPaymentMethod} </P.DefaultSpan>
                 </div>
                 
             </P.ComponentSecondDiv>
