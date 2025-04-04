@@ -119,26 +119,7 @@ function MainpageLogin() {
   //   };
   //   fetchData();
   // }, []);
-  useEffect(()=>{
-    const fetchPoint = async()=>{
-      try{
-        const response = await fetchRequest('/auth/user/api/points')
-        const data = await response.json();
-        const point = data.data;
-        console.log("data", data)
-        setUserInfo((prev)=>({
-          ...prev,
-          point,
-        }));
-      }catch(error){
-        console.error("포인트 정보 가져오기 실패", error);
-      }
-    }
-    fetchPoint();
-  },[])
-  useEffect(() => {
-    console.log("userInfo 변경됨", userInfo);
-  }, [userInfo]);
+
   const handleNotService = () => {
     alert("해당 서비스는 9/12일 10:00에 오픈됩니다 축제까지 기다려주세요!");
   };
@@ -211,7 +192,7 @@ function MainpageLogin() {
     <div className="container">
       <HeaderMain />
       <Background />
-      <PointBalance userAmount={userInfo.point}/>
+      <PointBalance/>
       <MatchProfiles profiles={sampleProfiles}/>
       <div className="Mainpage__Login">
         

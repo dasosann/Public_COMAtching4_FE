@@ -17,7 +17,7 @@ const PointBalance = () => {
   const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const [userAmount, setUserAmount] = (0); // Recoil 상태 사용
+  const [userInfo, setUserInfo] = useRecoilState(userState); // Recoil 상태 사용
   const fetchUserPoints = async () => {
     try {
       const response = await fetchRequest("/auth/user/api/points", {
@@ -25,7 +25,10 @@ const PointBalance = () => {
       });
       if (response.ok) {
         const data = await response.json();
-        setUserAmount(data.data); // 백엔드에서 point 반환 가정
+        setUserInfo((prev)=>({
+          ...prev,
+          point: data.data,
+        })); // 백엔드에서 point 반환 가정
       } else {
         console.error("포인트 조회 실패");
       }
