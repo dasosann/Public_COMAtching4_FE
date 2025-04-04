@@ -18,7 +18,9 @@ const SearchUserComponent = ({nickname,email,uuid})=>{
             <S.TitleSpan>E-mail :</S.TitleSpan>
             <S.EmailSpan>&nbsp;{email}</S.EmailSpan>
           </div>
-          <S.DetailButton onClick={()=>navigate(`/adminpage/user/${uuid}`)}>상세정보 보기</S.DetailButton>
+          <S.DetailButton onClick={()=>navigate(`/adminpage/user/${uuid}`, {
+            state: {nickname,email}
+          })}>상세정보 보기</S.DetailButton>
       </S.EmailDiv>
     </S.UserComponentWrapper>
   )
@@ -66,11 +68,6 @@ const Pagination = ({totalPage,currentPage,onPageChange})=>{
   
 }
 const AdminSearch = () => {
-  const dummyData = Array.from({ length: 32 }, (_, i) => ({
-    nickname: `User${i + 1}`,
-    email: `user${i + 1}@example.com`,
-    uuid : i
-  }));
   const [searchQuery, setSearchQuery] = useState(""); // 검색어 상태
   const [adminSelect, setAdminSelect] = useState('가입자관리');
   const [selectedSort, setSelectedSort] = useState("50명씩 정렬");
@@ -134,7 +131,7 @@ const AdminSearch = () => {
               <S.SearchImgDiv onClick={handleSearchClick}><S.SearchImg src='/assets/Admin/search-logo.svg'/></S.SearchImgDiv>
             </S.SortSearchDiv>
             {userData.map((user,i)=>(
-              <SearchUserComponent email={user.email} nickname={user.nickname} uuid={user.uuid} key={i}/>
+              <SearchUserComponent email={user.email} nickname={user.username} uuid={user.uuid} key={i}/>
             ))}
           </AdminDiv>
           <Pagination totalPage={totalPage} currentPage={currentPage} onPageChange={setCurrentPage}/>
