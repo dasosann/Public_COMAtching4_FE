@@ -16,6 +16,8 @@ import EventModal from "../components/EventModal";
 import PointBalance from "../components/PointBalance";
 import MatchProfiles from "../components/Mainpage/MatchProfiles";
 import NavBar from '../components/Navbar.jsx';
+import fetchRequest from "../fetchConfig.jsx";
+import fetchRequest from "../fetchConfig.jsx";
 
 function MainpageLogin() {
   const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 훅 사용
@@ -119,10 +121,20 @@ function MainpageLogin() {
   useEffect(()=>{
     const fetchPoint = async()=>{
       try{
-        const points = 
+        const response = await fetchRequest('/api/user/api/points')
+        const data = await response.json();
+        if(data.status===200){
+          setUserInfo((prev)=>({
+            ...prev,
+            point:data.data,
+          }))
+        }
+      }catch(error){
+        console.error("포인트 정보 가져오기 실패", error);
       }
     }
-  })
+    fetchPoint();
+  },[])
   useEffect(() => {
     console.log("userInfo 변경됨", userInfo);
   }, [userInfo]);
