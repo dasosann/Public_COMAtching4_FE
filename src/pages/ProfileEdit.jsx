@@ -125,8 +125,32 @@ const ProfileEdit = () => {
       return value !== null && value !== '' && !(Array.isArray(value) && value.length === 0);
     }) &&
     profile.mbti.length === 4;
-  
-
+    
+    const handleSave = () => {
+      const requestData = {
+        username: profile.nickname,
+        university: profile.school,
+        major: profile.department,
+        contactId: profile.contact_id,
+        hobbies: profile.interests,
+        song: profile.favoriteSong,
+        mbti: profile.mbti,
+        contactFrequency: profile.contactFrequency,
+        comments: profile.introduction,
+      };
+    
+      instance
+        .patch('/auth/user/api/info', requestData)
+        .then((response) => {
+          alert("프로필이 성공적으로 수정되었습니다!");
+          setOriginalProfile(profile); // 수정 후 상태를 원본으로 반영
+        })
+        .catch((error) => {
+          console.error("프로필 수정 실패:", error);
+          alert("수정 중 오류가 발생했습니다. 다시 시도해주세요.");
+        });
+    };
+    
   return (
     <div className="profile-edit-container">
       <Background />
