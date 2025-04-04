@@ -121,7 +121,7 @@ function MainpageLogin() {
   useEffect(()=>{
     const fetchPoint = async()=>{
       try{
-        const response = await fetchRequest('/api/user/api/points')
+        const response = await fetchRequest('/auth/user/api/points')
         console.log(response);
         const data = await response.json();
         console.log("data", data)
