@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import P from '../../css/pages/Admin/AdminPaymentHistoryStyle';
 import { AdminHeader } from '../../components/Admin/AdminHeader';
 import { AdminDiv, MainWrapper } from '../../css/pages/Admin/AdminCSS';
+import { useParams } from 'react-router-dom';
+import fetchRequest from '../../fetchConfig';
+import Spinner from '../../components/Admin/Spinner';
 const PaymentHistoryComponent = ({ status, orderNumber, chargePoint, paymentMethod, amount, paymentTime }) => {
     return (
         <P.ComponentWrapper>
@@ -47,59 +50,30 @@ const PaymentHistoryComponent = ({ status, orderNumber, chargePoint, paymentMeth
 }
 const AdminPaymentHistory = () => {
     const [paymentHistory, setPaymentHistory] = useState([]);
-    // useEffect(()=>{
-    //     const fetchData= async ()=>{
-    //         try{
-    //             const response = await fetch(``);
-    //             const data = response.json();
-    //             setPaymentHistory(data);
-    //         }catch(error){
-    //             console.log("결제 정보 가져오는 중 오류 발생",error)
-    //         }
-    //     }
-    // },[])
-    const testData = [
-        {
-          "status": "Completed",
-          "orderNumber": "XYZ1054320FYAAD",
-          "chargePoint": 5000,
-          "paymentMethod": "Credit Card",
-          "amount": 1000,
-          "paymentTime": "2025-03-18T12:30:00"
-        },
-        {
-          "status": "Pending",
-          "orderNumber": "XYZ1054320FYAAD",
-          "chargePoint": 30000,
-          "paymentMethod": "PayPal",
-          "amount": 5000,
-          "paymentTime": "2025-03-19T09:00:00"
-        },
-        {
-          "status": "Failed",
-          "orderNumber": "XYZ1054320FYAAD",
-          "chargePoint": 20000,
-          "paymentMethod": "Debit Card",
-          "amount": 2000,
-          "paymentTime": "2025-03-20T15:30:00"
-        },
-        {
-          "status": "Completed",
-          "orderNumber": "XYZ1054320FYAAD",
-          "chargePoint": 7000,
-          "paymentMethod": "Credit Card",
-          "amount": 15000,
-          "paymentTime": "2025-03-21T11:15:00"
-        },
-        {
-          "status": "Completed",
-          "orderNumber": "XYZ1054320FYAAD",
-          "chargePoint": 10000,
-          "paymentMethod": "Bank Transfer",
-          "amount": 2000,
-          "paymentTime": "2025-03-22T14:45:00"
+    const { uuid } = useParams();
+    const [isLoading, setIsLoading] = useState(false);
+    useEffect(()=>{
+        const fetchPaymentHistory =async () =>{
+          setIsLoading(true);
+          try{
+            const response = await fetchRequest(`/auth/operator/api/history/payment/${uuid}`);
+            const data = await response.json()
+            if(!response.ok){
+              throw new Error("결제 내역 불러오기 실패!");
+            }
+            console.log("json으로 변환한 데이터의 데이터",data.data);
+            setPaymentHistory(data.data)
+          }catch(error){
+            console.error("try문 밖에서 오류 발생",error);
+          }finally{
+            setIsLoading(false)
+          }
+        };
+        if(uuid){
+          fetchPaymentHistory();
         }
-      ];
+    },[uuid])
+   
     const [adminSelect, setAdminSelect] = useState('가입자관리');
     
     return (
@@ -109,9 +83,19 @@ const AdminPaymentHistory = () => {
                 <AdminDiv style={{paddingRight:'24px'}}>
                     <P.PaymentTitle>결제내역</P.PaymentTitle>
                     <P.SubText>최신순 정렬</P.SubText>
-                    <P.PaymentHistoryDiv>
-                        {testData.map((data,i)=><PaymentHistoryComponent key={i} {...data}/>)}
-                    </P.PaymentHistoryDiv>
+                    {isLoading ? (
+                        <Spinner loading={isLoading} />
+                      ) : (
+                        <P.PaymentHistoryDiv>
+                          {paymentHistory.length > 0 ? (
+                            paymentHistory.map((data, i) => (
+                              <PaymentHistoryComponent key={i} {...data} />
+                            ))
+                          ) : (
+                            <div>결제 내역이 없습니다.</div>
+                          )}
+                        </P.PaymentHistoryDiv>
+                      )}
                 </AdminDiv>
             </MainWrapper>
         </div>

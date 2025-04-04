@@ -47,8 +47,8 @@ const AdminUserDetail = () => {
                         <S.FunctionButton onClick={()=>navigate(`${location.pathname}/SendWarnMessage`, {
                             state : {
                                 userInfo : {
-                                    nickname: "가지",
-                                    email: "comatching@catholic.ac.kr",
+                                    nickname: location.nickname,
+                                    email: location.email,
                                     gender: '여',
                                 }
                             }
