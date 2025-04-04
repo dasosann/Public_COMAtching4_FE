@@ -118,7 +118,7 @@ const PointBalance = () => {
         <div className="left-section">
           <img src="/assets/point.svg" alt="Point Icon" className="point-icon" />
           <span className="point-text">보유 포인트</span>
-          <span className="amount">{userAmount} P</span>
+          <span className="amount">{userInfo.point} P</span>
         </div>
         <button className="charges-button" onClick={openModal}>충전하기</button>
       </div>
