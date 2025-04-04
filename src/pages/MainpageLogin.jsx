@@ -17,7 +17,6 @@ import PointBalance from "../components/PointBalance";
 import MatchProfiles from "../components/Mainpage/MatchProfiles";
 import NavBar from '../components/Navbar.jsx';
 import fetchRequest from "../fetchConfig.jsx";
-import fetchRequest from "../fetchConfig.jsx";
 
 function MainpageLogin() {
   const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 훅 사용
