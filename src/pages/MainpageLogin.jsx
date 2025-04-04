@@ -24,7 +24,6 @@ function MainpageLogin() {
   const [isHeartClicked, setIsHeartClicked] = useState(false); // 하트 충전 요청 토글 클릭 상태를 저장하는 상태 변수
   const [showTutorial, setShowTutorial] = useState(false); // Show tutorial on login
   const [userInfo, setUserInfo] = useRecoilState(userState);
-  const [userInfo, setUserInfo] = useRecoilState(userState);
   // 충전 요청 상태를 관리하는 Recoil 상태(너무 자주 못누르게 하기 위해서 임시방편이였습니다. 회의를 통해 방식 수정이 필요합니다)
   const [chargeclick, setchargeclick] = useRecoilState(charge);
   const [showEventModal, setShowEventModal] = useState(false);
