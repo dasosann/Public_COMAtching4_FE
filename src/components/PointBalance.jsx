@@ -97,7 +97,9 @@ const PointBalance = () => {
       setPaymentStatus("fail");
     }
   }, [location, navigate]);
-
+  useEffect(() => {
+    fetchUserPoints(); // ✅ 페이지 진입 시 포인트 불러오기
+  }, []);
   const openModal = () => {
     setIsModalOpen(true);
   };
