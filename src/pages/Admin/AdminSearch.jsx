@@ -96,7 +96,8 @@ const AdminSearch = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setUserData(data.content);
+        console.log(data.data.content)
+        setUserData(data.data.content);
       });
   }, []);
   return (

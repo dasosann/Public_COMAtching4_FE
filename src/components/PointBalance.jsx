@@ -90,7 +90,7 @@ const PointBalance = ({ userAmount }) => {
       }
     } else if (status === "fail") {
       navigate('/login', { replace: true }); 
-      setIsModalOpen(true);
+      setIsModalOpen(false);
       setPaymentStatus("fail");
     }
   }, [location, navigate]);
