@@ -124,10 +124,12 @@ function MainpageLogin() {
       try{
         const response = await fetchRequest('/auth/user/api/points')
         const data = await response.json();
+        const point = data.data;
         console.log("data", data)
-        if(data.status===200){
-          setUserPoint(data.data)
-        }
+        setUserInfo((prev)=>({
+          ...prev,
+          point,
+        }));
       }catch(error){
         console.error("포인트 정보 가져오기 실패", error);
       }
@@ -209,7 +211,7 @@ function MainpageLogin() {
     <div className="container">
       <HeaderMain />
       <Background />
-      <PointBalance userAmount={userPoint}/>
+      <PointBalance userAmount={userInfo.point}/>
       <MatchProfiles profiles={sampleProfiles}/>
       <div className="Mainpage__Login">
         
