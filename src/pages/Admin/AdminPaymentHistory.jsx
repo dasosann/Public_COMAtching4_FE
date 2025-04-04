@@ -63,6 +63,7 @@ const AdminPaymentHistory = () => {
             }
             console.log("json으로 변환한 데이터의 데이터",data.data);
             setPaymentHistory(data.data)
+            console.log(paymentHistory)
           }catch(error){
             console.error("try문 밖에서 오류 발생",error);
           }finally{
