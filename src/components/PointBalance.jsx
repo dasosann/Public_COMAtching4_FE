@@ -9,7 +9,7 @@ import { PaymentSuccessModal, WrongRequestModal } from './AfterPaymentModal';
 import { userState } from '../Atoms';
 import { useRecoilState } from 'recoil';
 
-const PointBalance = ({ userAmount }) => {
+const PointBalance = () => {
   const hasSent = useRef(false); 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState(false); 
@@ -17,7 +17,7 @@ const PointBalance = ({ userAmount }) => {
   const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const [user, setUser] = useRecoilState(userState); // Recoil 상태 사용
+  const [userAmount, setUserAmount] = (0); // Recoil 상태 사용
   const fetchUserPoints = async () => {
     try {
       const response = await fetchRequest("/auth/user/api/points", {
@@ -25,7 +25,7 @@ const PointBalance = ({ userAmount }) => {
       });
       if (response.ok) {
         const data = await response.json();
-        setUser((prev) => ({ ...prev, point: data.data || 0 })); // 백엔드에서 point 반환 가정
+        setUserAmount(data.data); // 백엔드에서 point 반환 가정
       } else {
         console.error("포인트 조회 실패");
       }
