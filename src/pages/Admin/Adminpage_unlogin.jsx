@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../css/pages/Adminpage.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { adminUserState } from "../../Atoms";
 import fetchRequest from "../../fetchConfig";
 function Adminpageunlogin() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [formData, setFormData] = useState({ accountId: "", password: "" });
   const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 훅 사용
-  const setAdminUser = useSetRecoilState(adminUserState);
-  const adminUser = useRecoilValue(adminUserState);
+  const [adminUser,setAdminUser] = useRecoilState(adminUserState);
+  const [originalAdminUser, setOriginalAdminUser] = useState(adminUser);
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
@@ -19,7 +19,7 @@ function Adminpageunlogin() {
     try {
       // /auth/operator/info 엔드포인트로 사용자 정보를 가져온다고 가정
       // 백엔드가 GET인지, credentials가 필요한지 등을 상황에 맞게 설정
-      const response = await fetchRequest("/auth/semi/info", {
+      const response = await fetchRequest("/auth/any-admin/info", {
         method: "GET",
       });
 
@@ -28,18 +28,23 @@ function Adminpageunlogin() {
       }
 
       const userData = await response.json();
-      console.log("사용자 정보 조회 성공:", userData);
+      console.log("사용자 정보 조회 성공:", userData); 
+      console.log("사용자 정보 파고들기", userData.data);
       const adminProfile = {
-        acountId: userData.data.accountId || "",
-        schoolEmail: userData.data.schoolEmail || "",
-        nickname: userData.data.nickname || "",
-        role: userData.data.role || "",
-        university: userData.data.university || "",
-        universityAuth: userData.data.universityAuth || "",
-      }
-      // 응답 데이터 구조에 맞춰 adminUserState에 저장
-      // 여기서는 예시로, userData 구조를 가정
-      setAdminUser(adminProfile);
+        accountId: userData?.data?.accountId || "", // 안전하게 값에 접근
+        schoolEmail: userData?.data?.schoolEmail || "",
+        nickname: userData?.data?.nickname || "",
+        role: userData?.data?.role || "",
+        university: userData?.data?.university || "",
+        universityAuth: userData?.data?.universityAuth || "",
+      };
+      
+      console.log(adminProfile);
+      
+        setAdminUser(adminProfile);
+        setOriginalAdminUser(adminProfile);
+        console.log(adminUser)
+  
     } catch (error) {
       console.error("사용자 정보 요청 중 에러 발생:", error);
       alert("사용자 정보를 불러오는 중 오류가 발생했습니다.");
@@ -52,7 +57,7 @@ function Adminpageunlogin() {
       [name]: value,
     });
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -77,7 +82,7 @@ function Adminpageunlogin() {
         if (data.redirectUrl) {
           console.log(data.redirectUrl)
           console.log("현재 adminUserState:", adminUser);
-          window.location.href = data.redirectUrl;
+          navigate("/adminpage/mypage");
         }
         // 또는 navigate("/somewhere");
       } else {

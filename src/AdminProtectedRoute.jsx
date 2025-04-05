@@ -10,12 +10,12 @@ const AdminProtectedRoute = ({ children, allowedAuthorities }) => {
   const { role } = useRecoilValue(adminUserState);
   // 1) 로그인 안 된 경우 (role === "")
   if (!role) {
-    alert("로그인 해주세요.");
+    alert("다시 로그인 해주세요.");
     return <Navigate to="/adminpage" replace />;
   }
   if (role==='ROLE_SEMI_OPERATOR'){
     alert("관리자의 승인을 받아주세요")
-    return <Adminpage_MyPage/>;
+    return <Adminpage_MyPage/> ;
   }
   if (role==='ROLE_SEMI_ADMIN'){
     alert("관리자는 이메일 인증을 해주세요")

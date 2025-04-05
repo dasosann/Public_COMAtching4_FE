@@ -20,6 +20,9 @@ const AdminHeader = ({ adminSelect, setAdminSelect }) => {
     navigate("/adminpage/myPage", {state: {selectedTab:"가입자관리"}})
   }
   const {nickname, role, university} = useRecoilValue(adminUserState);
+  const getRoleLabel = (role) => {
+    return role.includes("ADMIN") ? "관리자" : "오퍼레이터";
+  };
   return (
     <A.HeaderContainer>
       <A.HeaderImg src="/assets/Admin/header_logo.svg" alt="코매칭 로고" onClick={()=>navigate("/adminpage",{replace:true})} />
@@ -56,7 +59,7 @@ const AdminHeader = ({ adminSelect, setAdminSelect }) => {
       <A.HeaderProfile>
         <div style={{ display:'flex', flexDirection:"column", fontWeight:'500' }}>
           <div style={{ color:'#808080' }}>{university}</div>
-          <div>{role} {nickname}님</div>
+          <div>{getRoleLabel(role)} {nickname}님</div>
         </div>
         <img src="/assets/Admin/under-triangle.svg" alt="코매칭 로고" />
       </A.HeaderProfile>

@@ -6,8 +6,10 @@ import fetchRequest from '../fetchConfig';
 import { v4 as uuidv4 } from 'uuid';
 import { ClipLoader } from 'react-spinners';
 import { PaymentSuccessModal, WrongRequestModal } from './AfterPaymentModal';
+import { userState } from '../Atoms';
+import { useRecoilState } from 'recoil';
 
-const PointBalance = ({ userAmount }) => {
+const PointBalance = () => {
   const hasSent = useRef(false); 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState(false); 
@@ -15,7 +17,25 @@ const PointBalance = ({ userAmount }) => {
   const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-
+  const [userInfo, setUserInfo] = useRecoilState(userState); // Recoil 상태 사용
+  const fetchUserPoints = async () => {
+    try {
+      const response = await fetchRequest("/auth/user/api/points", {
+        method: "GET",
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setUserInfo((prev)=>({
+          ...prev,
+          point: data.data,
+        })); // 백엔드에서 point 반환 가정
+      } else {
+        console.error("포인트 조회 실패");
+      }
+    } catch (error) {
+      console.error("포인트 조회 중 오류:", error);
+    }
+  };
   const sendParamsToBackend = async (paymentKey, orderId, amount, uniqueId) => {
     try {
       setIsLoading(true);
@@ -36,6 +56,7 @@ const PointBalance = ({ userAmount }) => {
         const data = await response.json();
         console.log("백엔드 응답 정상:", data);
         setPaymentStatus('success');
+        await fetchUserPoints();
       } else {
         const errorData = await response.json();
         console.error("백엔드 응답 오류:", errorData);
@@ -72,11 +93,13 @@ const PointBalance = ({ userAmount }) => {
       }
     } else if (status === "fail") {
       navigate('/login', { replace: true }); 
-      setIsModalOpen(true);
+      setIsModalOpen(false);
       setPaymentStatus("fail");
     }
   }, [location, navigate]);
-
+  useEffect(() => {
+    fetchUserPoints(); // ✅ 페이지 진입 시 포인트 불러오기
+  }, []);
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -97,7 +120,7 @@ const PointBalance = ({ userAmount }) => {
         <div className="left-section">
           <img src="/assets/point.svg" alt="Point Icon" className="point-icon" />
           <span className="point-text">보유 포인트</span>
-          <span className="amount">{userAmount} P</span>
+          <span className="amount">{userInfo.point} P</span>
         </div>
         <button className="charges-button" onClick={openModal}>충전하기</button>
       </div>

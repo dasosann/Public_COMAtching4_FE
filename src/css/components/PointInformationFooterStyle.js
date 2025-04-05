@@ -25,6 +25,5 @@ P.StyledDiv = styled.ul`
 P.BusinessInformation = styled.div`
     font-weight: 500;
     margin-top: 8px;
-    margin-bottom: 68px;
 `
 export default P;

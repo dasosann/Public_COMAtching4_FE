@@ -11,6 +11,9 @@ import PaymentSecondModal from './PaymentSecondModal';
 import PointChargeListModal from './PointChargeListModal';
 import { useEffect, useState } from 'react';
 import {PaymentCancelModal,PaymentSuccessModal,WrongRequestModal} from './AfterPaymentModal';
+import Modal from '../css/pages/Admin/AdminModalAll';
+import { userState } from '../Atoms';
+import { useRecoilState } from 'recoil';
 
 const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,amount}) => {
   // const [isOpen, setIsOpen] = useState(false); 
@@ -21,13 +24,14 @@ const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,am
   const [discount, setDiscount] = useState();
   const [didAnimateOnce, setDidAnimateOnce] = useState(false);
   const [point, setChargePoint] = useState();
+  
 
   // const closeModal = () => setIsOpen(false);
   
   
   // 두 번째 모달 열기
   const openSecondModal=()=>{
-    console.log("isOpen", isOpen)
+    // console.log("isOpen", isOpen)
     setIsSecondModalOpen(true);
   }
   const closeSecondModal = () => setIsSecondModalOpen(false);
@@ -67,7 +71,7 @@ const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,am
   return (
     <div>
       <P.ModalWrapper show={isOpen} isSecondModalOpen={isSecondModalOpen} data-aos="fade-up">
-        <P.ModalContent onClick={(e) => e.stopPropagation()}>
+        <P.ModalContent onClick={(e) => e.stopPropagation()} isDimmed={isSecondModalOpen}>
           <div style={{position:'sticky', zIndex:'1', top:'0', backgroundColor:'white', paddingTop:'24px', paddingBottom:'23px'}}>
             <P.Header>
               <P.ChargePointText>포인트 충전</P.ChargePointText>
