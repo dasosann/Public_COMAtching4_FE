@@ -10,7 +10,7 @@ const NavBar = () => {
     <div className="navbar">
       <Link to="/" className={`nav-item ${pathname === '/' ? 'active' : ''}`}>
         <img
-          src={pathname === '/' ? './assets/homeactive.svg' : './assets/home.svg'}
+          src={pathname === '/login' ? './assets/homeactive.svg' : './assets/home.svg'}
           alt="Home"
           className="icon"
         />
