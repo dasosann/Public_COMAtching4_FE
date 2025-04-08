@@ -35,7 +35,18 @@ const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,am
     setIsSecondModalOpen(true);
   }
   const closeSecondModal = () => setIsSecondModalOpen(false);
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'; // 스크롤 비활성화
+    } else {
+      document.body.style.overflow = 'auto'; // 스크롤 활성화
+    }
 
+    // 컴포넌트 언마운트 시 원상복구
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen]);
   useEffect(() => {
     AOS.init({
       duration: 500,
@@ -92,7 +103,6 @@ const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,am
           />
         )}
        
-        
       </P.ModalWrapper>
 
     </div>

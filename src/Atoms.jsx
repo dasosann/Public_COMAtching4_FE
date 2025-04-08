@@ -68,7 +68,7 @@ export const adminUserState = atom({
     role: "",
     university:"",
     universityAuth:"",
-  },x
+  },
 });
 export const selectedMBTIState = atom({
   key: "selectedMBTIState",
