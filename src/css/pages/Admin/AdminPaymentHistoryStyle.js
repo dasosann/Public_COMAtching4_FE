@@ -67,6 +67,7 @@ P.ComponentSecondDiv = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: nowrap;
 `
 P.DefaultSpan = styled.div`
     font-size: 24px;
