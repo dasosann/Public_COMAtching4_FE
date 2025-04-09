@@ -6,26 +6,30 @@ import { useParams } from 'react-router-dom';
 import fetchRequest from '../../fetchConfig';
 import Spinner from '../../components/Admin/Spinner';
 const PaymentHistoryComponent = ({ cancelReason, orderId, point, tossPaymentMethod, price, approvedAt }) => {
+  const getStatusStyle = (reason) => {
+    switch (reason) {
+        case "결제 성공":
+            return { backgroundColor: "#3fea3a", color: "#3fea3a" }; // 초록색
+        case "관리자에 의해 취소됨":
+            return { backgroundColor: "#ea3a3a", color: "#ea3a3a" }; // 빨간색
+        case "결제 취소":
+            return { backgroundColor: "#ff9800", color: "#ff9800" }; // 주황색
+        default:
+            return { backgroundColor: "#gray", color: "#gray" }; // 기본값 (필요 시)
+    }
+};
+const statusStyle = getStatusStyle(cancelReason);
     return (
         <P.ComponentWrapper>
-            <P.PaymentStatusDiv>
+            <P.PaymentStatusDiv >
             <div style={{display:'flex'}}>
                 <div style={{display: 'flex', gap: '8px', alignItems: 'center'}}>
-                  {cancelReason === "정상 결제" ? (
-                    <>
-                      <P.Circle backgroundColor="#3fea3a" />
-                      <P.StatusText color="#3fea3a">결제 성공</P.StatusText>
-                    </>
-                  ) : (
-                    <>
-                      <P.Circle backgroundColor="#ea3a3a" />
-                      <P.StatusText color="#ea3a3a">결제 실패</P.StatusText>
-                    </>
-                  )}
+                  <P.Circle backgroundColor={statusStyle.backgroundColor} />
+                  <P.StatusText color={statusStyle.color}>{cancelReason}</P.StatusText>
                 </div>
                 <P.DateText>{approvedAt}</P.DateText>
             </div>
-            <P.OrderNumberText>{orderId}</P.OrderNumberText>
+            <P.OrderNumberText style={{margin:'0'}}>{orderId}</P.OrderNumberText>
             </P.PaymentStatusDiv>
             <P.ComponentSecondDiv>
                 <div style={{display:'flex',alignItems:'center'}}>
@@ -39,10 +43,11 @@ const PaymentHistoryComponent = ({ cancelReason, orderId, point, tossPaymentMeth
                     <P.DefaultSpan style={{width:'120px', textAlign:'center'}}>{point} </P.DefaultSpan>
                     <P.DefaultSpan>P</P.DefaultSpan>
                 </div>
-                <div style={{display:'flex', alignItems:'center'}}>
+               
+                {/* <div style={{display:'flex', alignItems:'center'}}>
                     <P.DefaultSpan>결제수단&nbsp;&nbsp;: </P.DefaultSpan>
                     <P.DefaultSpan style={{width:'172px', textAlign:'center'}}>{tossPaymentMethod} </P.DefaultSpan>
-                </div>
+                </div> */}
                 
             </P.ComponentSecondDiv>
         </P.ComponentWrapper>
@@ -79,9 +84,9 @@ const AdminPaymentHistory = () => {
     
     return (
         <div>
-            <AdminHeader setAdminSelect={setAdminSelect} adminSelect={adminSelect}/>
+            <AdminHeader setAdminSelect={setAdminSelect} adminSelect={adminSelect} />
             <MainWrapper>
-                <AdminDiv style={{paddingRight:'24px'}}>
+                <AdminDiv style={{paddingRight:'24px', cursor:'default'}}>
                     <P.PaymentTitle>결제내역</P.PaymentTitle>
                     <P.SubText>최신순 정렬</P.SubText>
                     {isLoading ? (
