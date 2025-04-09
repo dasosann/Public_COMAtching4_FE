@@ -4,7 +4,7 @@ import TossBuyPointComponent from './TossBuyPointComponent.jsx';
 import 'aos/dist/aos.css'; // AOS 스타일 시트 불러오기
 import { PaymentCheckoutPage } from './TossPaymentAPI.jsx';
 import fetchRequest from '../fetchConfig.jsx';
-const PaymentSecondModal = ({ isOpen, pointPrice, productName, discount, closeSecondModal,point }) => {
+const PaymentSecondModal = ({ isOpen, pointPrice, productName, discount, closeSecondModal,point,setMainModal }) => {
   const [isChecked, setIsChecked] = useState(false);
   // const [paymentData, setPaymentData] = useState(null); // 결제 데이터 저장
   if (!isOpen) return null;
@@ -62,10 +62,12 @@ const PaymentSecondModal = ({ isOpen, pointPrice, productName, discount, closeSe
       if(data.code==="PAY-003"){
         alert(data.message);
         closeSecondModal();
+        setMainModal('false')
       }
       else if(data.code==="GEN-000"){
         alert("충전 요청이 정상적으로 완료되었습니다.")
         closeSecondModal();
+        setMainModal('false')
       }
       
       // 응답받은 데이터를 PaymentCheckoutPage에 전달

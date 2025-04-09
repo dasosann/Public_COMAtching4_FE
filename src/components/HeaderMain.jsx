@@ -12,7 +12,7 @@ function HeaderMain() {
           data={`${import.meta.env.VITE_PUBLIC_URL}../../assets/logoblacknav.svg`}
           type="image/svg+xml"
           aria-label="로고"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/login")}
         >
           <span>로고</span>
         </object>
