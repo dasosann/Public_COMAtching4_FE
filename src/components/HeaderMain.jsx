@@ -6,13 +6,13 @@ function HeaderMain() {
 
   return (
     <div className={styles.header}>
-      <div className={styles.left}>
+      <div className={styles.left} onClick={() => navigate("/login")}>
         <object
           className={styles.logoImg}
           data={`${import.meta.env.VITE_PUBLIC_URL}../../assets/logoblacknav.svg`}
           type="image/svg+xml"
           aria-label="로고"
-          onClick={() => navigate("/login")}
+         
         >
           <span>로고</span>
         </object>

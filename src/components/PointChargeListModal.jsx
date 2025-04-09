@@ -68,7 +68,7 @@ const PointChargeListModal = ({ isOpen, onClose, closeAllModal }) => {
               productName={item.productName}
               orderStatus={item.orderStatus}
               amount={formatAmount(item.price)}
-              date={formatDateTime(item.approvedAt)}  // "YYYY-MM-DD HH:mm" 형식으로 변환하여 전달
+              date={formatDateTime(item.requestAt)}  // "YYYY-MM-DD HH:mm" 형식으로 변환하여 전달
               status={item.cancelReason}
               tossPaymentMethod={item.tossPaymentMethod}
               orderId = {item.orderId}
