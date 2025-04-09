@@ -82,7 +82,7 @@ const PaymentSecondModal = ({ isOpen, pointPrice, productName, discount, closeSe
     <P.SecondModalWrapper data-aos="fade-up">
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <P.StyledDiv>포인트 구매</P.StyledDiv>
-        <img src="/assets/MainPayment/closebutton.svg" alt="error" onClick={closeModal} />
+        <img src="/assets/MainPayment/closebutton.svg" alt="error" onClick={closeSecondModal} />
       </div>
       <TossBuyPointComponent pointPrice={pointPrice} productName={productName} discount={discount} />
       <P.AgreePointRule>
