@@ -62,12 +62,12 @@ const PaymentSecondModal = ({ isOpen, pointPrice, productName, discount, closeSe
       if(data.code==="PAY-003"){
         alert(data.message);
         closeSecondModal();
-        setMainModal('false')
+        setMainModal(false)
       }
       else if(data.code==="GEN-000"){
         alert("충전 요청이 정상적으로 완료되었습니다.")
         closeSecondModal();
-        setMainModal('false')
+        setMainModal(false)
       }
       
       // 응답받은 데이터를 PaymentCheckoutPage에 전달

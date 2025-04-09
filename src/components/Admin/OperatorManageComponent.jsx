@@ -5,6 +5,10 @@ const OperatorManageComponent = () => {
     const navigate = useNavigate();
     return (
         <M.MasterContainer>
+            <M.EachContainer onClick={()=>(navigate('/adminpage/payrequest'))}>
+                <M.TitleText>가입자 결제 요청 관리</M.TitleText>
+                <M.ContentText>유저 결제 요청 관리</M.ContentText>
+            </M.EachContainer>
             <M.EachContainer onClick={()=>(navigate('/adminpage/myPage/search'))}>
                 <M.TitleText>가입자 검색 및 관리</M.TitleText>
                 <M.ContentText>결제내역 및 포인트 사용내역 열람, 포인트 조정, 블랙리스트 추가</M.ContentText>

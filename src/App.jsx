@@ -50,6 +50,7 @@ import MainpageUnLogin from "./pages/MainpageUnLogin.jsx";
 import AdminNoticeMain from "./pages/Admin/AdminNoticeMain.jsx";
 import NoticeReservation from "./pages/Admin/NoticeReservation.jsx";
 import NoticeRegisterComplete from "./pages/Admin/NoticeRegisterComplete.jsx";
+import AdminPayRequest from "./pages/Admin/AdminPayRequest.jsx";
 export default function App() {
   return (
     <RecoilRoot>
@@ -85,6 +86,7 @@ export default function App() {
             >
               <Route path="myPage" element={<Adminpage_MyPage />} />
               <Route path="myPage/search" element={<AdminSearch />} />
+              <Route path="payrequest" element={<AdminPayRequest/>} />
               
               <Route path="user/:uuid" element={<AdminUserDetail />} />
               <Route path="user/:uuid/warnhistory" element={<AdminUserWarningHistory />} />
