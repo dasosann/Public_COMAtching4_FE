@@ -94,7 +94,7 @@ const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,am
           <AllPaymentMenu openSecondModal={openSecondModal} setPointPrice={setPointPrice} setProductName={setProductName}setDiscount={setDiscount} setChargePoint={setChargePoint} />
           <PointInformationFooter />
         </P.ModalContent>
-        <PaymentSecondModal data-aos="fade-up" closeSecondModal={closeSecondModal} isOpen={isSecondModalOpen} closeModal={closeSecondModal} productName={productName} pointPrice={pointPrice}discount={discount} point={point} />
+        <PaymentSecondModal data-aos="fade-up" closeSecondModal={closeSecondModal} isOpen={isSecondModalOpen}  productName={productName} pointPrice={pointPrice}discount={discount} point={point} />
         {isChargeListModalOpen && (
           <PointChargeListModal
           isOpen={isChargeListModalOpen}
