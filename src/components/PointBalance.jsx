@@ -70,33 +70,33 @@ const PointBalance = () => {
     }
   };
 
-  useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const status = searchParams.get("status"); 
-    const paymentKey = searchParams.get("paymentKey");
-    const orderId = searchParams.get("orderId");
-    const amountQuery = searchParams.get("amount");
+  // useEffect(() => {
+  //   const searchParams = new URLSearchParams(location.search);
+  //   const status = searchParams.get("status"); 
+  //   const paymentKey = searchParams.get("paymentKey");
+  //   const orderId = searchParams.get("orderId");
+  //   const amountQuery = searchParams.get("amount");
 
-    if (status === "success") {
-      navigate('/login', { replace: true }); 
-      setIsModalOpen(false);
+  //   if (status === "success") {
+  //     navigate('/login', { replace: true }); 
+  //     setIsModalOpen(false);
 
-      if (amountQuery) {
-        setAmount(amountQuery);
-      }
-      // 처음 한 번만 서버에 검증 요청
-      if (paymentKey && orderId && amountQuery && !hasSent.current) {
-        hasSent.current = true;
-        const uniqueId = uuidv4();
-        console.log("uniqueId:", uniqueId);
-        sendParamsToBackend(paymentKey, orderId, amountQuery, uniqueId);
-      }
-    } else if (status === "fail") {
-      navigate('/login', { replace: true }); 
-      setIsModalOpen(false);
-      setPaymentStatus("fail");
-    }
-  }, [location, navigate]);
+  //     if (amountQuery) {
+  //       setAmount(amountQuery);
+  //     }
+  //     // 처음 한 번만 서버에 검증 요청
+  //     if (paymentKey && orderId && amountQuery && !hasSent.current) {
+  //       hasSent.current = true;
+  //       const uniqueId = uuidv4();
+  //       console.log("uniqueId:", uniqueId);
+  //       sendParamsToBackend(paymentKey, orderId, amountQuery, uniqueId);
+  //     }
+  //   } else if (status === "fail") {
+  //     navigate('/login', { replace: true }); 
+  //     setIsModalOpen(false);
+  //     setPaymentStatus("fail");
+  //   }
+  // }, [location, navigate]);
   useEffect(() => {
     fetchUserPoints(); // ✅ 페이지 진입 시 포인트 불러오기
   }, []);
