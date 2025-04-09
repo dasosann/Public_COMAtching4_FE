@@ -87,7 +87,7 @@ const PaymentSecondModal = ({ isOpen, closeModal, pointPrice, productName, disco
         <P.ArrowImg src="/assets/MainPayment/arrow-right.svg" alt="" />
       </P.AgreePointRule>
       <img src= {isChecked ? "/assets/MainPayment/active_toss_button.svg" : "/assets/MainPayment/unactive_toss_button.svg" }
-        onClick={isChecked? handleTossButtonClick: undefined}
+        onClick={isChecked? handleChargeRequest: undefined}
         alt='토스버튼'
       />
        {/* {paymentData && (
