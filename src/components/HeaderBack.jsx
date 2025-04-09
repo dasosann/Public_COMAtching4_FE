@@ -6,7 +6,7 @@ function HeaderBack() {
 
   return (
     <div className={styles.header}>
-       <div className={styles.left} onClick={() => navigate("/")}>
+       <div className={styles.left} onClick={() => navigate("/login")}>
                 <img src="./assets/backimg.svg" alt="point" className={styles.pointImage} />
                 
                 
