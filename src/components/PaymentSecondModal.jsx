@@ -59,7 +59,7 @@ const PaymentSecondModal = ({ isOpen, pointPrice, productName, discount, closeSe
 
       const data = await response.json(); // 응답받은 데이터
       console.log("받아온 data" , data)
-      if(data.code==="PAY003"){
+      if(data.code==="PAY-003"){
         alert(data.message);
         closeSecondModal();
       }
