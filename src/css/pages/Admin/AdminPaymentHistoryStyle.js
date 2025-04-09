@@ -45,7 +45,7 @@ P.StatusText = styled.div`
     color: ${(props)=>props.color};
 `
 P.DateText =styled.div`
-    width: 242px;
+    width: 300px;
     color: #828282;
     font-size: 20px;
     font-weight: 400;

@@ -6,7 +6,7 @@ function HeaderMain() {
 
   return (
     <div className={styles.header}>
-      <div className={styles.left} onClick={() => navigate("/login")}>
+      <div className={styles.left}>
         <object
           className={styles.logoImg}
           data={`${import.meta.env.VITE_PUBLIC_URL}../../assets/logoblacknav.svg`}

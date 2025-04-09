@@ -1,0 +1,103 @@
+import React, { useEffect, useState } from 'react';
+import { AdminDiv, MainWrapper } from '../../css/pages/Admin/AdminCSS';
+import { AdminHeader } from '../../components/Admin/AdminHeader';
+import R from '../../css/pages/Admin/AdminPayRequestStyle';
+import S from '../../css/pages/Admin/AdminSearch';
+import P from '../../css/pages/Admin/AdminPaymentHistoryStyle';
+import fetchRequest from '../../fetchConfig';
+const RequestUserComponent = ({  orderId, point, username, price, requestAt,productName,onUpdate }) => {
+    const handleApprove = async () => {
+        try {
+            const response = await fetchRequest('/auth/operator/tempay/approval', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({orderId}),
+            });
+            console.log('수락 성공:', await response.json());
+            alert('충전 요청이 수락되었습니다.');
+            onUpdate();
+        } catch (error) {
+            console.error('수락 중 오류:', error);
+            alert('수락 처리 중 오류가 발생했습니다.');
+        }
+    };
+
+    const handleReject = async () => {
+        try {
+            const response = await fetchRequest('/auth/operator/tempay/refund', {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ orderId }),
+            });
+            console.log('거절 성공:', await response.json());
+            alert('충전 요청이 거절되었습니다.');
+            onUpdate();
+        } catch (error) {
+            console.error('거절 중 오류:', error);
+            alert('거절 처리 중 오류가 발생했습니다.');
+        }
+    };
+    return (
+        <P.ComponentWrapper>
+            <P.PaymentStatusDiv style={{padding:'0', justifyContent:'start', gap:'20px'}}>
+                <R.UserIdDiv>userID : <R.IdSpan>{username}</R.IdSpan></R.UserIdDiv>
+                <P.DateText>요청시각 : {requestAt}</P.DateText>
+                <P.OrderNumberText style={{margin:'0'}}>주문번호 : {orderId}</P.OrderNumberText>
+            </P.PaymentStatusDiv>
+            <P.ComponentSecondDiv>
+                <div style={{display:'flex',alignItems:'center'}}>
+                    <img src="/assets/MainPayment/coin.svg" alt="코인" style={{width:'32px',height:'32px', marginRight:'1.5px'}}/>
+                    <P.DefaultSpan>{productName}</P.DefaultSpan>
+                </div>
+                <div style={{display:'flex', alignItems:'center', height:'32px'}}>
+                    <P.DefaultSpan>가격&nbsp;&nbsp;: </P.DefaultSpan>
+                    <P.DefaultSpan style={{width:'120px', textAlign:'center'}}>{price}원 </P.DefaultSpan>
+                </div>
+                <div style={{display:'flex', alignItems:'center', paddingRight:'32px', gap:'8px'}}>
+                    <S.DetailButton style={{width:'100px', height:'100%'}} onClick={handleApprove}>수락</S.DetailButton>
+                    <S.DetailButton style={{width:'100px', height:'100%'}} onClick={handleReject}>거절</S.DetailButton>
+                </div>
+            </P.ComponentSecondDiv>
+        </P.ComponentWrapper>
+    )
+}
+const AdminPayRequest = () => {
+    const [adminSelect, setAdminSelect] = useState("가입자관리");
+    const [userData, setUserData] = useState([]); // userData 상태 추가
+    const fetchData = async () => {
+        try {
+            const res = await fetchRequest('/auth/operator/tempay/charge-list');
+            const data = await res.json();
+            console.log("가져온데이터", data.data); 
+            setUserData(data.data);
+        } catch (error) {
+            console.error("결제 요청 리스트 가져오는 중 오류 발생", error);
+        }
+    };
+    useEffect(()=>{
+        fetchData();
+    },[])
+    return (
+        <div>
+            <AdminHeader setAdminSelect={setAdminSelect} adminSelect={adminSelect}/>
+            <MainWrapper>
+                <AdminDiv style={{cursor:'default', paddingRight:'10px'}}>
+                    <div style={{display:'flex',justifyContent:'space-between'}}>
+                        <div style={{display:'flex',flexDirection:'column',gap:'8px'}}>
+                            <R.TitleDiv>
+                                충전 요청 목록
+                            </R.TitleDiv>
+                            <R.SortTextDiv>유저로부터 이름, 아이디, 입금 내역 확인해서 충전을 진행합니다.</R.SortTextDiv>
+                        </div>
+                        <img src="/assets/Admin/refresh-button.svg" alt="새로고침" onClick={fetchData} style={{cursor:'pointer'}}/>
+                    </div>
+                    {userData.map((data,i)=>(
+                        <RequestUserComponent {...data} key={i} onUpdate={fetchData}/>
+                    ))}
+                </AdminDiv>
+            </MainWrapper>
+        </div>
+    );
+};
+
+export default AdminPayRequest;
