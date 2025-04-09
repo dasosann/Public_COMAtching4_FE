@@ -1,7 +1,7 @@
 import React from "react";
 import "../../css/components/UnloginModal.css";
 
-function UnloginModal({onClose}) {
+function UnloginModal({onClose,handleKakaoLogin,handleGoogleLogin}) {
     return (
         <div className="unlogin-modal-overlay">
             <div className="unlogin-modal-container">
@@ -11,11 +11,11 @@ function UnloginModal({onClose}) {
                     원하는 계정으로 시작하세요.
                 </div>
                 <div className="unlogin-modal-buttons">
-                    <button className="unlogin-modal-btn kakao">
+                    <button className="unlogin-modal-btn kakao" onClick={handleKakaoLogin}>
                         <img src="/assets/Mainpage/kakao.svg" alt="카카오"/>
                         <span>카카오로 시작하기</span>
                     </button>
-                    <button className="unlogin-modal-btn google">
+                    <button className="unlogin-modal-btn google" onClick={handleGoogleLogin}>
                         <img src="/assets/Mainpage/google.svg" alt="구글"/>
                         <span>구글로 시작하기</span>
                     </button>
