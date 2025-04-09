@@ -15,7 +15,7 @@ import Modal from '../css/pages/Admin/AdminModalAll';
 import { userState } from '../Atoms';
 import { useRecoilState } from 'recoil';
 
-const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,amount,setMainModal}) => {
+const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,amount}) => {
   // const [isOpen, setIsOpen] = useState(false); 
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false); // 두 번째 모달 열기/닫기 상태
   const [isChargeListModalOpen, setIsChargeListModalOpen] = useState(false); 
@@ -94,7 +94,7 @@ const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,am
           <AllPaymentMenu openSecondModal={openSecondModal} setPointPrice={setPointPrice} setProductName={setProductName}setDiscount={setDiscount} setChargePoint={setChargePoint} />
           <PointInformationFooter />
         </P.ModalContent>
-        <PaymentSecondModal data-aos="fade-up" closeSecondModal={closeSecondModal} isOpen={isSecondModalOpen}  productName={productName} pointPrice={pointPrice}discount={discount} point={point} setMainModel = {setMainModal} />
+        <PaymentSecondModal data-aos="fade-up" closeSecondModal={closeSecondModal} isOpen={isSecondModalOpen}  productName={productName} pointPrice={pointPrice}discount={discount} point={point} closeAllModal = {closeModal} />
         {isChargeListModalOpen && (
           <PointChargeListModal
           isOpen={isChargeListModalOpen}

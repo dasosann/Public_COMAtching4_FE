@@ -131,7 +131,6 @@ const PointBalance = () => {
         paymentStatus={paymentStatus}
         setPaymentStatus={setPaymentStatus}
         amount={amount}
-        setMainModal = {setIsModalOpen}
       />
 
       {/* 로딩 스피너 표시 */}
