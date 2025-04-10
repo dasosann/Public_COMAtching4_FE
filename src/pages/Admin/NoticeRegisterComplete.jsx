@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AdminHeader } from '../../components/Admin/AdminHeader';
 import { AdminDiv, MainWrapper } from '../../css/pages/Admin/AdminCSS';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const R = {};
 R.Titlediv = styled.div`
@@ -41,6 +42,7 @@ R.TitleCancelText = styled.span`
 `
 const NoticeRegisterComplete = () => {
     const [adminSelect, setAdminSelect] = useState('가입자관리');
+    const navigate = useNavigate();
     return (
         <div>
             <AdminHeader setAdminSelect={setAdminSelect} adminSelect={adminSelect} />
@@ -56,11 +58,11 @@ const NoticeRegisterComplete = () => {
                     </R.SubDiv>
                 </AdminDiv>
                 <R.SecondDiv>
-                    <AdminDiv style={{paddingTop:'26px', paddingBottom:'26px'}}>
+                    <AdminDiv style={{paddingTop:'26px', paddingBottom:'26px'}} onClick={()=>navigate('/adminpage/myPage/notice/list')}>
                         <R.Titlediv>공지사항 예약목록 및 <R.TitleCancelText>취소</R.TitleCancelText></R.Titlediv>
                         <R.SecondText>공지사항 예약 내역 및 취소</R.SecondText>
                     </AdminDiv>
-                    <AdminDiv style={{paddingTop:'26px',paddingBottom:'26px'}}>
+                    <AdminDiv style={{paddingTop:'26px', paddingBottom:'26px'}} onClick={()=>navigate('/adminpage/myPage/notice/history')}>
                         <R.Titlediv>공지사항 히스토리</R.Titlediv>
                         <R.SecondText>과거 공지 내역</R.SecondText>
                     </AdminDiv>

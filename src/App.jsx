@@ -51,6 +51,8 @@ import AdminNoticeMain from "./pages/Admin/AdminNoticeMain.jsx";
 import NoticeReservation from "./pages/Admin/NoticeReservation.jsx";
 import NoticeRegisterComplete from "./pages/Admin/NoticeRegisterComplete.jsx";
 import AdminPayRequest from "./pages/Admin/AdminPayRequest.jsx";
+import NoticeListAndCancel from "./pages/Admin/NoticeListAndCancel.jsx";
+import NoticeHistory from "./pages/Admin/NoticeHistory.jsx";
 export default function App() {
   return (
     <RecoilRoot>
@@ -114,6 +116,8 @@ export default function App() {
               <Route path="myPage/notice" element={<AdminNoticeMain/>} />
               <Route path="myPage/notice/reservation" element={<NoticeReservation/>} />
               <Route path="myPage/notice/complete" element={<NoticeRegisterComplete/>} />
+              <Route path="myPage/notice/list" element={<NoticeListAndCancel/>} />
+              <Route path="myPage/notice/history" element={<NoticeHistory/>} />
             </Route>
             <Route
               path="/adminpage/*"
