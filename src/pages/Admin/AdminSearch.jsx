@@ -73,7 +73,7 @@ const AdminSearch = () => {
   const [selectedSort, setSelectedSort] = useState("50명씩 정렬");
   const [currentPage,setCurrentPage] = useState(1);
   const [userData, setUserData] = useState([]);
-  const totalPage = 32;
+  const [totalPage,setTotalPage] = useState();
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value); 
   };
@@ -88,15 +88,32 @@ const AdminSearch = () => {
         });
     }
   };
+  const getUserList = async(page = 0 , size = 50)=>{
+    try{
+      const res = await fetchRequest(`/auth/operator/user-list?page=${page}&size=${size}`);
+      const data = await res.json();
+      setUserData(data.data.content);
+      setTotalPage(data.data.page.totalPages);
+    }catch(error){
+      console.error("유저 리스트 불러오기 실패",error);
+    }
+  };
+  const getSizeFromSort = (sortOption) => {
+    switch (sortOption) {
+      case "5명씩 정렬": return 5;
+      case "10명씩 정렬": return 10;
+      case "50명씩 정렬": return 50;
+      default: return 50;
+    }
+  };
+  const handleSortChange = (sort) => {
+    setSelectedSort(sort);
+    setCurrentPage(1); // 페이지 초기화
+  };
   useEffect(() => {
-    fetchRequest('/auth/operator/user-list')
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        console.log(data.data.content)
-        setUserData(data.data.content);
-      });
-  }, []);
+    const size = getSizeFromSort(selectedSort);
+    getUserList(currentPage-1,size);
+  }, [selectedSort,currentPage]);
   return (
     // 1) 전체를 세로로 쌓는 flex 컨테이너
     <div style={{ boxSizing: 'border-box' }}>
@@ -111,19 +128,19 @@ const AdminSearch = () => {
             <S.SortSearchDiv>
               <S.SortButton
                 isSelected={selectedSort === '50명씩 정렬'}
-                onClick={() => setSelectedSort('50명씩 정렬')}
+                onClick={()=>handleSortChange("50명씩 정렬")}
               >
                 50명씩 정렬
               </S.SortButton>
               <S.SortButton
                 isSelected={selectedSort === '10명씩 정렬'}
-                onClick={() => setSelectedSort('10명씩 정렬')}
+                onClick={()=>handleSortChange('10명씩 정렬')}
               >
                 10명씩 정렬
               </S.SortButton>
               <S.SortButton
                 isSelected={selectedSort === '5명씩 정렬'}
-                onClick={() => setSelectedSort('5명씩 정렬')}
+                onClick={()=>handleSortChange('5명씩 정렬')}
               >
                 5명씩 정렬
               </S.SortButton>
