@@ -5,6 +5,7 @@ import { AdminHeader } from '../../components/Admin/AdminHeader';
 import Dropdown from '../../components/Admin/AdminDropDown';
 import { useLocation, useNavigate } from 'react-router-dom';
 import  Modal from '../../css/pages/Admin/AdminModalAll';
+import fetchRequest from '../../fetchConfig';
 const EventDiscount = () => {
     const navigate = useNavigate();
     const [selectedTime, setSelectedTime] = useState("선택");
@@ -73,7 +74,7 @@ const EventDiscount = () => {
           return `${hours}시간`;
         }
       }
-      const handleConfirm = () => {
+      const handleConfirm = async() => {
         // 시간 선택이 올바른지 체크
         const startHour = parseInt(selectedTime, 10);
         const startMin = parseInt(selectedMinutes, 10);
@@ -132,9 +133,9 @@ const EventDiscount = () => {
           end: formattedEndTime,      // 한국 시간으로 변환된 ISO 시간
           discountRate: selectedDiscount,
         };
-      
+        console.log("보내지는 eventData",eventData)
         // fetch로 데이터 전송
-        fetch('/admin/event/register/discount', {
+        await fetchRequest('/admin/event/register/discount', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
