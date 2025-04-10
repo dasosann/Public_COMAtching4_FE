@@ -99,7 +99,6 @@ const AdminPayRequest = () => {
       );
       setFilteredData(filtered);
     } else {
-      alert("검색된 유저가 없습니다.")
       setFilteredData(userData); // 검색어 없으면 전체 데이터 표시
     }
   };
