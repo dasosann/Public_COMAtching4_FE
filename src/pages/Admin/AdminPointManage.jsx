@@ -17,6 +17,7 @@ import { header } from '../../css/components/HeaderMain.css';
         const { uuid } = useParams();  // URL 경로에서 uuid 추출
         const [userData, setUserData] = useState(null); // 사용자 정보를 저장할 상태
         const [currentPoint, setCurrentPoint] = useState(null); // 최신 포인트 정보
+        const [prevPoint, setPrevPoint] = useState(null); // 최신 포인트 정보
         const gender ="남"
          // 최종 포인트 계산 (기존 포인트 + 조정된 포인트)
          const adjustedPoints = points === "" ? 0 : Number(points);
@@ -35,6 +36,7 @@ import { header } from '../../css/components/HeaderMain.css';
                     });
                     const data = await response.json();
                     setUserData(data);
+                    setPrevPoint(data.data.point)
                 }catch(error){
                     console.error("사용자 정보를 가져오는데 실패했습니다",error)
                 }
@@ -162,8 +164,9 @@ import { header } from '../../css/components/HeaderMain.css';
                     body : JSON.stringify(payload)
                 });
                 console.log("사용자 포인트 조정 완료");
-                await fetchUpdatedPoints();
                 setShowSecondModal(true);
+                setReason("");
+                await fetchUpdatedPoints();
                
             }catch(error){
                 console.error("데이터 전송 실패",error);
@@ -172,6 +175,7 @@ import { header } from '../../css/components/HeaderMain.css';
         };
         const handleCloseSecondModal = () => {
             setShowSecondModal(false);
+            setPrevPoint(currentPoint);
         };
        
         return (
@@ -214,7 +218,7 @@ import { header } from '../../css/components/HeaderMain.css';
                             <M.SubTitleDiv style={{margin:'0'}}>(10자 이상)</M.SubTitleDiv>
                         </div>
                         <M.SubTitleDiv style={{fontSize:'20px',margin:'0'}}>모든 조정 사유는 히스토리에 기록되며, 이후 수정 또는 삭제할 수 없습니다.</M.SubTitleDiv>
-                        <M.ManageReason type='text' onChange={onChangeReason} maxLength={200}/>
+                        <M.ManageReason type='text' onChange={onChangeReason} maxLength={200} value={reason}/>
                         <M.SubmitButton isActive={reason.length>10 && adjustedPoints != 0} onClick={handleSubmit}>조정</M.SubmitButton>
                     </AdminDiv>
                     {showModal && (
@@ -233,7 +237,7 @@ import { header } from '../../css/components/HeaderMain.css';
                         <Modal.ModalContainer>
                             <Modal.ModalContent>
                                 해당 가입자의 포인트를 <br/>정상적으로 조정하였습니다.<br/>
-                                {userData.data.point}P {`->`} {totalPoints}P
+                                {prevPoint}P {`->`} {totalPoints}P
                             </Modal.ModalContent>
                             <Modal.ModalConfirm>
                                 <Modal.ModalConfirmButton onClick={handleCloseSecondModal}>확인</Modal.ModalConfirmButton>
