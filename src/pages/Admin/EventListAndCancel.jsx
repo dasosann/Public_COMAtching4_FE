@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AdminDiv, MainWrapper } from '../../css/pages/Admin/AdminCSS';
 import { AdminHeader } from '../../components/Admin/AdminHeader';
 import styled from 'styled-components';
 import Modal from '../../css/pages/Admin/AdminModalAll';
+import fetchRequest from '../../fetchConfig';
 const L = {};
 L.TitleDiv = styled.div`
     font-size: 32px;
@@ -66,6 +67,13 @@ L.Button = styled.button`
     padding: 12px 0px;
 `
 const EachEventComponent = ({data}) =>{
+    const startDateObj = new Date(data.start);
+    const endDateObj = new Date(data.end);
+    const startDate = `${startDateObj.getFullYear()}-${String(startDateObj.getMonth() + 1).padStart(2, '0')}-${String(startDateObj.getDate()).padStart(2, '0')}`;
+    const startTime= startDateObj.toTimeString().slice(0, 5); // HH:MM
+    const endTime= endDateObj.toTimeString().slice(0, 5);;    // HH:MM
+    console.log("사용해야할데이터",data)
+    console.log ("시작날짜", startDate, "시작시간",startTime, "종료시간",endTime)
     const [showSecondModal, setShowSecondModal] = useState(false);  // 두 번째 모달 표시 여부
     const [showModal, setShowModal] = useState(false);
     const handleCloseModal = () =>{
@@ -82,15 +90,15 @@ const EachEventComponent = ({data}) =>{
         <L.ComponentWrapper>
             <L.FirstDiv><span style={{color:'#828282',fontWeight:'500'}}>실행전</span><span>{data.eventType}</span></L.FirstDiv>
             <L.SecondDiv>
-                <div style={{display:'flex', gap:'16px'}}><span style={{width:'137px'}}>이벤트 시작일:</span><L.SecondSpan style={{width:'177px'}}>{data.startDate}</L.SecondSpan></div>
-                <div style={{display:'flex', gap:'8px', width:'293px'}}><span style={{width:'96px'}}>시작 시각:</span><L.SecondSpan style={{width:'130px'}}>{data.startTime}</L.SecondSpan></div>
-                <div style={{display:'flex', gap:'8px', width:'293px'}}><span style={{width:'107px'}}>종료 시각&nbsp;:</span> <L.SecondSpan style={{width:'151px'}}>{data.endTime}</L.SecondSpan></div>
+                <div style={{display:'flex', gap:'16px'}}><span style={{width:'137px'}}>이벤트 시작일:</span><L.SecondSpan style={{width:'177px'}}>{startDate}</L.SecondSpan></div>
+                <div style={{display:'flex', gap:'8px', width:'293px'}}><span style={{width:'96px'}}>시작 시각:</span><L.SecondSpan style={{width:'130px'}}>{startTime}</L.SecondSpan></div>
+                <div style={{display:'flex', gap:'8px', width:'293px'}}><span style={{width:'107px'}}>종료 시각:</span> <L.SecondSpan style={{width:'130px'}}>{endTime}</L.SecondSpan></div>
             </L.SecondDiv>
             <L.Button onClick={()=>setShowModal(true)}>이벤트 취소</L.Button>
             {showModal && (
                     <Modal.Overlay>
                         <Modal.ModalContainer>
-                            <Modal.ModalContent style={{textAlign:'center'}}>이 이벤트를 정말로 취소하시겠어요? <br/>이벤트는 다음과 같습니다.<br/>'{data.eventType}'<br/>{data.startDate}, {data.startTime}-{data.endTime}</Modal.ModalContent>
+                            <Modal.ModalContent style={{textAlign:'center'}}>이 이벤트를 정말로 취소하시겠어요? <br/>이벤트는 다음과 같습니다.<br/>'{data.eventType}'<br/>{startDate}, {startTime}-{endTime}</Modal.ModalContent>
                             <Modal.ModalConfirm >
                                 <Modal.ModalConfirmButton onClick={handleCloseModal} style={{ borderRight:'1px solid #b3b3b3'}}>취소</Modal.ModalConfirmButton>
                                 <Modal.ModalConfirmButton onClick={handleFirstModalConfirm}>확인</Modal.ModalConfirmButton>
@@ -114,50 +122,64 @@ const EachEventComponent = ({data}) =>{
     )
 }
 const EventListAndCancel = () => {
-    const eventList = [
-        {
-          eventType: "매칭 기회 제공 이벤트",
-          startDate: "2025-04-01",
-          startTime: "10:00",
-          endTime: "12:00"
-        },
-        {
-          eventType: "할인 이벤트",
-          startDate: "2025-05-15",
-          startTime: "09:00 AM",
-          endTime: "18:00"
-        },
-        {
-          eventType: "특별 프로모션",
-          startDate: "2025-06-20",
-          startTime: "11:00 AM",
-          endTime: "14:00"
-        },
-        {
-          eventType: "회원 전용 이벤트",
-          startDate: "2025-07-10",
-          startTime: "01:00 PM",
-          endTime: "15:00"
-        },
-        {
-          eventType: "회원 전용 이벤트",
-          startDate: "2025-07-10",
-          startTime: "01:00 PM",
-          endTime: "16:00"
-        },
-        {
-          eventType: "회원 전용 이벤트",
-          startDate: "2025-07-10",
-          startTime: "01:00 PM",
-          endTime: "03:00"
-        },
-        {
-          eventType: "회원 전용 이벤트",
-          startDate: "2025-07-10",
-          startTime: "01:00 PM",
-          endTime: "03:00 PM"
-        },
-      ];
+    const [eventList,setEventList] = useState([]);
+    useEffect(()=>{
+        const getEventList = async ()=>{
+            try{
+                const response = await fetchRequest('/admin/event/inquiry');
+                const data = await response.json();
+                console.log("불러온 이벤트 리스트",data)
+                setEventList(data.data);
+            }catch(error){
+                console.error("이벤트 리스트 가져와서 처리 중 오류",error);
+            }
+        }
+        getEventList();
+    },[])
+    // const eventList = [
+    //     {
+    //       eventType: "매칭 기회 제공 이벤트",
+    //       startDate: "2025-04-01",
+    //       startTime: "10:00",
+    //       endTime: "12:00"
+    //     },
+    //     {
+    //       eventType: "할인 이벤트",
+    //       startDate: "2025-05-15",
+    //       startTime: "09:00 AM",
+    //       endTime: "18:00"
+    //     },
+    //     {
+    //       eventType: "특별 프로모션",
+    //       startDate: "2025-06-20",
+    //       startTime: "11:00 AM",
+    //       endTime: "14:00"
+    //     },
+    //     {
+    //       eventType: "회원 전용 이벤트",
+    //       startDate: "2025-07-10",
+    //       startTime: "01:00 PM",
+    //       endTime: "15:00"
+    //     },
+    //     {
+    //       eventType: "회원 전용 이벤트",
+    //       startDate: "2025-07-10",
+    //       startTime: "01:00 PM",
+    //       endTime: "16:00"
+    //     },
+    //     {
+    //       eventType: "회원 전용 이벤트",
+    //       startDate: "2025-07-10",
+    //       startTime: "01:00 PM",
+    //       endTime: "03:00"
+    //     },
+    //     {
+    //       eventType: "회원 전용 이벤트",
+    //       startDate: "2025-07-10",
+    //       startTime: "01:00 PM",
+    //       endTime: "03:00 PM"
+    //     },
+    //   ];
     const [adminSelect, setAdminSelect] = useState('가입자관리');
     
     
