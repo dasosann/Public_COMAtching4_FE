@@ -102,7 +102,7 @@ const EachNoticeComponent = ({data}) =>{
                 <Modal.Overlay>
                     <Modal.ModalContainer>
                         <Modal.ModalContent style={{letterSpacing:'-0.03em', textAlign:'center'}}>
-                            <div style={{width:'343px',height:'87px',display:'flex',alignItems:'center',display:'flex',justifyContent:'center',alignItems:'center'}}>공지 예약이<br/> 성공적으로 취소되었습니다.</div>
+                            <div style={{width:'343px',height:'87px',display:'flex',alignItems:'center',justifyContent:'center'}}>공지 예약이<br/> 성공적으로 취소되었습니다.</div>
                         </Modal.ModalContent>
                         <Modal.ModalConfirm>
                             <Modal.ModalConfirmButton onClick={handleCloseSecondModal}>확인</Modal.ModalConfirmButton>
