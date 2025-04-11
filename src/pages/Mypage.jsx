@@ -46,6 +46,7 @@ const Mypage = () => {
         프로필 수정
       </button>
       
+      
       <div className='mypage-point-container'>
         <div className="mypage-flex">
             <img className='mypage-point-icon' src='/assets/MainPayment/coin.svg' alt='포인트 아이콘' />
