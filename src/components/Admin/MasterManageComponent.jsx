@@ -1,8 +1,21 @@
 import React, { useState } from 'react';
 import M from '../../css/components/MasterManageComponentStyle';
 import { useNavigate } from 'react-router-dom';
+import fetchRequest from '../../fetchConfig';
 const MasterManageComponent = () => {
     const navigate= useNavigate();
+    const handle1000Button  = async()=>{
+        try{
+            const data = await fetchRequest('/auth/admin/make1000',{
+                method : 'GET',
+            });
+            console.log("1000원 버튼 응답: ", data);
+            alert("1000원 버튼 활성/비활성화 되었습니다.");
+        }catch(error){
+            console.error("천원 버튼 요청 실패",error);
+            alert("천원 버튼 요청에 실패했습니다.");
+        }
+    }
     return (
         <M.MasterContainer>
             <M.EachContainer onClick={()=>(navigate('/adminpage/payrequest'))}>
@@ -32,6 +45,10 @@ const MasterManageComponent = () => {
             <M.EachContainer onClick={()=>(navigate('/adminpage/myPage/Q&A'))}>
                 <M.TitleText>문의 및 신고목록</M.TitleText>
                 <M.ContentText>가입자로부터 온 문의와 신고 열람</M.ContentText>
+            </M.EachContainer>
+            <M.EachContainer onClick={handle1000Button}>
+                <M.TitleText>1000원 맞추기 버튼</M.TitleText>
+                <M.ContentText>코매칭 마지막 날 진행할 유저포인트 천원 버튼 활성화화</M.ContentText>
             </M.EachContainer>
         </M.MasterContainer>
     );

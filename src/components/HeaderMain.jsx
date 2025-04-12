@@ -4,6 +4,8 @@ import { useState } from "react";
 import styled, { keyframes } from "styled-components"; // 애니메이션용 스타일드 컴포넌트
 import Modal from "../css/pages/Admin/AdminModalAll";
 import fetchRequest from "../fetchConfig";
+import { useRecoilState } from "recoil";
+import { userState } from "../Atoms";
 
 // 애니메이션 정의
 const fadeInSlideUp = keyframes`
@@ -33,8 +35,27 @@ const AnimatedModalContainer = styled.div`
   animation: ${({ isClosing }) =>
     isClosing ? fadeOutSlideDown : fadeInSlideUp} 0.3s ease-out forwards;
 `;
-
+ const fetchUserPoints = async () => {
+    try {
+      const response = await fetchRequest("/auth/user/api/points", {
+        method: "GET",
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setUserInfo((prev)=>({
+          ...prev,
+          point: data.data,
+        })); // 백엔드에서 point 반환 가정
+      } else {
+        console.error("포인트 조회 실패");
+      }
+    } catch (error) {
+      console.error("포인트 조회 중 오류:", error);
+    }
+  };
+  
 function HeaderMain() {
+  const [userInfo, setUserInfo] = useRecoilState(userState); 
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림/닫힘 상태
   const [isClosing, setIsClosing] = useState(false); // 닫힘 애니메이션 상태
@@ -48,14 +69,37 @@ function HeaderMain() {
       alert("계좌번호 복사에 실패했습니다.");
     }
   };
-  const get1000Button = async () => {
-    const res = await fetchRequest("/auth/user/tempay/make1000", {
-      method: "GET", // POST에서 GET으로 변경
-    });
-    console.log("json변환전",res);
-    const data = await res.json();
-    console.log(data)
-  };
+  const fetchUserPoints = async () => {
+    try {
+        const response = await fetchRequest("/auth/user/api/points", {
+            method: "GET",
+        });
+        const data = await response.json();
+        setUserInfo((prev) => ({
+            ...prev,
+            point: data.data,
+        }));
+        return data.data;
+    } catch (error) {
+        console.error("포인트 조회 중 오류:", error);
+        throw error;
+    }
+};
+const get1000Button = async () => {
+  try {
+      const res = await fetchRequest("/auth/user/tempay/make1000", {
+          method: "GET",
+      });
+      const data = await res.json();
+      console.log("1000원 버튼 응답:", data);
+      // 포인트 재조회
+      await fetchUserPoints();
+      alert("1000원 버튼 요청이 완료되었습니다!");
+  } catch (err) {
+      console.error("1000원 버튼 요청 실패:", err);
+      alert("버튼 비활성화 / 이미 사용한 버튼입니다다.");
+  }
+};
   // 모달 열기
   const openModal = () => {
     setIsModalOpen(true);
