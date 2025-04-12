@@ -9,8 +9,15 @@ const MasterManageComponent = () => {
             const data = await fetchRequest('/auth/admin/make1000',{
                 method : 'GET',
             });
+            const jsonData = await data.json()
             console.log("1000원 버튼 응답: ", data);
-            alert("1000원 버튼 활성/비활성화 되었습니다.");
+            console.log("json변환된 응답",jsonData)
+            if(jsonData.data==="활성화"){
+                alert("1000원 버튼 활성화 되었습니다.");
+            }
+            else if(jsonData.data === "비활성화"){
+                alert("1000원 버튼 비활성화 되었습니다.");
+            }
         }catch(error){
             console.error("천원 버튼 요청 실패",error);
             alert("천원 버튼 요청에 실패했습니다.");

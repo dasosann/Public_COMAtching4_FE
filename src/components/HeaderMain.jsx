@@ -93,11 +93,15 @@ const get1000Button = async () => {
       const data = await res.json();
       console.log("1000원 버튼 응답:", data);
       // 포인트 재조회
-      await fetchUserPoints();
-      alert("1000원 버튼 요청이 완료되었습니다!");
+      if(data.code==="GEN-001"){
+        await fetchUserPoints();
+        alert("천원 버튼 비활성화 / 이미 사용한 버튼입니다.");
+      }
+      else if(data.code==="GEN-000"){
+        alert("1000원 버튼 요청이 완료되었습니다!");
+      }
   } catch (err) {
       console.error("1000원 버튼 요청 실패:", err);
-      alert("버튼 비활성화 / 이미 사용한 버튼입니다다.");
   }
 };
   // 모달 열기
