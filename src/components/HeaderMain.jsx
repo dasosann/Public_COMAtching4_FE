@@ -49,9 +49,10 @@ function HeaderMain() {
     }
   };
   const get1000Button = async () => {
-    const res = fetchRequest("/auth/user/tempay/make1000", {
+    const res = await fetchRequest("/auth/user/tempay/make1000", {
       method: "GET", // POST에서 GET으로 변경
     });
+    console.log("json변환전",res);
     const data = await res.json();
     console.log(data)
   };
