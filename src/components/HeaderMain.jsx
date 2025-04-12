@@ -69,22 +69,7 @@ function HeaderMain() {
       alert("계좌번호 복사에 실패했습니다.");
     }
   };
-  const fetchUserPoints = async () => {
-    try {
-        const response = await fetchRequest("/auth/user/api/points", {
-            method: "GET",
-        });
-        const data = await response.json();
-        setUserInfo((prev) => ({
-            ...prev,
-            point: data.data,
-        }));
-        return data.data;
-    } catch (error) {
-        console.error("포인트 조회 중 오류:", error);
-        throw error;
-    }
-};
+  
 const get1000Button = async () => {
   try {
       const res = await fetchRequest("/auth/user/tempay/make1000", {
@@ -94,10 +79,10 @@ const get1000Button = async () => {
       console.log("1000원 버튼 응답:", data);
       // 포인트 재조회
       if(data.code==="GEN-001"){
-        await fetchUserPoints();
         alert("천원 버튼 비활성화 / 이미 사용한 버튼입니다.");
       }
       else if(data.code==="GEN-000"){
+        await fetchUserPoints();
         alert("1000원 버튼 요청이 완료되었습니다!");
       }
   } catch (err) {
