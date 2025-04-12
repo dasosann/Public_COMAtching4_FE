@@ -35,7 +35,14 @@ const AnimatedModalContainer = styled.div`
   animation: ${({ isClosing }) =>
     isClosing ? fadeOutSlideDown : fadeInSlideUp} 0.3s ease-out forwards;
 `;
- const fetchUserPoints = async () => {
+
+  
+function HeaderMain() {
+  const [userInfo, setUserInfo] = useRecoilState(userState); 
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림/닫힘 상태
+  const [isClosing, setIsClosing] = useState(false); // 닫힘 애니메이션 상태
+  const fetchUserPoints = async () => {
     try {
       const response = await fetchRequest("/auth/user/api/points", {
         method: "GET",
@@ -53,12 +60,6 @@ const AnimatedModalContainer = styled.div`
       console.error("포인트 조회 중 오류:", error);
     }
   };
-  
-function HeaderMain() {
-  const [userInfo, setUserInfo] = useRecoilState(userState); 
-  const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림/닫힘 상태
-  const [isClosing, setIsClosing] = useState(false); // 닫힘 애니메이션 상태
   const copyAccountNumber = async () => {
     const accountNumber = "123-456-789012"; // 복사할 계좌번호
     try {
