@@ -79,12 +79,25 @@ const get1000Button = async () => {
       const data = await res.json();
       console.log("1000원 버튼 응답:", data);
       // 포인트 재조회
-      if(data.code==="GEN-001"){
-        alert("천원 버튼 비활성화 / 이미 사용한 버튼입니다.");
-      }
-      else if(data.code==="GEN-000"){
+      if(data.code==="GEN-000"){
         await fetchUserPoints();
         alert("1000원 버튼 요청이 완료되었습니다!");
+        return;
+      }
+      else if(data.status==="CHR-001"){
+        alert("보유 포인트가 1000원 이상입니다.");
+        return;
+
+      }
+      else if(data.status==="CHR-002"){
+        alert("이미 천원 버튼을 사용했습니다..");
+        return;
+
+      }
+      else if(data.status==="CHR-003"){
+        alert("현재 천원 버튼이 비활성화 되어 있습니다.");
+        return;
+
       }
   } catch (err) {
       console.error("1000원 버튼 요청 실패:", err);
