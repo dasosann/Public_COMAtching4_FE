@@ -6,7 +6,13 @@ import Modal from "../css/pages/Admin/AdminModalAll";
 import fetchRequest from "../fetchConfig";
 import { useRecoilState } from "recoil";
 import { userState } from "../Atoms";
-
+const AccountLine = styled.div`
+  display: block;
+  margin-bottom: 0.2rem; /* 줄 간격 조정 */
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: -0.03em;
+`;
 // 애니메이션 정의
 const fadeInSlideUp = keyframes`
   from {
@@ -61,7 +67,7 @@ function HeaderMain() {
     }
   };
   const copyAccountNumber = async () => {
-    const accountNumber = "123-456-789012"; // 복사할 계좌번호
+    const accountNumber = "1001-4935-3543"; // 복사할 계좌번호
     try {
       await navigator.clipboard.writeText(accountNumber);
       alert("계좌번호가 복사되었습니다!"); // 사용자 피드백
@@ -131,7 +137,7 @@ const get1000Button = async () => {
       </div>
       <div>
         <div className={styles.iconWrapper}>
-          <img
+          <img style={{width:'17px', height:'17px'}}
             className={styles.iconImage}
             src="/assets/Mainpage/kr-currency.svg"
             alt="알림 아이콘"
@@ -153,15 +159,11 @@ const get1000Button = async () => {
                   paddingBottom: "30px",
                 }}
               >
-                <Modal.EventTextDiv
-                  style={{ fontSize: "18px" }}
-                  onClick={copyAccountNumber}
-                >
-                  입금 계좌
-                  <br />
-                  국민은행 123-456-789012 <br />
-                  (예금주: 천승환)
-                </Modal.EventTextDiv>
+                  <Modal.EventTextDiv onClick={copyAccountNumber}   style={{ fontSize: "18px" }}>
+                    <AccountLine>입금 계좌</AccountLine>
+                    <AccountLine>토스뱅크 1001-4935-3543</AccountLine>
+                    <AccountLine>(예금주: 서승준)</AccountLine>
+                  </Modal.EventTextDiv>
                 <button
                   style={{
                     backgroundColor: "#ff",
