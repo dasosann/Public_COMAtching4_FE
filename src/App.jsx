@@ -53,6 +53,7 @@ import NoticeRegisterComplete from "./pages/Admin/NoticeRegisterComplete.jsx";
 import AdminPayRequest from "./pages/Admin/AdminPayRequest.jsx";
 import NoticeListAndCancel from "./pages/Admin/NoticeListAndCancel.jsx";
 import NoticeHistory from "./pages/Admin/NoticeHistory.jsx";
+import SearchMyPage from "./pages/SearchMyPage/SearchMyPage.jsx";
 export default function App() {
   return (
     <RecoilRoot>
@@ -141,6 +142,7 @@ export default function App() {
             <Route path="/charge" element={<Charge />} />
             <Route path="/heart" element={<Heart />} />
             <Route path="/event" element={<EventModal />} />
+            <Route path="/search-mylist" element={<SearchMyPage />} />
 
             <Route path="/test" element={<PaymentCallTest />} />
             {/* <Route path="/test" element={<MainPaymentModal />} /> */}

@@ -136,9 +136,9 @@ function MainpageLogin() {
     navigate("/matching");
   };
   const handleVisitcheckresult = () => {
-    navigate("/check-result");
+    navigate("/search-mylist");
   };
-
+  
   // 충전 요청
   const handleChargeRequest = async () => {
     const response = await instance.get("/user/charge/request");
