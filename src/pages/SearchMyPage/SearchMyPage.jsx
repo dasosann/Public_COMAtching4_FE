@@ -1,12 +1,17 @@
 import React from 'react';
 import Background from '../../components/Background';
 import E from '../../css/pages/MyPageSearch/SearchMyPageStyle'
+import { useNavigate } from 'react-router-dom';
 const SearchMyPage = () => {
+    const navigate = useNavigate();
+    const handleBackArrow = () => {
+        navigate("/login");
+    };
     return (
         <E.MainContainer>
             <Background/>
             <E.BackArrowDiv>
-                <img src="/assets/MainPayment/arrow-left.svg" alt="화살표" />
+                <img src="/assets/MainPayment/arrow-left.svg" alt="화살표" onClick={handleBackArrow}/>
             </E.BackArrowDiv>
             <E.HeaderContainer>
                 <E.MainSpan>조회하기</E.MainSpan>
