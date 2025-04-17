@@ -64,5 +64,58 @@ E.MatchingButtonDiv = styled.div`
     cursor: pointer;
     
 `
+E.BackgroundBlur = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px; /* 흐림 효과 영역 높이 */
+  z-index: 1; /* 콘텐츠 아래에 배치 */
+  overflow: hidden; /* 넘치는 부분 숨김 */
+
+  /* 첫 번째 레이어: 기본 흐림 효과 */
+  background: linear-gradient(
+    180deg,
+    rgba(255, 250, 251, 0) 0%, /* 상단 투명 */
+    rgba(255, 250, 251, 0.7) 100% /* 하단 불투명도 낮춤 */
+  );
+  backdrop-filter: blur(1px); /* 기본 흐림 */
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0.9;
+
+  /* 두 번째 레이어: 중간 흐림 */
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px; /* 중간 레이어 높이 */
+    background: linear-gradient(
+      180deg,
+      rgba(255, 250, 251, 0) 0%,
+      rgba(255, 250, 251, 0.6) 100%
+    );
+    backdrop-filter: blur(4px); /* 중간 흐림 */
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  /* 세 번째 레이어: 하단 강한 흐림 */
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px; /* 하단 레이어 높이 */
+    background: linear-gradient(
+      180deg,
+      rgba(255, 250, 251, 0) 0%,
+      rgba(255, 250, 251, 0.8) 100%
+    );
+    backdrop-filter: blur(8px); /* 강한 흐림 */
+    -webkit-backdrop-filter: blur(8px);
+  }
+`;
 export default E;
 
