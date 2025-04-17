@@ -3,32 +3,34 @@ import styled from "styled-components";
 const C = {};
 C.ProfileContainer = styled.div`
     width: 100%;
-    height: 203px;
+    min-height: 203px;
+    height: auto;
     display: flex;
     flex-direction: column;
 `
 C.InformationContainer = styled.div`
     box-sizing: border-box;
-    height: 161px;
     width: 100%;
     padding: 16px 16px;
     display: flex;
     flex-direction: column;
-    gap: 16px ;
+    gap: 16px;
     backdrop-filter: blur(50px);
     background: rgba(255, 255, 255, 0.8);
     border: 1px solid #e5e5e5;
     clip-path: polygon(
-    16px 0, /* 상단 좌측 모서리 제외 */
-    calc(100% - 16px) 0, /* 상단 우측 모서리 제외 */
-    100% 16px, /* 우측 상단 모서리 제외 */
-    100% calc(100% - 16px), /* 우측 하단 모서리 제외 */
-    calc(100% - 16px) 100%, /* 하단 우측 모서리 제외 */
-    16px 100%, /* 하단 좌측 모서리 제외 */
-    0 calc(100% - 16px), /* 좌측 하단 모서리 제외 */
-    0 16px /* 좌측 상단 모서리 제외 */
+        16px 0,
+        calc(100% - 16px) 0,
+        100% 16px,
+        100% calc(100% - 16px),
+        calc(100% - 16px) 100%,
+        16px 100%,
+        0 calc(100% - 16px),
+        0 16px
     );
-`
+    height: ${props => (props.isExpanded ? 'auto' : '161px')}; /* 확장 시 높이 auto */
+    overflow: ${props => (props.isExpanded ? 'visible' : 'hidden')};
+`;
 C.NameDiv  = styled.div`
     height: 20px;
     text-align: start;
@@ -38,12 +40,17 @@ C.NameDiv  = styled.div`
     display: flex;
     justify-content: space-between;
     margin-bottom: 4px;
+    img {
+        cursor: pointer;
+        transform: ${props => (props.isExpanded ? 'rotate(180deg)' : 'rotate(0deg)')};
+        transition: transform 0.4s ease-in-out; /* 화살표 회전 부드럽게 */
+    }
 `
 C.AgeAndMajorWrapper = styled.div`
     display: flex;
     width: 100%;
     height: 27px;
-    gap: 28px;
+    gap: 40px;
     text-align: start;
 `
 C.AgeWrapper = styled.div`
@@ -55,6 +62,7 @@ C.AgeWrapper = styled.div`
 `
 C.MajorWrapper = styled(C.AgeWrapper)`
     width: 160px;
+    gap: 4px;
 `
 C.GraySpan = styled.span`
     font-size: 10px;
@@ -89,6 +97,8 @@ C.HobbyButton = styled.div`
 C.HobbyButtonWrapper = styled.div`
   width: 100%;
   display: flex;
+  overflow: hidden;
+  height: ${props => (props.isExpanded ? 'auto' : '28px')}; /* 확장 시 높이 auto */
   flex-wrap: wrap; /* 버튼이 길어지면 다음 줄로 넘어감 */
   gap: 4px;
 `;

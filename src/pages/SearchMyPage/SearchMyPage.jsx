@@ -1,13 +1,23 @@
 import React, { useEffect, useRef } from 'react';
 import Background from '../../components/Background';
 import E from '../../css/pages/MyPageSearch/SearchMyPageStyle';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import SearchNoMatching from './SearchNoMatching';
 import SearchYesMatching from './SearchYesMatching';
 
 const SearchMyPage = () => {
   const navigate = useNavigate();
   const mainContainerRef = useRef(null);
+  const { pathname } = useLocation(); 
+  // 페이지 로드 및 경로 변경 시 스크롤을 맨 위로 이동
+  useEffect(() => {
+    // 브라우저 스크롤 복원 비활성화
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    // 스크롤을 맨 위로 이동
+    window.scrollTo(0, 0);
+  }, [pathname]); // 경로 변경 시 실행
 
   useEffect(() => {
     if (mainContainerRef.current) {
