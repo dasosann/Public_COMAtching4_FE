@@ -2,7 +2,7 @@ import React from "react";
 import "../../css/components/MatchProfiles.css"; 
 import { getArrowByFrequency, mapHobbiesWithIcons }  from "../../utils/profileUtils.js"
 
-const ProfileCard = ({ profile }) => {
+const ProfileCard  = ({ profile }) => {
   return (
     <div  className="profile-box">
     <p>
