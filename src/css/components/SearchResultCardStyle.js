@@ -28,9 +28,9 @@ C.InformationContainer = styled.div`
         0 calc(100% - 16px),
         0 16px
     );
-    height: ${props => (props.isExpanded ? 'auto' : '161px')}; /* 확장 시 높이 auto */
     overflow: ${props => (props.isExpanded ? 'visible' : 'hidden')};
-`;
+    transition: height 0.4s ease-in-out; /* 높이 변화에 애니메이션 적용 */
+`
 C.NameDiv  = styled.div`
     height: 20px;
     text-align: start;
@@ -62,6 +62,11 @@ C.AgeWrapper = styled.div`
 `
 C.MajorWrapper = styled(C.AgeWrapper)`
     width: 160px;
+    gap: 4px;
+`
+C.LastWrapper = styled(C.AgeWrapper)`
+    width: 100%;
+    margin-bottom:15px;
     gap: 4px;
 `
 C.GraySpan = styled.span`

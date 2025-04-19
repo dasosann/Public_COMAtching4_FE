@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 const Y = {};
 Y.SearchInputWrapper = styled.div`
@@ -123,6 +123,10 @@ Y.CloseButton = styled.button`
     background-color: #999;
   }
 `;
+const fadeIn = keyframes`
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+`;
 Y.CheckIcon = styled.img`
   position: absolute;
   top: 15.5px;
@@ -131,4 +135,36 @@ Y.CheckIcon = styled.img`
   height: 16px;
   display: ${props => (props.isActive ? 'block' : 'none')}; /* 활성화 시에만 표시 */
 `;
+Y.MessageContainer = styled.div`
+  display: flex;
+  margin-top: 32px;
+  flex-direction: column;
+  align-items: center;
+`
+Y.MoveText = styled.div`
+  font-size: 14px;
+  font-weight: 500;
+  color: #808080;
+  line-height: 160%;
+  animation: ${fadeIn} 0.5s ease-in-out forwards;
+`
+Y.MatchingButton = styled.div`
+  cursor: pointer;
+  width: 136px;
+  height: 38px;
+  background: conic-gradient(from -36.07deg at 64.06% -102.34%, #E83ABC 0deg, rgba(255, 119, 94, 0.1) 0.04deg, rgba(255, 77, 97, 0.6) 169.2deg, #E83ABC 360deg);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 99px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  margin-top: 16px;
+  margin-bottom: 50px;
+`
+
 export default Y;

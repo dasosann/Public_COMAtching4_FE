@@ -33,7 +33,7 @@ const SearchMyPage = () => {
   return (
     <E.MainContainer ref={mainContainerRef}>
       <Background/>
-      <E.BackgroundBlur/>
+      {/* <E.BackgroundBlur/>  */}
       <E.BackArrowDiv>
         <img src="/assets/MainPayment/arrow-left.svg" alt="화살표" onClick={handleBackArrow} />
       </E.BackArrowDiv>
