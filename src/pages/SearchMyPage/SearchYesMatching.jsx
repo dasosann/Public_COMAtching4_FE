@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import SearchResultCard from '../../components/SearchResultCard';
 import Y from '../../css/pages/MyPageSearch/SearchYesMatchingStyle';
 
@@ -52,32 +52,91 @@ const TypeSelectModal = ({ setSortType, setIsModalOpen, sortType }) => {
   );
 };
 
-const SearchYesMatching = () => {
-  const [sortType, setSortType] = useState("오래된순");
+const SearchYesMatching = ({ matchingData }) => {
+  const [sortType, setSortType] = useState('오래된순');
   const [textStage, setTextStage] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(''); // 검색어 상태 추가
   const messageContainerRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [sortedProfiles, setSortedProfiles] = useState([]);
+
+  // SearchResultCard에 맞게 데이터 매핑
+  const mappedProfiles = useMemo(() => {
+    return matchingData.map((profile) => ({
+      id: profile.socialId,
+      nickname: profile.nickname, // username → nickname
+      major: profile.major,
+      mbti: profile.mbti,
+      age: profile.age,
+      contact_id: profile.contact_id, // contactId → contact_id
+      song: profile.song,
+      comment: profile.comment,
+      hobby: profile.hobby,
+      contactFrequency: profile.contactFrequency,
+      matchedAt: profile.matchedAt, // 원본 필드 유지
+    }));
+  }, [matchingData]);
+
+  // 검색어로 프로필 필터링
+  const filteredProfiles = useMemo(() => {
+    if (!searchQuery.trim()) return matchingData;
+    const query = searchQuery.toLowerCase();
+    return matchingData.filter((profile) => {
+      return (
+        profile.age.toString().includes(query) ||
+        profile.major.toLowerCase().includes(query) ||
+        profile.nickname.toLowerCase().includes(query) ||
+        profile.mbti.toLowerCase().includes(query) ||
+        profile.hobby.some((hobby) =>
+          typeof hobby === 'string' ? hobby.toLowerCase().includes(query) : false
+        )
+      );
+    });
+  }, [searchQuery, matchingData]);
+
+  // sortType 또는 filteredProfiles 변경 시 프로필 정렬
+  useEffect(() => {
+    const sortProfiles = () => {
+      const profilesCopy = [...filteredProfiles];
+      switch (sortType) {
+        case '최신순':
+          return profilesCopy.reverse(); // 배열 역순
+        case '오래된순':
+          return profilesCopy; // 원본 순서 유지
+        case '나이순':
+          return profilesCopy.sort((a, b) => a.age - b.age); // 오름차순
+        default:
+          return profilesCopy;
+      }
+    };
+    setSortedProfiles(sortProfiles());
+  }, [sortType, filteredProfiles]);
+
+  // 검색어 입력 핸들러
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
 
   useEffect(() => {
-    console.log("Setting up IntersectionObserver");
+    console.log('Setting up IntersectionObserver');
     const observer = new IntersectionObserver(
       ([entry]) => {
-        console.log("IntersectionObserver entry:", entry.isIntersecting, "BoundingClientRect:", entry.boundingClientRect);
+        console.log('IntersectionObserver entry:', entry.isIntersecting, 'BoundingClientRect:', entry.boundingClientRect);
         if (entry.isIntersecting) {
-          console.log("MessageContainer is visible");
+          console.log('MessageContainer is visible');
           setIsVisible(true);
           observer.disconnect();
         }
       },
-      { threshold: 0.1 } // 요소의 10%가 보일 때 트리거
+      { threshold: 0.1 }
     );
 
     if (messageContainerRef.current) {
-      console.log("Observing MessageContainer:", messageContainerRef.current);
+      console.log('Observing MessageContainer:', messageContainerRef.current);
       observer.observe(messageContainerRef.current);
     } else {
-      console.log("messageContainerRef.current is null");
+      console.log('messageContainerRef.current is null');
     }
 
     return () => {
@@ -92,73 +151,69 @@ const SearchYesMatching = () => {
     if (messageContainerRef.current) {
       setTimeout(() => {
         const startTime = performance.now();
-        const duration = 1000; // 애니메이션 지속 시간 (1초)
+        const duration = 1000;
         const startScroll = window.scrollY;
         const rect = messageContainerRef.current.getBoundingClientRect();
-        const targetScroll = window.scrollY + rect.top + rect.height - window.innerHeight; // MessageContainer 하단
+        const targetScroll = window.scrollY + rect.top + rect.height - window.innerHeight;
 
-        console.log("Scroll Info:", {
+        console.log('Scroll Info:', {
           startScroll,
           rectTop: rect.top,
           rectHeight: rect.height,
           windowHeight: window.innerHeight,
-          targetScroll
+          targetScroll,
         });
 
         const animateScroll = (currentTime) => {
           const elapsed = currentTime - startTime;
           const progress = Math.min(elapsed / duration, 1);
-          const easeInOut = progress * (2 - progress); // easeInOutQuad
+          const easeInOut = progress * (2 - progress);
           const scrollPosition = startScroll + (targetScroll - startScroll) * easeInOut;
 
           window.scrollTo({ top: scrollPosition, behavior: 'auto' });
-          console.log("Scrolling: progress:", progress, "scrollPosition:", scrollPosition);
+          console.log('Scrolling: progress:', progress, 'scrollPosition:', scrollPosition);
 
           if (progress < 1) {
             requestAnimationFrame(animateScroll);
           } else {
-            // 스크롤 완료 후 위치 확인 및 보정
             const finalRect = messageContainerRef.current.getBoundingClientRect();
             const finalTarget = window.scrollY + finalRect.top + finalRect.height - window.innerHeight;
             if (Math.abs(window.scrollY - finalTarget) > 10) {
-              console.log("Correcting scroll position to:", finalTarget);
+              console.log('Correcting scroll position to:', finalTarget);
               window.scrollTo({ top: finalTarget, behavior: 'smooth' });
             }
-            console.log("Scroll animation completed");
+            console.log('Scroll animation completed');
           }
         };
 
         requestAnimationFrame(animateScroll);
-      }, 100); // 100ms 지연
+      }, 100);
     }
   };
 
   useEffect(() => {
-    console.log("isVisible:", isVisible, "textStage:", textStage);
+    console.log('isVisible:', isVisible, 'textStage:', textStage);
     if (!isVisible) return;
 
-    // 텍스트 애니메이션: textStage 전환
     const interval = setInterval(() => {
       setTextStage((prevStage) => {
         if (prevStage === 0) {
-          console.log("Transition to textStage 1");
+          console.log('Transition to textStage 1');
           return 1;
         }
         if (prevStage === 1) {
-          console.log("Transition to textStage 2 - Button should render");
+          console.log('Transition to textStage 2 - Button should render');
           return 2;
         }
-        return prevStage; // textStage 2에서 유지
+        return prevStage;
       });
-    }, 1000); // 1000ms 간격으로 전환
+    }, 1000);
 
-    // 초기 스크롤
     scrollToMessageContainerBottom();
 
-    return () => clearInterval(interval); // cleanup
+    return () => clearInterval(interval);
   }, [isVisible]);
 
-  // textStage 변경 시 스크롤 갱신
   useEffect(() => {
     if (isVisible && textStage > 0) {
       scrollToMessageContainerBottom();
@@ -176,47 +231,8 @@ const SearchYesMatching = () => {
     };
   }, [isModalOpen]);
 
-  const sampleProfiles = [
-    {
-      nickname: "JaneDoe",
-      major: "컴퓨터공학과",
-      mbti: "INTJ",
-      age: 22,
-      admissionYear: 23,
-      contact_id: "@janedoe",
-      song: "IU - Love Poem",
-      comment: "안녕하세요!!",
-      hobby: ["해외여행"],
-      contactFrequency: "보통",
-    },
-    {
-      nickname: "JohnSmith",
-      major: "경영학과",
-      mbti: "ENTP",
-      age: 24,
-      admissionYear: 21,
-      contact_id: "@johnsmith",
-      song: "Coldplay - Fix You",
-      comment: "새로운 도전을 즐깁니다!",
-      hobby: ["인디음악", "사랑", "인디음악", "사랑", "인디음악", "사랑", "인디음악", "사랑"],
-      contactFrequency: "자주",
-    },
-    {
-      nickname: "AliceKim",
-      major: "심리학과",
-      mbti: "INFJ",
-      age: 23,
-      admissionYear: 22,
-      contact_id: "@alicekim",
-      song: "BTS - Spring Day",
-      comment: "심리학이 흥미로워요!",
-      hobby: ["영화"],
-      contactFrequency: "가끔",
-    },
-  ];
-
   const handleMatchButtonClick = () => {
-    alert("매칭 페이지로 이동합니다!");
+    alert('매칭 페이지로 이동합니다!');
     // 예: navigate('/matching');
   };
 
@@ -225,6 +241,8 @@ const SearchYesMatching = () => {
       <Y.SearchInputWrapper>
         <Y.SearchInput
           placeholder="닉네임, 나이, 전공, MBTI 등을 입력하세요"
+          value={searchQuery}
+          onChange={handleSearchChange}
         />
         <Y.SearchIcon src="/assets/search.svg" alt="검색" />
       </Y.SearchInputWrapper>
@@ -233,8 +251,8 @@ const SearchYesMatching = () => {
         <span>{sortType}</span>
       </Y.SortDiv>
       <Y.CardWrapper>
-        {sampleProfiles.map((profile, index) => (
-          <SearchResultCard key={index} profile={profile} />
+        {sortedProfiles.map((profile) => (
+          <SearchResultCard key={profile.id} profile={profile} />
         ))}
       </Y.CardWrapper>
       <Y.MessageContainer ref={messageContainerRef}>
