@@ -11,7 +11,7 @@ E.MainContainer = styled.div`
 E.BackArrowDiv = styled.div`
     width: 100%;
     text-align: start;
-    margin-top: 1.72vh;
+    margin-top: 1.9vh;
 `
 E.HeaderContainer = styled.div`
     display: flex;
