@@ -52,7 +52,7 @@ const TypeSelectModal = ({ setSortType, setIsModalOpen, sortType }) => {
   );
 };
 
-const SearchYesMatching = ({ matchingData }) => {
+const SearchYesMatching = ({ matchingData,userNumber}) => {
   const [sortType, setSortType] = useState('오래된순');
   const [textStage, setTextStage] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -277,7 +277,7 @@ const SearchYesMatching = ({ matchingData }) => {
         )}
         {isVisible && (textStage === 1 || textStage === 2) && (
           <Y.MoveText key="stage1" data-stage="stage1">
-            아직 732명이 겨울이오길님을 기다리고 있어요!
+            아직 {userNumber}명이 겨울이오길님을 기다리고 있어요!
           </Y.MoveText>
         )}
         {isVisible && textStage === 2 && (

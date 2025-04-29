@@ -10,6 +10,7 @@ const SearchMyPage = () => {
   const navigate = useNavigate();
   const mainContainerRef = useRef(null);
   const [loading, setLoading] = useState(false);
+  const [userNumber,setUserNumber] = useState(0);
   const { pathname } = useLocation();
   const [matchingData, setMatchingData] = useState([
     {
@@ -50,6 +51,21 @@ const SearchMyPage = () => {
     },
   ]);
   console.log("매칭데이터", matchingData)
+  const getParticipants = async () =>{
+    try{
+      const userNumber = await fetchRequest('/api/participations',{
+        method:"GET",
+      });
+      const data = await userNumber.json();
+      console.log("참가자수", data)
+      setUserNumber(data.data);
+    }catch(error){
+      console.error("사용자 수 가져오는 중 오류 발생",error)
+    }
+  }
+  useEffect(() => {
+    getParticipants();
+  }, []);
   // 페이지 로드 및 경로 변경 시 스크롤을 맨 위로 이동
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
@@ -109,9 +125,9 @@ const SearchMyPage = () => {
       {loading ? (
         <div style={{ textAlign: 'center', padding: '20px' }}>로딩 중...</div>
       ) : matchingData.length === 0 ? (
-        <SearchNoMatching />
+        <SearchNoMatching userNumber={userNumber} />
       ) : (
-        <SearchYesMatching matchingData={matchingData} />
+        <SearchYesMatching matchingData={matchingData} userNumber={userNumber}/>
       )}
     </E.MainContainer>
   );
