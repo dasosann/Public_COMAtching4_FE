@@ -60,6 +60,7 @@ const SearchYesMatching = ({ matchingData }) => {
   const messageContainerRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
   const [sortedProfiles, setSortedProfiles] = useState([]);
+  const [filteredProfiles, setFilteredProfiles] = useState(matchingData); // 필터링된 프로필
 
   // SearchResultCard에 맞게 데이터 매핑
   const mappedProfiles = useMemo(() => {
@@ -79,21 +80,29 @@ const SearchYesMatching = ({ matchingData }) => {
   }, [matchingData]);
 
   // 검색어로 프로필 필터링
-  const filteredProfiles = useMemo(() => {
-    if (!searchQuery.trim()) return matchingData;
+  const handleSearchClick = () => {
+    console.log('Search query:', searchQuery);
+    if (!searchQuery.trim()) {
+      setFilteredProfiles(mappedProfiles);
+      return;
+    }
     const query = searchQuery.toLowerCase();
-    return matchingData.filter((profile) => {
-      return (
+    const result = mappedProfiles.filter((profile) => {
+      const hobbies = Array.isArray(profile.hobby) ? profile.hobby : [];
+      const matches = (
         profile.age.toString().includes(query) ||
-        profile.major.toLowerCase().includes(query) ||
-        profile.nickname.toLowerCase().includes(query) ||
-        profile.mbti.toLowerCase().includes(query) ||
-        profile.hobby.some((hobby) =>
-          typeof hobby === 'string' ? hobby.toLowerCase().includes(query) : false
-        )
+        (profile.major || '').toLowerCase().includes(query) ||
+        (profile.nickname || '').toLowerCase().includes(query) ||
+        (profile.mbti || '').toLowerCase().includes(query) ||
+        hobbies.some((hobby) => (hobby || '').toLowerCase().includes(query))
       );
+      console.log(`Profile ${profile.id} matches:`, matches, 'Profile data:', profile);
+      return matches;
     });
-  }, [searchQuery, matchingData]);
+    console.log('Filtered profiles:', result);
+    setFilteredProfiles(result);
+  };
+
 
   // sortType 또는 filteredProfiles 변경 시 프로필 정렬
   useEffect(() => {
@@ -244,7 +253,7 @@ const SearchYesMatching = ({ matchingData }) => {
           value={searchQuery}
           onChange={handleSearchChange}
         />
-        <Y.SearchIcon src="/assets/search.svg" alt="검색" />
+        <Y.SearchIcon src="/assets/search.svg" alt="검색" onClick={handleSearchClick} role='button'/>
       </Y.SearchInputWrapper>
       <Y.SortDiv onClick={() => setIsModalOpen(true)}>
         <Y.SortImg src="/assets/sortbutton.svg" alt="정렬" />
