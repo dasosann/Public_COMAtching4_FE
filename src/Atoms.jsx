@@ -1,4 +1,5 @@
 import { atom } from "recoil";
+import { recoilPersist } from "recoil-persist";
 
 export const charge = atom({
   key: "charge",
@@ -58,7 +59,10 @@ export const userState = atom({
   },
 });
 
-
+const { persistAtom } = recoilPersist({
+  key: 'adminUserState', // localStorage 키
+  storage: localStorage, // 또는 sessionStorage
+});
 export const adminUserState = atom({
   key: "adminUserState",
   default: {
@@ -69,6 +73,7 @@ export const adminUserState = atom({
     university:"",
     universityAuth:"",
   },
+  effects_UNSTABLE: [persistAtom], // 상태 지속성 추가
 });
 export const selectedMBTIState = atom({
   key: "selectedMBTIState",

@@ -27,7 +27,7 @@ const AdminProtectedRoute = ({ children, allowedAuthorities }) => {
   // allowedAuthorities가 비어있지 않고, 현재 authority가 목록에 포함되지 않으면 접근 불가
   if (allowedAuthorities?.length > 0 && !allowedAuthorities.includes(role)) {
     alert("권한이 없습니다. 접근이 제한됩니다.");
-    return <Navigate to="/adminpage" replace />;
+    return <Navigate to="/adminpage/myPage" replace />;
   }
 
   // 접근 허용
