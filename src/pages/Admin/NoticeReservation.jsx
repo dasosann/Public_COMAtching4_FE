@@ -15,11 +15,15 @@ const NoticeReservation = () => {
     const [endTime, setEndTime] = useState("선택");
     const [endMinutes, setEndMinutes] = useState("선택");
     const [showModal, setShowModal] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    // 새로운 상태 추가: 제목과 내용
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
+
     const handleEndTimeSelect = (value) => setEndTime(value);
     const handleEndMinutesSelect = (value) => setEndMinutes(value);
     const location = useLocation();
     const handleTimeSelect = (value) => setSelectedTime(value);
-    const [errorMessage, setErrorMessage] = useState("");
     const handleMinutesSelect = (value) => setSelectedMinutes(value);
     const hours = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, '0'));
     const minutes = Array.from({ length: 6 }, (_, i) => String(i * 10).padStart(2, '0'));
@@ -31,8 +35,18 @@ const NoticeReservation = () => {
         setShowModal(false);
     };
 
-    const handleConfirm = () => {
-        // 시간 선택이 올바른지 체크
+    const handleConfirm = async () => {
+        // 제목 또는 내용이 비어 있는지 확인
+        if (!title.trim() || !content.trim()) {
+            setErrorMessage(
+                <>
+                    공지사항 제목과 내용을 <br /> 모두 입력해주세요.
+                </>
+            );
+            setShowModal(true);
+            return;
+        }
+
         const startHour = parseInt(selectedTime, 10);
         const startMin = parseInt(selectedMinutes, 10);
         const endHour = parseInt(endTime, 10);
@@ -51,9 +65,8 @@ const NoticeReservation = () => {
             const currentHour = now.getHours();
             const currentMinute = now.getMinutes();
             const currentTotal = currentHour * 60 + currentMinute;
-            const minAllowedStartTotal = currentTotal + 10; // 현재 시간 + 10분
+            const minAllowedStartTotal = currentTotal + 10;
 
-            // 현재 시간보다 이전이거나 10분 이내인지 확인
             if (startTotal < minAllowedStartTotal) {
                 setErrorMessage(
                     <>
@@ -66,7 +79,6 @@ const NoticeReservation = () => {
             }
         }
 
-        // 시작 시간이 종료 시간보다 같거나 늦을 수 없도록 체크
         if (startTotal >= endTotal) {
             setErrorMessage(
                 <>
@@ -77,7 +89,6 @@ const NoticeReservation = () => {
             return;
         }
 
-        // 선택된 날짜와 시간 결합
         const today = new Date();
         let selectedDateObject;
 
@@ -94,38 +105,79 @@ const NoticeReservation = () => {
         selectedDateObject.setHours(startHour, startMin, 0, 0);
         const startISOString = new Date(selectedDateObject).toISOString();
 
-        // 한국 시간 (UTC+9) 맞추기
         const timeZoneOffset = 9 * 60 * 60 * 1000;
         const startKoreanTime = new Date(new Date(startISOString).getTime() + timeZoneOffset);
 
-        // 종료 시간 계산
         const endDateObject = new Date(selectedDateObject);
         endDateObject.setHours(endHour, endMin, 0, 0);
         const endISOString = new Date(endDateObject).toISOString();
 
-        // 한국 시간 (UTC+9) 맞추기
         const endKoreanTime = new Date(new Date(endISOString).getTime() + timeZoneOffset);
 
-        // UTC+9 시간으로 변환된 ISO 형식의 날짜 문자열
         const formattedStartTime = startKoreanTime.toISOString().slice(0, 19);
         const formattedEndTime = endKoreanTime.toISOString().slice(0, 19);
 
-        console.log(formattedStartTime);
-        console.log(formattedEndTime);
+        // 백엔드로 전송할 데이터 구성
+        const noticeData = {
+            title: title,
+            content: content,
+            postedAt: formattedStartTime,
+            closedAt: formattedEndTime,
+        };
+        console.log("백엔드로 보내는 데이터 로그", noticeData)
+        try {
+            const response = await fetch('/auth/admin/notice', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(noticeData),
+            });
 
-        navigate("/adminpage/myPage/notice/complete");
+            if (!response.ok) {
+                throw new Error('공지사항 등록에 실패했습니다.');
+            }
+
+            const data = await response.json();
+            console.log('공지사항 등록 성공:', data);
+            navigate("/adminpage/myPage/notice/complete");
+        } catch (error) {
+            console.error('Error:', error);
+            setErrorMessage(
+                <>
+                    공지사항 등록 중 오류가 발생했습니다. <br />
+                    다시 시도해주세요.
+                </>
+            );
+            setShowModal(true);
+        }
     };
 
     return (
         <div>
             <AdminHeader setAdminSelect={setAdminSelect} adminSelect={adminSelect} />
-            <MainWrapper>
-                <AdminDiv style={{ cursor: 'default', paddingTop: '26px', paddingRight: '24px' }}>
-                    <E.TitleDiv>공지사항 등록</E.TitleDiv>
-                    <E.SubTitleDiv>아래에 공지 내용을 입력해주세요.</E.SubTitleDiv>
-                    <E.NoticeInput />
-                </AdminDiv>
-                <AdminDiv style={{ padding: '24px', cursor: 'default' }}>
+            <MainWrapper style={{ flexDirection: 'row' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', flex: 444 ,minWidth:'534px' }}>
+                    <AdminDiv style={{ cursor: 'default', paddingTop: '26px', paddingRight: '24px' }}>
+                        <E.TitleDiv>공지사항 제목 등록</E.TitleDiv>
+                        <E.SubTitleDiv>아래에 공지사항 제목을 입력해주세요.</E.SubTitleDiv>
+                        <E.NoticeInput
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            placeholder="제목을 입력하세요"
+                        />
+                    </AdminDiv>
+                    <AdminDiv style={{ cursor: 'default', paddingRight: '24px' }}>
+                        <E.TitleDiv>내용 등록</E.TitleDiv>
+                        <E.SubTitleDiv>아래에 공지사항 내용을 입력하세요.</E.SubTitleDiv>
+                        <E.ContentInput
+                            value={content}
+                            onChange={(e) => setContent(e.target.value)}
+                            placeholder="내용을 입력하세요"
+                        />
+                    </AdminDiv>
+                </div>
+                <AdminDiv style={{ padding: '82px 24px', cursor: 'default', flex: 619 }}>
                     <E.FlexWrapper>
                         {['오늘', '내일', '모레'].map((date, i) => (
                             <E.DateButton key={i} isActive={selectedDate === date} onClick={() => handleDateClick(date)}>
