@@ -160,7 +160,7 @@ const NoticeReservation = () => {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', flex: 444 ,minWidth:'534px' }}>
                     <AdminDiv style={{ cursor: 'default', paddingTop: '26px', paddingRight: '24px' }}>
                         <E.TitleDiv>공지사항 제목 등록</E.TitleDiv>
-                        <E.SubTitleDiv>아래에 공지사항 제목을 입력해주세요.</E.SubTitleDiv>
+                        <E.SubTitleDiv>아래에 공지사항 제목을 입력해주세요.( 한줄에 공백 포함 15글자 넘어가면 줄바꿈 됨 )</E.SubTitleDiv>
                         <E.NoticeInput
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
@@ -169,7 +169,7 @@ const NoticeReservation = () => {
                     </AdminDiv>
                     <AdminDiv style={{ cursor: 'default', paddingRight: '24px' }}>
                         <E.TitleDiv>내용 등록</E.TitleDiv>
-                        <E.SubTitleDiv>아래에 공지사항 내용을 입력하세요.</E.SubTitleDiv>
+                        <E.SubTitleDiv>아래에 공지사항 내용을 입력하세요.( 한줄에 공백 포함 18글자  넘어가면 줄바꿈 됨 )</E.SubTitleDiv>
                         <E.ContentInput
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
