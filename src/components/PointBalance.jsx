@@ -36,39 +36,39 @@ const PointBalance = () => {
       console.error("포인트 조회 중 오류:", error);
     }
   };
-  const sendParamsToBackend = async (paymentKey, orderId, amount, uniqueId) => {
-    try {
-      setIsLoading(true);
-      const response = await fetchRequest("/payments/confirm", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Idempotency-Key": uniqueId,
-        },
-        body: JSON.stringify({
-          paymentKey,
-          orderId,
-          amount,
-        }),
-        credentials: "include",
-      });
-      if (response.ok) {
-        const data = await response.json();
-        console.log("백엔드 응답 정상:", data);
-        setPaymentStatus('success');
-        await fetchUserPoints();
-      } else {
-        const errorData = await response.json();
-        console.error("백엔드 응답 오류:", errorData);
-        setPaymentStatus("fail");
-      }
-    } catch (error) {
-      console.error("백엔드로 데이터 전송 실패:", error);
-      setPaymentStatus("fail");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // const sendParamsToBackend = async (paymentKey, orderId, amount, uniqueId) => {
+  //   try {
+  //     setIsLoading(true);
+  //     const response = await fetchRequest("/payments/confirm", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         "Idempotency-Key": uniqueId,
+  //       },
+  //       body: JSON.stringify({
+  //         paymentKey,
+  //         orderId,
+  //         amount,
+  //       }),
+  //       credentials: "include",
+  //     });
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       console.log("백엔드 응답 정상:", data);
+  //       setPaymentStatus('success');
+  //       await fetchUserPoints();
+  //     } else {
+  //       const errorData = await response.json();
+  //       console.error("백엔드 응답 오류:", errorData);
+  //       setPaymentStatus("fail");
+  //     }
+  //   } catch (error) {
+  //     console.error("백엔드로 데이터 전송 실패:", error);
+  //     setPaymentStatus("fail");
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   // useEffect(() => {
   //   const searchParams = new URLSearchParams(location.search);

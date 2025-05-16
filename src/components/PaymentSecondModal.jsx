@@ -94,7 +94,7 @@ const PaymentSecondModal = ({ isOpen, pointPrice, productName, discount, closeSe
         />
         <span onClick={handleImageClick}>포인트 사용 약관 동의 &nbsp;</span>
         <P.EssentialText>필수</P.EssentialText>
-        <P.ArrowImg src="/assets/MainPayment/arrow-right.svg" alt="" />
+        <P.ArrowImg src="/assets/MainPayment/gray-arrow-right.svg" alt="" />
       </P.AgreePointRule>
       <img src= {isChecked ? "/assets/MainPayment/active_toss_button.svg" : "/assets/MainPayment/unactive_toss_button.svg" }
         onClick={isChecked? handleChargeRequest: undefined}
