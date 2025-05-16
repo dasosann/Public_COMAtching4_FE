@@ -17,6 +17,7 @@ import PointBalance from "../components/PointBalance";
 import MatchProfiles from "../components/Mainpage/MatchProfiles";
 import NavBar from '../components/Navbar.jsx';
 import fetchRequest from "../fetchConfig.jsx";
+import NoticeSlideCard from "../components/Mainpage/NoticeSlideCard.jsx";
 
 function MainpageLogin() {
   const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 훅 사용
@@ -193,6 +194,7 @@ function MainpageLogin() {
       <HeaderMain />
       <Background />
       <PointBalance/>
+      <NoticeSlideCard/>
       <MatchProfiles profiles={sampleProfiles}/>
       <div className="Mainpage__Login">
         
