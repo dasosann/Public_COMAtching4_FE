@@ -16,7 +16,7 @@ import {
 } from "../css/components/AdminRequestListContainer.css.ts"; // 스타일 파일 import
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import pointIcon from '../../public/assets/point.svg';
+import pointIcon from '/src/assets/point.svg';
 
 function FormattedDate({ isoDate }) {
   const formatDate = (dateStr) => {
