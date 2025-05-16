@@ -6,11 +6,13 @@ import '../css/pages/mypage.css';
 import SupportSection from '../components/Mypage/SupportSection.jsx'
 import NavBar from '../components/Navbar.jsx';
 import instance from '../axiosConfig.jsx';
+import MainPaymentModal from '../components/MainPaymentModal.jsx';
 const Mypage = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
   const [userData, setUserData] = useState({ username: '', point: 0 }); 
-
+  const [paymentStatus, setPaymentStatus] = useState(false); 
+  const [amount, setAmount] = useState(null);
   const closeModal = ()=>{
     setIsModalOpen(false)
   }
@@ -67,8 +69,13 @@ const Mypage = () => {
       <NavBar />
 
       {/* 충전하기 버튼 클릭 시 모달 표시 */}
-      {isModalOpen && <MainPaymentModal isOpen={isModalOpen} closeModal={() => setIsModalOpen(false)} />} 
-      <NavBar/>
+      <MainPaymentModal
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        paymentStatus={paymentStatus}
+        setPaymentStatus={setPaymentStatus}
+        amount={amount}
+      />
       <div  style={{ height: '100px' }}></div>
     </div>
   );
