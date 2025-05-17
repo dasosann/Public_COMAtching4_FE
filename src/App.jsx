@@ -110,7 +110,7 @@ export default function App() {
               }
             >
               <Route path="myPage/event" element={<AdminEventPage/>} />
-              <Route path="myPage/event/free-match" element={<EventFreeMatch/>} />
+              {/* <Route path="myPage/event/free-match" element={<EventFreeMatch/>} /> */}
               <Route path="myPage/event/registercomplete" element={<EventRegisterComplete/>} />
               <Route path="myPage/event/discount" element={<EventDiscount/>} />
               <Route path="myPage/event/list" element={<EventListAndCancel/>} />

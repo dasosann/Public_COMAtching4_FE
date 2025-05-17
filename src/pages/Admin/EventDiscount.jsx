@@ -159,10 +159,10 @@ const EventDiscount = () => {
             <MainWrapper>
                 <AdminDiv style={{cursor:'default'}}>
                     <E.TitleDiv>포인트 충전 할인 이벤트 예약</E.TitleDiv>
-                    <E.SubTitleDiv>현재 잔여 이벤트 횟수는 {remainingEvents}회입니다.</E.SubTitleDiv>
+                    {/* <E.SubTitleDiv>현재 잔여 이벤트 횟수는 {remainingEvents}회입니다.</E.SubTitleDiv>
                     <div style={{display:'flex', justifyContent:'center'}}>
                         {hearts}
-                    </div>
+                    </div> */}
                 </AdminDiv>
                 <AdminDiv style={{padding:'24px', cursor:'default'}}>
                     <E.FlexWrapper>

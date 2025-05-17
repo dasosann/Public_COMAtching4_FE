@@ -20,13 +20,13 @@ const AdminEventPage = () => {
         <div>
             <AdminHeader setAdminSelect={setAdminSelect} adminSelect={adminSelect} />
             <MainWrapper>
-                <AdminDiv style={{cursor:'default'}}>
+                {/* <AdminDiv style={{cursor:'default'}}>
                     <E.TitleDiv>잔여 이벤트 횟수</E.TitleDiv>
                     <E.SubTitleDiv>잔여 이벤트 횟수는 {remainingEvents}회입니다.</E.SubTitleDiv>
                     <div style={{display:'flex', justifyContent:'center'}}>
                         {hearts}
                     </div>
-                </AdminDiv>
+                </AdminDiv> */}
                 <E.FlexWrapper>
                         <AdminDiv onClick={()=>navigate('/adminpage/myPage/event/free-match',{state:{remainingEvents:remainingEvents}})}>
                             <E.TitleDiv>매칭 기회 제공 이벤트</E.TitleDiv> 

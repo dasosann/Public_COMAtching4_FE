@@ -138,10 +138,10 @@ const NoticeReservation = () => {
             if (!response.ok) {
                 throw new Error('공지사항 등록에 실패했습니다.');
             }
-
-            const data = await response.json();
-            console.log('공지사항 등록 성공:', data);
-            navigate("/adminpage/myPage/notice/complete");
+            else{
+                console.log('공지사항 등록 성공:', response);
+                navigate("/adminpage/myPage/notice/complete");
+            }
         } catch (error) {
             console.error('Error:', error);
             setErrorMessage(

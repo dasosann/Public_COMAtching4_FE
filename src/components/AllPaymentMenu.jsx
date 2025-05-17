@@ -1,7 +1,7 @@
 
 import P from '../css/components/AllPaymentMenuStyle'
 import ChargeMenuComponent from './ChargeMenuComponent';
-const AllPaymentMenu = ({openSecondModal,setPointPrice, setProductName, setDiscount,setChargePoint}) => {
+const AllPaymentMenu = ({discountRate,openSecondModal,setPointPrice, setProductName, setDiscount,setChargePoint}) => {
     return (
         <P.Container>
             <P.PopularText>전체</P.PopularText>

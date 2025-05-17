@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AdminHeader } from '../../components/Admin/AdminHeader';
 import { AdminDiv, MainWrapper } from '../../css/pages/Admin/AdminCSS';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const R = {};
 R.Titlediv = styled.div`
@@ -41,6 +42,7 @@ R.TitleCancelText = styled.span`
 `
 const EventRegisterComplete = () => {
     const [adminSelect, setAdminSelect] = useState('가입자관리');
+    const navigate = useNavigate();
     return (
         <div>
             <AdminHeader setAdminSelect={setAdminSelect} adminSelect={adminSelect} />
@@ -50,19 +52,19 @@ const EventRegisterComplete = () => {
                     <img src="/assets/Admin/event-register-heart.svg" alt="하트" style={{width:'90px',height:'90px'}} />
                     <R.SubDiv>
                     <div>
-                        기회를 한 번 소진하여 이벤트 등록을 완료하였습니다.<br/>
-                        남은 기회는 <R.LeftSpan>3회</R.LeftSpan>입니다.<br/>
+                        {/* 기회를 한 번 소진하여 이벤트 등록을 완료하였습니다.<br/>
+                        남은 기회는 <R.LeftSpan>3회</R.LeftSpan>입니다.<br/> */}
                         해당 이벤트 예약 내역은 좌측 하단 이벤트 예약목록에서 열람하거나 <R.CancelSpan>취소</R.CancelSpan>할 수 있습니다.<br/>
                         이벤트 사유를 공지하고 싶다면 우측 하단의 공지사항 등록을 이용하십시오.
                     </div>
                     </R.SubDiv>
                 </AdminDiv>
                 <R.SecondDiv>
-                    <AdminDiv style={{paddingTop:'26px', paddingBottom:'26px'}}>
+                    <AdminDiv style={{paddingTop:'26px', paddingBottom:'26px'}} onClick={()=>navigate('/adminpage/mypage/event/list')}>
                         <R.Titlediv>이벤트 예약목록 및 <R.TitleCancelText>취소</R.TitleCancelText></R.Titlediv>
                         <R.SecondText>두 이벤트 예약 리스트 통합 예약 내역 및 취소</R.SecondText>
                     </AdminDiv>
-                    <AdminDiv style={{paddingTop:'26px',paddingBottom:'26px'}}>
+                    <AdminDiv style={{paddingTop:'26px',paddingBottom:'26px'}} onClick={()=>navigate('/adminpage/mypage/notice/reservation')}>
                         <R.Titlediv>공지사항 등록</R.Titlediv>
                         <R.SecondText>이벤트 사유를 공지하고 싶으신가요?</R.SecondText>
                     </AdminDiv>
