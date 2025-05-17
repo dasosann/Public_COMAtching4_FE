@@ -7,7 +7,7 @@ const ChargeMenuComponent = ({
     setProductName,
     setDiscount,
     setChargePoint,
-    discountRate = 10,
+    discountRate = 0,
 }) => {
     let money = type;
     let discount = 0;

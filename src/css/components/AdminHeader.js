@@ -36,7 +36,7 @@ A.HeaderImg = styled.img`
     height: 40px;
 `
 A.HeaderProfile = styled.div`
-    width: 182px;
+    padding: 8px;
     height: 50px;
     background-color: #f3f3f3;
     color: #000;
@@ -47,7 +47,6 @@ A.HeaderProfile = styled.div`
     text-align: right;
     gap: 16px;
     border-radius: 8px;
-    padding: 8px 0;
     white-space: nowrap;
 `
 A.AlarmImg = styled.div`
