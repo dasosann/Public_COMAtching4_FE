@@ -1,7 +1,7 @@
 
 import ChargeMenuComponent from './ChargeMenuComponent';
 import P from '../css/components/PopularPaymentMenuStyle'
-const PopularPaymentMenu = ({openSecondModal,setPointPrice, setProductName, setDiscount, setChargePoint}) => {
+const PopularPaymentMenu = ({discountRate, openSecondModal,setPointPrice, setProductName, setDiscount, setChargePoint}) => {
     return (
         <P.Container>
             <P.PopularText>인기</P.PopularText>

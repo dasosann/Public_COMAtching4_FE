@@ -14,6 +14,7 @@ import {PaymentCancelModal,PaymentSuccessModal,WrongRequestModal} from './AfterP
 import Modal from '../css/pages/Admin/AdminModalAll';
 import { userState } from '../Atoms';
 import { useRecoilState } from 'recoil';
+import fetchRequest from '../fetchConfig';
 
 const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,amount}) => {
   // const [isOpen, setIsOpen] = useState(false); 
@@ -24,7 +25,7 @@ const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,am
   const [discount, setDiscount] = useState();
   const [didAnimateOnce, setDidAnimateOnce] = useState(false);
   const [point, setChargePoint] = useState();
-  
+  const [discountRate, setDiscountRate] = useState(0); // 할인율 상태 추가
 
   // const closeModal = () => setIsOpen(false);
   
@@ -54,7 +55,31 @@ const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,am
       once: true,
     });
   }, []);
-
+  useEffect(() => {
+        if (isOpen) {
+            const fetchEventDiscount = async () => {
+                try {
+                    const response = await fetchRequest('/auth/user/events?status=CURRENT', {
+                        method: 'GET',
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        console.log('이벤트 데이터:', data);
+                        // 이벤트가 있으면 할인율 설정, 없으면 0
+                        const event = data.data && data.data.length > 0 ? data.data[0] : null;
+                        setDiscountRate(event && event.discountRate ? event.discountRate : 0);
+                    } else {
+                        console.error('이벤트 데이터 가져오기 실패:', response.status);
+                        setDiscountRate(0);
+                    }
+                } catch (error) {
+                    console.error('이벤트 데이터 요청 오류:', error);
+                    setDiscountRate(0);
+                }
+            };
+            fetchEventDiscount();
+        }
+    }, [isOpen]);
   // useEffect(() => {
   //   // 모달이 열렸고, 아직 애니메이션을 한 번도 안 했으면
   //   if (isOpen && !didAnimateOnce) {
@@ -90,11 +115,11 @@ const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,am
             </P.Header>
             <MyPointCharge onOpenChargeHistory={openChargeHistoryModal} />
           </div>
-          <PopularPaymentMenu openSecondModal={openSecondModal} setPointPrice={setPointPrice} setProductName={setProductName} setDiscount={setDiscount} setChargePoint={setChargePoint}/>
-          <AllPaymentMenu openSecondModal={openSecondModal} setPointPrice={setPointPrice} setProductName={setProductName}setDiscount={setDiscount} setChargePoint={setChargePoint} />
+          <PopularPaymentMenu discountRate={discountRate} openSecondModal={openSecondModal} setPointPrice={setPointPrice} setProductName={setProductName} setDiscount={setDiscount} setChargePoint={setChargePoint}/>
+          <AllPaymentMenu discountRate={discountRate} openSecondModal={openSecondModal} setPointPrice={setPointPrice} setProductName={setProductName}setDiscount={setDiscount} setChargePoint={setChargePoint} />
           <PointInformationFooter />
         </P.ModalContent>
-        <PaymentSecondModal data-aos="fade-up" closeSecondModal={closeSecondModal} isOpen={isSecondModalOpen}  productName={productName} pointPrice={pointPrice}discount={discount} point={point} closeAllModal = {closeModal} />
+        <PaymentSecondModal data-aos="fade-up"  closeSecondModal={closeSecondModal} isOpen={isSecondModalOpen}  productName={productName} pointPrice={pointPrice}discount={discount} point={point} closeAllModal = {closeModal} />
         {isChargeListModalOpen && (
           <PointChargeListModal
           isOpen={isChargeListModalOpen}
