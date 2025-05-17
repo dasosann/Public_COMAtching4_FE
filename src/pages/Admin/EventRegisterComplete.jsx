@@ -50,8 +50,8 @@ const EventRegisterComplete = () => {
                     <img src="/assets/Admin/event-register-heart.svg" alt="하트" style={{width:'90px',height:'90px'}} />
                     <R.SubDiv>
                     <div>
-                        기회를 한 번 소진하여 이벤트 등록을 완료하였습니다.<br/>
-                        남은 기회는 <R.LeftSpan>3회</R.LeftSpan>입니다.<br/>
+                        {/* 기회를 한 번 소진하여 이벤트 등록을 완료하였습니다.<br/>
+                        남은 기회는 <R.LeftSpan>3회</R.LeftSpan>입니다.<br/> */}
                         해당 이벤트 예약 내역은 좌측 하단 이벤트 예약목록에서 열람하거나 <R.CancelSpan>취소</R.CancelSpan>할 수 있습니다.<br/>
                         이벤트 사유를 공지하고 싶다면 우측 하단의 공지사항 등록을 이용하십시오.
                     </div>
