@@ -125,8 +125,9 @@ const NoticeReservation = () => {
             closedAt: formattedEndTime,
         };
         console.log("백엔드로 보내는 데이터 로그", noticeData)
+        const backendAddress = import.meta.env.VITE_BACKEND_ADDRESS;
         try {
-            const response = await fetch('/auth/admin/notice', {
+            const response = await fetch(`${backendAddress}/auth/admin/notice`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
