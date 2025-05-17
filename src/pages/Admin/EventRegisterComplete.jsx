@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AdminHeader } from '../../components/Admin/AdminHeader';
 import { AdminDiv, MainWrapper } from '../../css/pages/Admin/AdminCSS';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const R = {};
 R.Titlediv = styled.div`
@@ -41,6 +42,7 @@ R.TitleCancelText = styled.span`
 `
 const EventRegisterComplete = () => {
     const [adminSelect, setAdminSelect] = useState('가입자관리');
+    const navigate = useNavigate();
     return (
         <div>
             <AdminHeader setAdminSelect={setAdminSelect} adminSelect={adminSelect} />
@@ -58,11 +60,11 @@ const EventRegisterComplete = () => {
                     </R.SubDiv>
                 </AdminDiv>
                 <R.SecondDiv>
-                    <AdminDiv style={{paddingTop:'26px', paddingBottom:'26px'}}>
+                    <AdminDiv style={{paddingTop:'26px', paddingBottom:'26px'}} onClick={()=>navigate('/adminpage/mypage/event/list')}>
                         <R.Titlediv>이벤트 예약목록 및 <R.TitleCancelText>취소</R.TitleCancelText></R.Titlediv>
                         <R.SecondText>두 이벤트 예약 리스트 통합 예약 내역 및 취소</R.SecondText>
                     </AdminDiv>
-                    <AdminDiv style={{paddingTop:'26px',paddingBottom:'26px'}}>
+                    <AdminDiv style={{paddingTop:'26px',paddingBottom:'26px'}} onClick={()=>navigate('/adminpage/mypage/notice/reservation')}>
                         <R.Titlediv>공지사항 등록</R.Titlediv>
                         <R.SecondText>이벤트 사유를 공지하고 싶으신가요?</R.SecondText>
                     </AdminDiv>
