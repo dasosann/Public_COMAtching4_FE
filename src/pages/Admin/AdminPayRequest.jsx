@@ -7,6 +7,32 @@ import P from '../../css/pages/Admin/AdminPaymentHistoryStyle';
 import fetchRequest from '../../fetchConfig';
 
 const RequestUserComponent = ({ orderId, point, username, price, requestAt, productName, onUpdate }) => {
+  const formatDateTime = (isoString) => {
+    if (!isoString || typeof isoString !== 'string') {
+        return '알 수 없음'; // 잘못된 입력 처리
+    }
+
+    try {
+        const date = new Date(isoString);
+        if (isNaN(date.getTime())) {
+            return '알 수 없음'; // 유효하지 않은 날짜
+        }
+
+        // KST 시간대 적용 (UTC+9)
+        const kstDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
+
+        const year = kstDate.getUTCFullYear();
+        const month = String(kstDate.getUTCMonth() + 1).padStart(2, '0');
+        const day = String(kstDate.getUTCDate()).padStart(2, '0');
+        const hours = String(kstDate.getUTCHours()).padStart(2, '0');
+        const minutes = String(kstDate.getUTCMinutes()).padStart(2, '0');
+
+        return `${year}-${month}-${day} ${hours}시 ${minutes}분`;
+    } catch (error) {
+        console.error('날짜 포맷팅 오류:', error);
+        return '알 수 없음';
+    }
+};
   const handleApprove = async () => {
     try {
       const response = await fetchRequest('/auth/operator/tempay/approval', {
@@ -43,7 +69,7 @@ const RequestUserComponent = ({ orderId, point, username, price, requestAt, prod
     <P.ComponentWrapper>
       <P.PaymentStatusDiv style={{ padding: '0', justifyContent: 'start', gap: '20px' }}>
         <R.UserIdDiv>userID : <R.IdSpan>{username}</R.IdSpan></R.UserIdDiv>
-        <P.DateText>요청시각 : {requestAt}</P.DateText>
+        <P.DateText>요청시각 : {formatDateTime(requestAt)}</P.DateText>
         <P.OrderNumberText style={{ margin: '0' }}>주문번호 : {orderId}</P.OrderNumberText>
       </P.PaymentStatusDiv>
       <P.ComponentSecondDiv>
