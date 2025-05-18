@@ -127,29 +127,34 @@ const ProfileEdit = () => {
     profile.mbti.length === 4;
     
     const handleSave = () => {
-      const requestData = {
-        username: profile.nickname,
-        university: profile.school,
-        major: profile.department,
-        contactId: profile.contact_id,
-        hobbies: profile.interests,
-        song: profile.favoriteSong,
-        mbti: profile.mbti,
-        contactFrequency: profile.contactFrequency,
-        comments: profile.introduction,
-      };
-    
-      instance
-        .patch('/auth/user/api/info', requestData)
-        .then((response) => {
-          alert("프로필이 성공적으로 수정되었습니다!");
-          setOriginalProfile(profile); // 수정 후 상태를 원본으로 반영
-        })
-        .catch((error) => {
-          console.error("프로필 수정 실패:", error);
-          alert("수정 중 오류가 발생했습니다. 다시 시도해주세요.");
-        });
-    };
+  const updatedFields = {
+    username: profile.nickname !== originalProfile.nickname ? profile.nickname : null,
+    university: profile.school || null, // 학교는 무조건 넣음
+    major: profile.department !== originalProfile.department ? profile.department : null,
+    contactId: profile.contact_id !== originalProfile.contact_id ? profile.contact_id : null,
+    hobbies:
+      JSON.stringify(profile.interests) !== JSON.stringify(originalProfile.interests)
+        ? profile.interests
+        : null,
+    song: profile.favoriteSong !== originalProfile.favoriteSong ? profile.favoriteSong : null,
+    mbti: profile.mbti !== originalProfile.mbti ? profile.mbti : null,
+    contactFrequency:
+      profile.contactFrequency !== originalProfile.contactFrequency ? profile.contactFrequency : null,
+    comments: profile.introduction !== originalProfile.introduction ? profile.introduction : null,
+  };
+
+  instance
+    .patch('/auth/user/api/user/info', updatedFields)
+    .then((response) => {
+      alert('프로필이 성공적으로 수정되었습니다!');
+      setOriginalProfile(profile); // 상태 동기화
+    })
+    .catch((error) => {
+      console.error('프로필 수정 실패:', error);
+      alert('수정 중 오류가 발생했습니다. 다시 시도해주세요.');
+    });
+};
+
     
   return (
     <div className="profile-edit-container">
@@ -325,6 +330,7 @@ const ProfileEdit = () => {
       <button
         className={`profile-submit-button ${isFormComplete && isFormModified ? 'active' : 'inactive'}`}
         disabled={!isFormComplete || !isFormModified}
+        onClick={handleSave}
       >
         수정하기
       </button>

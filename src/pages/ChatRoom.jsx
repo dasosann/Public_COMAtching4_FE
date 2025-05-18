@@ -3,8 +3,6 @@ import ChatHeader from '../components/Chat/ChatHeader';
 import ChatMessage from '../components/Chat/ChatMessage.jsx';
 import Background from '../components/Background.jsx';
 import "../css/pages/ChatRoom.css";
-import NavBar from '../components/Navbar.jsx';
-
 const chatMessages = [
     { id: 1, sender: "me", message: "안녕하세요!", time: "10:00" },
     { id: 2, sender: "other", message: "반갑습니다 :)", time: "10:01" },
@@ -56,7 +54,7 @@ function ChatRoom() {
                         time={chat.time} />
                 ))}
             </div>
-            <div  style={{ height: '100px' }}></div>
+            <div  style={{ height: '30px' }}></div>
 
             <div className="chat-input-container">
                 <div

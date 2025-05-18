@@ -28,26 +28,34 @@ const MajorChange = ({ school, setSchool, department, setDepartment, major, setM
     return `${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
   };
 
-  const handleVerifyClick = () => {
-    if (!isValidEmail(email)) {
-      alert("올바른 학교 이메일 형식을 입력해주세요. (예: example@catholic.ac.kr)");
-      return;
+  const handleVerifyClick = async () => {
+  if (!isValidEmail(email)) {
+    alert("올바른 학교 이메일 형식을 입력해주세요.");
+    return;
+  }
+
+  setShowVerification(true); // ✅ 먼저 UI 반영
+  setTimer(300);
+
+  try {
+    const res = await instance.post(`/auth/user/api/auth/school?schoolEmail=${email}`);
+    console.log("인증 API 응답:", res.data);
+
+    const token = res.data?.data?.token;
+
+    if (token) {
+      setToken(token);
+    } else {
+      alert("토큰이 유효하지 않습니다.");
+      setShowVerification(false); // 실패 시 롤백
     }
-    try {
-      const res = instance.post(`/auth/user/api/auth/school?schoolEmail=${email}`);
-      const token = res.data?.data?.token;
-      if (token) {
-        setToken(token);
-        setShowVerification(true);
-        setTimer(300);
-      } else {
-        alert("토큰이 유효하지 않습니다.");
-      }
-    } catch (err) {
-      console.error("인증 요청 실패:", err);
-      alert("인증 메일 전송에 실패했습니다.");
-    }
-  };
+  } catch (err) {
+    console.error("인증 요청 실패:", err);
+    alert("인증 메일 전송에 실패했습니다.");
+    setShowVerification(false); // 실패 시 롤백
+  }
+};
+
 
   // 인증번호 확인 요청
 const handleVerificationComplete = async () => {
