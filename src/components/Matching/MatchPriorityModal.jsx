@@ -36,7 +36,8 @@ const AnimatedBubble = ({ text }) => {
 
 const MatchPriorityModal = ({ modalOpen, toggleModal, togglePrioritySelection }) => {
   const [priorities] = useRecoilState(priorityState);
-  const matchState = useRecoilValue(MatchPickState);
+  const [matchState, setMatchState] = useRecoilState(MatchPickState);
+
   const [selectedItem, setSelectedItem] = useState(null);
   const [touchingItem, setTouchingItem] = useState(null);
   const [touchPos, setTouchPos] = useState({ x: 0, y: 0 });
@@ -194,6 +195,26 @@ const MatchPriorityModal = ({ modalOpen, toggleModal, togglePrioritySelection })
             className={`modal-button ${selectedItem ? "enabled" : "disabled"}`}
             onClick={() => {
               if (!selectedItem) return;
+
+              // 선택된 항목 key를 기반으로 formData.importantOption 설정
+              const optionKeyMap = {
+                mbti: "mbtiOption",
+                hobby: "hobbyOption",
+                age: "ageOption",
+                contact: "contactFrequencyOption",
+              };
+
+              const mappedKey = optionKeyMap[selectedItem.key] || "None";
+
+              // ✅ 상태에 importantOption 저장
+              setMatchState((prev) => ({
+                ...prev,
+                formData: {
+                  ...prev.formData,
+                  importantOption: mappedKey,
+                },
+              }));
+
               console.log("선택된 옵션:", selectedItem);
               toggleModal();
               togglePrioritySelection();
@@ -201,6 +222,7 @@ const MatchPriorityModal = ({ modalOpen, toggleModal, togglePrioritySelection })
           >
             {selectedItem ? "선택 완료" : "옵션을 선택해주세요"}
           </div>
+
 
         </div>
       </div>
