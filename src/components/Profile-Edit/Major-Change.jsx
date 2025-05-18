@@ -69,7 +69,7 @@ const handleVerificationComplete = async () => {
       token,
       code: verificationCode,
     });
-
+    console.log("res",res);
     const { status, code, data } = res.data;
 
     if (status === 200 && code === "GEN-000" && data === true) {
