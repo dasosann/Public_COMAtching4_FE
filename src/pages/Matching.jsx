@@ -101,10 +101,10 @@ useEffect(() => {
     resetMatchResultState(); // MatchResultState 초기화
   }, [resetMatchState,  resetMatchResultState]);
   const handleStart = (e) => {
-    if (MatchState.point > userPoint.point) {
-      alert("포인트가 부족합니다!!");
-      return; // 동작 중단
-    }
+    // if (MatchState.point > userPoint.point) {
+    //   alert("포인트가 부족합니다!!");
+    //   return; // 동작 중단
+    // }
     if (!isMBTISelected) return; // MBTI 2개가 선택되지 않으면 드래그 불가
     setIsDragging(true);
     const clientX = e.type === "mousedown" ? e.clientX : e.touches[0].clientX;
@@ -112,10 +112,10 @@ useEffect(() => {
   };
 
   const handleMove = (e) => {
-    if (MatchState.point > userPoint.point) {
-      alert("포인트가 부족합니다!!");
-      return; // 동작 중단
-    }
+    // if (MatchState.point > userPoint.point) {
+    //   alert("포인트가 부족합니다!!");
+    //   return; // 동작 중단
+    // }
     if (isDragging) {
       const clientX = e.type === "mousemove" ? e.clientX : e.touches[0].clientX;
       const deltaX = clientX - startX.current;
@@ -126,10 +126,10 @@ useEffect(() => {
   };
   const handleEnd = async () => {
     if (!isDragging) return;
-    if (MatchState.point > userPoint.point) {
-      alert("포인트가 부족합니다!!");
-      return; // 동작 중단
-    }
+    // if (MatchState.point > userPoint.point) {
+    //   alert("포인트가 부족합니다!!");
+    //   return; // 동작 중단
+    // }
     setIsDragging(false);
 
     // 필수 선택 확인
