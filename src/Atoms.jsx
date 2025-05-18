@@ -118,6 +118,7 @@ export const MatchResultState = atom({
     mbti: "",
     socialId: "",
     song: "",
+    roomId: "",
   },
 });
 

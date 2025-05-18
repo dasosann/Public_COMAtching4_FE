@@ -81,6 +81,7 @@ function Matchresult() {
     // }
   };
   
+  
   // 취미를 아이콘과 매핑하는 함수
   const mapHobbiesWithIcons = (hobbyList) => {
     return hobbyList.map((hobbyName) => {
@@ -121,12 +122,18 @@ function Matchresult() {
     navigate("/matching");
   };
 
-  const handleSendText = () => {
-    alert("아직 준비중인 기능이에요!");
-  };
   const handleHome = () => {
     navigate("/");
   };
+  const handleSendText = () => {
+  const roomId = MatchResult.roomId; // MatchResult에 roomId가 있다고 가정
+  if (!roomId) {
+    alert("roomId가 없습니다!");
+    return;
+  }
+  navigate(`/chat/${roomId}`);
+};
+
   console.log(resultData);
   return (
     <>

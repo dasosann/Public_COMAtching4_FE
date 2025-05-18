@@ -68,7 +68,7 @@ export default function App() {
             <Route path="/match-result" element={<Matchresult />} />
             <Route path="/check-result" element={<Checkresult />} />
             <Route path="/chat" element={<Chat />} />
-            <Route path="/chat/:id" element={<ChatRoom />} />
+            <Route path="/chat/:roomId" element={<ChatRoom />} />
             
             <Route path="/hobby" element={<Hobby />} />
 

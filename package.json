@@ -14,6 +14,7 @@
     "@emotion/styled": "^11.11.5",
     "@mui/material": "^5.15.21",
     "@reduxjs/toolkit": "^2.5.1",
+    "@stomp/stompjs": "^7.1.1",
     "@tosspayments/tosspayments-sdk": "^2.3.4",
     "@vanilla-extract/css": "^1.15.3",
     "aos": "^2.3.4",

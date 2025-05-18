@@ -190,6 +190,7 @@ useEffect(() => {
           mbti: response.data.data.mbti,
           socialId: response.data.data.contactId,
           song: response.data.data.song,
+          roomId:response.data.data.roomId,
         }));
         await setUserPoint((prev) => ({
           ...prev,

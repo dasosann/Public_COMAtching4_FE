@@ -2,6 +2,10 @@ import React, { useState,useRef,useEffect } from 'react';
 import ChatHeader from '../components/Chat/ChatHeader';
 import ChatMessage from '../components/Chat/ChatMessage.jsx';
 import Background from '../components/Background.jsx';
+import { useParams } from "react-router-dom";
+import SockJS from "sockjs-client";
+import { Client } from "@stomp/stompjs";
+
 import "../css/pages/ChatRoom.css";
 const chatMessages = [
     { id: 1, sender: "me", message: "안녕하세요!", time: "10:00" },
@@ -32,6 +36,33 @@ function ChatRoom() {
     const [focused, setFocused] = useState(false);
     const [inputValue, setInputValue] = useState('');
     const chatBodyRef = useRef(null);
+    const { roomId } = useParams();
+    const [client, setClient] = useState(null);
+
+    useEffect(() => {
+        const socket = new SockJS(`https://backend1.comatching.site/ws/chat?roomId=${roomId}`);
+        const stompClient = new Client({
+        webSocketFactory: () => socket,
+        onConnect: () => {
+            console.log("WebSocket connected");
+
+            // 예시: 특정 채널 구독
+            stompClient.subscribe(`/sub/chat/room/${roomId}`, (message) => {
+            console.log("받은 메시지:", JSON.parse(message.body));
+            });
+        },
+        onStompError: (frame) => {
+            console.error("STOMP 오류", frame);
+        },
+        });
+
+        stompClient.activate();
+        setClient(stompClient);
+
+        return () => {
+        stompClient.deactivate(); // 페이지 이탈 시 연결 종료
+        };
+    }, [roomId]);
 
     useEffect(() => {
         if (chatBodyRef.current) {
