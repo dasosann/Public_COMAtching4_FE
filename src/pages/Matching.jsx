@@ -175,7 +175,7 @@ useEffect(() => {
       duplication: MatchState.duplication || [] // MatchState에 duplication 값이 있다고 가정
     };
 
-    
+    console.log("보낼 매칭 요청 FormData:", FormData);
 
     try {
       setLoading(true);
