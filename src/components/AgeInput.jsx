@@ -4,7 +4,7 @@ import AgeSelectorElement from "./AgeSelectorElement.jsx";
 
 function AgeInputInput({ user, setUser }) {
   // 연도, 월, 일 옵션 배열 (예시: 1980~2019, 1~12, 1~31)
-  const year = Array.from({ length: 40 }, (_, i) => (1980 + i).toString());
+  const year = Array.from({ length: 10 }, (_, i) => (1997 + i).toString());
   const month = Array.from({ length: 12 }, (_, i) => (i + 1).toString());
   const day = Array.from({ length: 31 }, (_, i) => (i + 1).toString());
 

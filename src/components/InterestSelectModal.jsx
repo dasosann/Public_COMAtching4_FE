@@ -62,6 +62,14 @@ const InterestSelectModal = ({ isOpen, onClose, interests, setInterests }) => {
     }),
   }));
 
+  const additionalInterests = tempInterests.filter(
+    (item) =>
+      !hobbyData.some((category) =>
+        category.hobbies.some((hobby) => hobby.name === item)
+      )
+  );
+
+
   return (
     <div className="interest-modal-overlay">
       <div className="interest-modal-container">
@@ -76,30 +84,49 @@ const InterestSelectModal = ({ isOpen, onClose, interests, setInterests }) => {
         </button>
         <SearchBar onSearch={handleSearch} />
         <div className="hobby-container">
-          {filteredHobbyData.map(
-            (category, index) =>
-              category.hobbies.length > 0 && (
-                <div className="hobby-category" key={index}>
-                  <div className="hobby-category-title">{category.category}</div>
-                  <div className="hobby-list">
-                    {category.hobbies.map((hobby, idx) => (
-                      <div
-                        key={idx}
-                        className={`hobby-items ${
-                          tempInterests.includes(hobby.name) ? "selected" : ""
-                        }`}
-                        onClick={() => handleHobbyClick(hobby.name)}
-                      >
-                        <span className="hobby-emoji">
-                          {hobby.emoji} {hobby.name}
-                        </span>
-                      </div>
-                    ))}
+            {filteredHobbyData.map(
+              (category, index) =>
+                category.hobbies.length > 0 && (
+                  <div className="hobby-category" key={index}>
+                    <div className="hobby-category-title">{category.category}</div>
+                    <div className="hobby-list">
+                      {category.hobbies.map((hobby, idx) => (
+                        <div
+                          key={idx}
+                          className={`hobby-items ${
+                            tempInterests.includes(hobby.name) ? "selected" : ""
+                          }`}
+                          onClick={() => handleHobbyClick(hobby.name)}
+                        >
+                          <span className="hobby-emoji">
+                            {hobby.emoji} {hobby.name}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
+                )
+            )}
+
+            {/* ✅ hobbyData에 없는 항목들은 별도로 렌더링 */}
+            {additionalInterests.length > 0 && (
+              <div className="hobby-category">
+                <div className="hobby-category-title">기타</div>
+                <div className="hobby-list">
+                  {additionalInterests.map((customHobby, idx) => (
+                    <div
+                      key={`custom-${idx}`}
+                      className="hobby-items selected"
+                      onClick={() => handleHobbyClick(customHobby)}
+                    >
+                      <span className="hobby-emoji">{customHobby}</span>
+                    </div>
+                  ))}
                 </div>
-              )
-          )}
-        </div>
+              </div>
+            )}
+          </div>
+
         <button 
           className={`edit-button ${tempInterests.length > 0 && tempInterests !== interests ? "active" : "inactive"}`} 
           onClick={handleSave}
