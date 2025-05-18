@@ -9,6 +9,7 @@ import { useRecoilState } from 'recoil';
 import InterestSelectModal from '../components/InterestSelectModal.jsx';
 import ContactEditModal from '../components/ContactEditModal.jsx';
 import instance from '../axiosConfig.jsx';
+import HeaderBack from "../components/HeaderBack.jsx";
 const ProfileEdit = () => {
   // 프로필 정보 상태 관리
   
@@ -158,6 +159,7 @@ const ProfileEdit = () => {
     
   return (
     <div className="profile-edit-container">
+      <HeaderBack/>
       <Background />
       <div className="profile-edit-header">
         <h2 className="profile-edit-title">프로필 수정</h2>
