@@ -70,10 +70,13 @@ const handleVerificationComplete = async () => {
       code: verificationCode,
     });
 
-    if (res.data?.code === "GEN-000") {
-      setIsCodeVerified(true);
+    const { status, code, data } = res.data;
+
+    if (status === 200 && code === "GEN-000" && data === true) {
+      setIsCodeVerified(true);  // 성공 시에만 true
       setIsVerified(true);
     } else {
+      setIsCodeVerified(false); // 실패 시 명시적으로 false
       alert("인증번호가 올바르지 않습니다.");
     }
   } catch (err) {
