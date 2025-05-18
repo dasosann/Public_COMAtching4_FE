@@ -1,198 +1,106 @@
-/* 전체 컨테이너 */
-
-  
-  /* 슬라이더 */
-  .profile-slider {
-    position: relative;
-    margin-top: 20px;
-    touch-action: pan-y; /* 터치 스와이프 적용 */
-    
- 
-  }
-  
-  /* 전체 프로필 박스 */
-.profile-box {
-    text-align: left;
-    padding-top: 20px;
-    
-    border: 2px solid #E5E5E5;
-    border-radius: 10px;
-    background: #fff;
-  }
-  
-
-
-/* 기본 문단 스타일 */
-.profile-box p {
-  font-size: 16px;
-  margin-top: 12px;
-  margin-bottom: 5px;
-  margin-left: 15px;
-  margin-right: 15px;
-  font-weight: 500; /* 기본 medium */
-  color: #777777; /* 기본 글자색 */
-  
+/* 슬라이더 전체를 감싸는 컨테이너 */
+.profile-slider-wrapper {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px 0;
+  overflow: hidden;
 }
 
-/* 데이터에서 가져온 부분 스타일 */
-.profile-box span {
-  font-weight: bold;
-  font-size: 16px;
-  color: #1A1A1A; /* 강조 색상 */
-  text-decoration: underline; /* 밑줄 추가 */
-  line-height: 1.5;
-  text-underline-offset: 7px; /* 밑줄과 글자 사이 간격 */
+/* slick 슬라이더 내부 구조 설정 */
+.slick-slider,
+.slick-list,
+.slick-track {
+  width: 100% !important;
+  overflow: visible !important;
 }
 
-
-
-
-/* 닉네임 */
-.profile-nickname {
-  font-size: 18px;
-  font-weight: bold;
-  color: #1A1A1A;
-  margin-bottom: 5px;
-}
-  
-  /* 페이지네이션 (점) */
-  .pagination-dots {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-  }
-  
-  .dot {
-    width: 10px;
-    height: 10px;
-    margin: 0 5px;
-    background-color: #ccc; /* 비활성 점 색 */
-    border-radius: 50%;
-    transition: background 0.3s;
-  }
-  
-  .dot.active {
-    background-color: #575757; /* 현재 활성화된 슬라이드의 점 색 */
-  }
-  /* 연락처 컨테이너 */
-.contact-container {
-    display: flex;
-    padding-top: 20px;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .profile-contact {
-    display: flex;
-    justify-content: space-between; /* 양쪽 끝으로 정렬 */
-    align-items: center; /* 세로 중앙 정렬 */
-    padding: 10px 15px;
-    font-size: 19px;
-    font-weight: bold;
-    margin-top: 10px;
-    color: white;
-    width: 100%;
-}
-
-.profile-text {
-    text-align: left; /* 왼쪽 정렬 */
-}
-
-.profile-right {
-    display: flex;
-    gap: 10px; /* 아이콘 사이 여백 조정 */
-} /* 페이지네이션 (점) */
-.pagination-dots {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-}
-
-.dot {
-  width: 10px;
-  height: 10px;
-  margin: 0 5px;
-  background-color: #ccc; /* 비활성 점 색 */
-  border-radius: 50%;
-  transition: background 0.3s;
-}
-
-.dot.active {
-  background-color: #575757; /* 현재 활성화된 슬라이드의 점 색 */
-}
-/* 연락처 컨테이너 */
-.contact-container {
-  display: flex;
-  padding-top: 20px;
+.slick-slide {
+  display: flex !important;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+/* 프로필 카드 */
+.profile-box {
+  max-width: 340px;
+  background: #fff;
+  padding: 20px;
+  margin: 0 auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.profile-box p {
+  font-size: 15px;
+  color: #555;
+  margin: 10px 0;
+}
+
+.profile-box span {
+  font-weight: bold;
+  color: #1A1A1A;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+.contact-container {
+  margin-top: 20px;
 }
 
 .profile-contact {
   display: flex;
-  justify-content: space-between; /* 양쪽 끝으로 정렬 */
-  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: space-between;
+  align-items: center;
+  background: #eee;
   padding: 10px 15px;
-  font-size: 15px;
+  border-radius: 8px;
+  font-size: 14px;
   font-weight: 600;
-  margin-top: 10px;
-  color: white;
-  width: 100%;
+  color: #fff;
 }
 
-.profile-text {
-  text-align: left; /* 왼쪽 정렬 */
+.profile-contact.instagram {
+  background: linear-gradient(135deg, #ff775e 0%, #e83abc 100%);
+}
 
+.profile-contact.kakao {
+  background: #ffeb3b;
+  color: #3c1e1e;
 }
 
 .profile-right {
   display: flex;
-  gap: 10px; /* 아이콘 사이 여백 조정 */
+  gap: 10px;
 }
 
-
-/* 인스타그램 스타일 (@로 시작) */
-.profile-contact.instagram {
-  background: linear-gradient(135deg, #ff775e 0%, #ff4d61 47%, #e83abc 100%);
+.profile-right img {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
 }
 
-/* 카카오톡 스타일 (일반 연락처) */
-.profile-contact.kakao {
-  background: linear-gradient(135deg, rgba(255, 235, 106, 0.29), rgb(255, 235, 106));
-  color: #3c1e1e; /* 카카오톡 글자색 */
+.no-match {
+  display: flex;
+  margin-top: 30px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  border: 2px dashed #ccc;
+  border-radius: 12px;
+  background: #f9f9f9;
 }
 
-
-.profile-right img{
-  width: 14px;
-  height: 14px;
-  margin-right: 10px;
-}
-/* slick slider 기본 스타일 수정 */
-.slick-slider {
-width: 100%;
+.no-match-icon {
+  width: 60px;
+  margin-bottom: 15px;
 }
 
-.slick-list {
-overflow: hidden; /* 슬라이드가 컨테이너를 침범하지 않도록 */
-}
-
-.slick-track {
-display: flex;
-align-items: stretch;
-}
-
-.slick-slide {
-flex: 1 0 auto;
-padding: 0 5px; /* 슬라이드 간 간격 추가 */
-box-sizing: border-box;
-}
-.match-container {
-margin-top: 50px;
-width: 95%;
-max-width: 400px;
-margin-left: auto;
-margin-right: auto;
-text-align: center;
-overflow: hidden; /* 내부 슬라이드가 침범하지 않도록 */
+.no-match-text {
+  font-size: 16px;
+  color: #888;
+  text-align: center;
 }

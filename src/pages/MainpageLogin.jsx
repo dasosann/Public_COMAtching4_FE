@@ -21,29 +21,20 @@ import NoticeSlideCard from "../components/Mainpage/NoticeSlideCard.jsx";
 
 function MainpageLogin() {
   const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 훅 사용
-  const [isAccountClicked, setIsAccountClicked] = useState(false);
-  const [isPointClicked, setIsPointClicked] = useState(false); // 포인트 충전 요청 토글 클릭 상태를 저장하는 상태 변수
-  const [isHeartClicked, setIsHeartClicked] = useState(false); // 하트 충전 요청 토글 클릭 상태를 저장하는 상태 변수
+  
   const [showTutorial, setShowTutorial] = useState(false); // Show tutorial on login
   const [userInfo, setUserInfo] = useRecoilState(userState); 
   // const [userPoint, setUserPoint] = useState(0); 
   
   // 충전 요청 상태를 관리하는 Recoil 상태(너무 자주 못누르게 하기 위해서 임시방편이였습니다. 회의를 통해 방식 수정이 필요합니다)
-  const [chargeclick, setchargeclick] = useRecoilState(charge);
+  const [profiles, setProfiles] = useState([]);
   const [showEventModal, setShowEventModal] = useState(false);
   
   const handleAccountToggleClick = () => {
     setIsAccountClicked((prevIsClicked) => !prevIsClicked);
   };
   // 포인트 충전 토글 클릭 핸들러
-  const handlePointToggleClick = () => {
-    setIsPointClicked((prevIsClicked) => !prevIsClicked);
-  };
-
-  // 하트 충전 토글 클릭 핸들러
-  const handleHeartToggleClick = () => {
-    setIsHeartClicked((prevIsClicked) => !prevIsClicked);
-  };
+  
   const handleLogout = () => {
     // 쿠키에서 Authorization, RefreshToken 제거
     Cookies.remove("Authorization");
@@ -51,6 +42,35 @@ function MainpageLogin() {
     
     window.location.reload();
   };
+  // 매칭 히스토리 가져오기
+  useEffect(() => {
+    const fetchMatchingHistory = async () => {
+      try {
+        const res = await instance.get("/auth/user/api/history/matching");
+        const data = res.data;
+
+        const mapped = data.map((item) => ({
+          nickname: item.username,
+          major: item.major,
+          age: item.age,
+          mbti: item.mbti,
+          contactFrequency: item.contactFrequency,
+          hobby: item.hobby,
+          song: item.song,
+          comment: item.comment,
+          contact_id: item.contactId,
+        }));
+
+        setProfiles(mapped);
+      } catch (err) {
+        console.error("매칭 히스토리 로딩 실패:", err);
+      }
+    };
+
+    fetchMatchingHistory();
+  }, []);
+
+
   useEffect(() => {
     // eventokay가 false일 때만 모달을 띄웁니다.
     if (userInfo.eventokay === false) {
@@ -150,44 +170,7 @@ function MainpageLogin() {
       alert("이미 요청되었습니다."); // 이미 요청된 경우 알림
     }
   };
-  const sampleProfiles = [
-    {
-      nickname: "JaneDoe",
-      major: "컴퓨터공학과",
-      mbti: "INTJ",
-      age: 22,
-      admissionYear: 23,
-      contact_id: "@janedoe",
-      song: "IU - Love Poem",
-      comment: "안녕하세요!!",
-      hobby: ["해외여행"],
-      contactFrequency: "보통",
-    },
-    {
-      nickname: "JohnSmith",
-      major: "경영학과",
-      mbti: "ENTP",
-      age: 24,
-      admissionYear: 21,
-      contact_id: "@johnsmith",
-      song: "Coldplay - Fix You",
-      comment: "새로운 도전을 즐깁니다!",
-      hobby: ["인디음악", "사랑"],
-      contactFrequency: "자주",
-    },
-    {
-      nickname: "AliceKim",
-      major: "심리학과",
-      mbti: "INFJ",
-      age: 23,
-      admissionYear: 22,
-      contact_id: "@alicekim",
-      song: "BTS - Spring Day",
-      comment: "심리학이 흥미로워요!",
-      hobby: [  "영화"],
-      contactFrequency: "가끔",
-    },
-  ];
+  
   
   return (
     <div className="container">
@@ -195,7 +178,7 @@ function MainpageLogin() {
       <Background />
       <PointBalance/>
       <NoticeSlideCard/>
-      <MatchProfiles profiles={sampleProfiles}/>
+      <MatchProfiles profiles={profiles}/>
       <div className="Mainpage__Login">
         
         <div
