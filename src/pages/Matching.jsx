@@ -160,15 +160,9 @@ useEffect(() => {
     const FormData = {
       importantOption: MatchState.formData.importantOption || "None", // 중요 옵션이 MBTI일 경우
       mbtiOption: MatchState.selectedMBTI.filter((l) => l !== "X").join(""),
-      hobbyOption: MatchState.isUseOption[2]
-        ? MatchState.formData.hobbyOption
-        : ["UNSELECTED"],
-      ageOption: MatchState.isUseOption[0]
-        ? MatchState.formData.ageOption
-        : "UNSELECTED",
-      contactFrequencyOption: MatchState.isUseOption[1]
-        ? MatchState.formData.contactFrequencyOption
-        : "UNSELECTED",
+      hobbyOption: MatchState.formData.hobbyOption,
+      ageOption: MatchState.formData.ageOption,
+      contactFrequencyOption: MatchState.formData.contactFrequencyOption,
       sameMajorOption: MatchState.isUseOption[3] ? true : false,
       totalCost: MatchState.point,
       university: "Catholic",
