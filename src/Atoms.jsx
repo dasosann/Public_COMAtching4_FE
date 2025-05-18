@@ -85,7 +85,7 @@ export const selectedMBTIState = atom({
   },
 });
 
-const MatchPickState = atom({
+export const MatchPickState = atom({
   key: "MatchPickState",
   default: {
     point: 0,
