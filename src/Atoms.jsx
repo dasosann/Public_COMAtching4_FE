@@ -85,24 +85,23 @@ export const selectedMBTIState = atom({
   },
 });
 
-export const MatchPickState = atom({
+const MatchPickState = atom({
   key: "MatchPickState",
   default: {
-    selectedMBTI: ["X", "X", "X", "X"],
-    selectedCategory: [],
-    point: 1000,
-    balance: null,
-    isUseOption: [false, false, false, false],
+    point: 0,
     formData: {
-      ageOption: "",
-
       mbtiOption: "",
       hobbyOption: [],
+      ageOption: "",
       contactFrequencyOption: "",
-      sameMajorOption: false,
     },
+    selectedMBTI: ["X", "X", "X", "X"],
+    selectedCategory: [],
+    isUseOption: [false, false, false, false],
+    duplication: [], // ✅ 추가
   },
 });
+
 
 export const MatchResultState = atom({
   key: "MatchResultState",

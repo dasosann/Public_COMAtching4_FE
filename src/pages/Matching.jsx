@@ -89,7 +89,7 @@ useEffect(() => {
   setIsButtonEnabled(isAllOptionsSelected);
   console.log(isAllOptionsSelected);
 }, [MatchState.formData]); // formData 값이 변경될 때마다 실행
-
+console.log("보낼 매칭 요청 데이터:", FormData);
 useEffect(() => {
   console.log("Updated MatchState:", MatchState);
 }, [MatchState]); // MatchState가 변경될 때마다 실행
@@ -158,26 +158,23 @@ useEffect(() => {
     }
 
     const FormData = {
-      ageOption: MatchState.isUseOption[0]
-        ? MatchState.formData.ageOption
-        : "UNSELECTED",
-      mbtiOption: MatchState.selectedMBTI
-        .filter((letter) => letter !== "X")
-        .join(","),
+      importantOption: isPrioritySelected ? "mbtiOption" : "None", // 중요 옵션이 MBTI일 경우
+      mbtiOption: MatchState.selectedMBTI.filter((l) => l !== "X").join(""),
       hobbyOption: MatchState.isUseOption[2]
         ? MatchState.formData.hobbyOption
         : ["UNSELECTED"],
+      ageOption: MatchState.isUseOption[0]
+        ? MatchState.formData.ageOption
+        : "UNSELECTED",
       contactFrequencyOption: MatchState.isUseOption[1]
         ? MatchState.formData.contactFrequencyOption
         : "UNSELECTED",
       sameMajorOption: MatchState.isUseOption[3] ? true : false,
+      totalCost: MatchState.point,
+      university: "Catholic",
+      duplication: MatchState.duplication || [] // MatchState에 duplication 값이 있다고 가정
     };
-    setMatchState((prev) => ({
-      ...prev,
-      formData: {
-        FormData,
-      },
-    }));
+
     
 
     try {
@@ -186,7 +183,7 @@ useEffect(() => {
         "/auth/user/api/match/request",
         FormData
       );
-      
+      console.log("서버 응답:", response.data)
       if (response.status === 200) {
         await setMatchPageResult((prev) => ({
           ...prev,
@@ -218,55 +215,53 @@ useEffect(() => {
 
   
   const handleMBTISelection = (value) => {
-    // 선택한 것의 카테고리 구분
-    const category =
-      value === "E" || value === "I"
-        ? 0
-        : value === "S" || value === "N"
-        ? 1
-        : value === "T" || value === "F"
-        ? 2
-        : 3;
-  
-    setMatchState((prev) => {
-      const updatedMBTI = [...prev.selectedMBTI];
-      const updatedCategory = [...prev.selectedCategory];
-  
-      if (updatedCategory.includes(category)) {
-        if (updatedMBTI[category] === value) {
-          updatedMBTI[category] = "X"; // 선택 해제
-          updatedCategory.splice(updatedCategory.indexOf(category), 1);
-        } else {
-          updatedMBTI[category] = value; // 같은 카테고리 내 다른 값 선택
-        }
+  const category =
+    value === "E" || value === "I"
+      ? 0
+      : value === "S" || value === "N"
+      ? 1
+      : value === "T" || value === "F"
+      ? 2
+      : 3;
+
+  setMatchState((prev) => {
+    const updatedMBTI = [...prev.selectedMBTI];
+    const updatedCategory = [...prev.selectedCategory];
+
+    if (updatedCategory.includes(category)) {
+      if (updatedMBTI[category] === value) {
+        updatedMBTI[category] = "X"; // 선택 해제
+        updatedCategory.splice(updatedCategory.indexOf(category), 1);
       } else {
-        if (updatedCategory.length >= 4) {
-          updatedMBTI[updatedCategory[0]] = "X"; // 기존 선택을 제거
-          updatedCategory.shift();
-        }
-        updatedMBTI[category] = value;
-        updatedCategory.push(category);
+        updatedMBTI[category] = value; // 같은 카테고리 내 다른 값 선택
       }
+    } else {
+      if (updatedCategory.length >= 2) {
+        // 최대 2개까지만 허용
+        alert("MBTI는 두 개만 선택할 수 있습니다.");
+        return prev; // 더 이상 선택 불가
+      }
+      updatedMBTI[category] = value;
+      updatedCategory.push(category);
+    }
 
-      // 선택된 MBTI 값을 정리하여 formData.mbtiOption에 반영
-      const mbtiOptionValue = updatedMBTI.filter((letter) => letter !== "X").join(",");
+    const mbtiOptionValue = updatedMBTI.filter((letter) => letter !== "X").join(",");
+    const isSelected = updatedCategory.length === 2;
 
+    setIsMBTISelected(isSelected);
 
-  
-      const isSelected = updatedCategory.length >= 2 && updatedCategory.length <= 4; // 2개 이상 4개 이하 선택 여부 확인
-      setIsMBTISelected(isSelected); // 2개 이상 4개 이하가 선택되었을 때만 슬라이더 활성화
-  
-      return {
-        ...prev,
-        selectedMBTI: updatedMBTI,
-        selectedCategory: updatedCategory,
-        formData: {
-          ...prev.formData,
-          mbtiOption: mbtiOptionValue, // 업데이트된 MBTI 값을 저장
-        },
-      };
-    });
-  };
+    return {
+      ...prev,
+      selectedMBTI: updatedMBTI,
+      selectedCategory: updatedCategory,
+      formData: {
+        ...prev.formData,
+        mbtiOption: mbtiOptionValue,
+      },
+    };
+  });
+};
+
   
   const togglePrioritySelection = () => {
     setIsPrioritySelected((prev) => !prev);
