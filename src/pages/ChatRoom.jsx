@@ -23,10 +23,12 @@ function ChatRoom() {
       try {
         const res = await instance.get(`/auth/user/chat/room?roomId=${roomId}`);
         console.log("res",res);
-        const data = res.data.data;
+        const data = res.data;
         if (!Array.isArray(data)) {
-            console.log(res);
-        console.error("❌ 예상치 못한 응답 형식:", data);
+            console.log("res", res);
+            console.log("res.data", res.data);
+            console.log("res.data.data", res.data.data);
+
         return;
         }
         const formattedMessages = data.map((msg, idx) => ({
