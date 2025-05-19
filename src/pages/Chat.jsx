@@ -43,7 +43,7 @@ function Chat() {
 
       <div className="chat-list">
         {chatList.map((chat) => (
-          <Link key={chat.roomId} to={`/chat/${chat.roomId}`} style={{ textDecoration: 'none' }}>
+          <Link key={chat.roomId} to={`/chat/${chat.roomId}`} state={{ myRole: chat.myRole }}  style={{ textDecoration: 'none' }}>
             <ChatItem
               name={chat.name}
               age={chat.age}

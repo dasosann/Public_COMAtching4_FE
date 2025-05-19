@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import ChatHeader from '../components/Chat/ChatHeader';
 import ChatMessage from '../components/Chat/ChatMessage.jsx';
 import Background from '../components/Background.jsx';
-import { useParams } from "react-router-dom";
+import { useParams , useLocation} from "react-router-dom";
 
 import { Client } from "@stomp/stompjs";
 import instance from "../axiosConfig";
@@ -11,6 +11,8 @@ import "../css/pages/ChatRoom.css";
 
 function ChatRoom() {
   const { roomId } = useParams();
+  const location = useLocation();
+  const myRole = location.state?.myRole; 
   const [chatMessages, setChatMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [focused, setFocused] = useState(false);
@@ -19,21 +21,28 @@ function ChatRoom() {
   const socketRef = useRef(null);
   // 📌 1. 지난 채팅 내역 불러오기
   useEffect(() => {
+    if (!myRole) {
+        alert("접근 오류: 잘못된 경로입니다.");
+        navigate("/chat");
+    }
+    }, [myRole]);
+
+  useEffect(() => {
     const fetchChatHistory = async () => {
       try {
         const res = await instance.get(`/auth/user/chat/room?roomId=${roomId}`);
         console.log("res",res);
-        const data = res.data;
+        const data = res.data.data;
         if (!Array.isArray(data)) {
             console.log("res", res);
             console.log("res.data", res.data);
             console.log("res.data.data", res.data.data);
 
-        return;
+            return;
         }
         const formattedMessages = data.map((msg, idx) => ({
           id: idx + 1,
-          sender: msg.role === "PICKER" ? "me" : "other",  // 역할에 따라 분기
+          sender: msg.role === myRole ? "me" : "other",  // 역할에 따라 분기
           message: msg.content,
           time: msg.timestamp.split(' ')[1].slice(0, 5),  // '13:34'
         }));
@@ -60,7 +69,7 @@ function ChatRoom() {
       const msg = JSON.parse(event.data);
       const newMessage = {
         id: Date.now(),
-        sender: msg.role === "PICKER" ? "me" : "other",
+        sender: msg.role === myRole ? "me" : "other",
         message: msg.content,
         time: msg.timestamp?.split(' ')[1]?.slice(0, 5) || new Date().toTimeString().slice(0, 5)
       };
