@@ -48,7 +48,7 @@ const NoticeSlideCard = () => {
             </ToggleButton>
             {isOpen && (
                 <SliderWrapper>
-                    {notices.map((notice, index) => (
+                    {notices.map((notice) => (
                         <NoticeCard key={notice.id}>
                             <NoticeTitle>{notice.title}</NoticeTitle>
                             <NoticeContent>{notice.content}</NoticeContent>
