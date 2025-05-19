@@ -75,22 +75,35 @@ function ChatRoom() {
   }, [roomId]);
 
   // 📌 3. 메시지 전송 핸들러
-  const handleSend = () => {
-    if (!inputValue.trim() || !clientRef.current?.connected) return;
+  // 📌 3. 메시지 전송 핸들러
+const handleSend = () => {
+  if (!inputValue.trim() || !clientRef.current?.connected) return;
 
-    const sendMessage = {
-      chatRoomId: roomId,
-      content: inputValue,
-      chatRole: "PICKER"  // 본인 역할로 설정 필요
-    };
-
-    clientRef.current.publish({
-      destination: "/pub/chat/message",
-      body: JSON.stringify(sendMessage)
-    });
-
-    setInputValue('');
+  const sendMessage = {
+    chatRoomId: roomId,
+    content: inputValue,
+    chatRole: "PICKER"  // 본인 역할로 설정 필요
   };
+
+  // 1️⃣ 서버에 전송
+  clientRef.current.publish({
+    destination: "/pub/chat/message",
+    body: JSON.stringify(sendMessage)
+  });
+
+  // 2️⃣ 화면에도 즉시 추가
+  const newMessage = {
+    id: Date.now(),
+    sender: "me",
+    message: inputValue,
+    time: new Date().toTimeString().slice(0, 5) // 'HH:mm'
+  };
+  setChatMessages(prev => [...prev, newMessage]);
+
+  // 3️⃣ 입력창 초기화
+  setInputValue('');
+};
+
 
   // 📌 4. 자동 스크롤
   useEffect(() => {
