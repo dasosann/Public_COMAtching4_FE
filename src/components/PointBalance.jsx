@@ -36,6 +36,9 @@ const PointBalance = () => {
       console.error("포인트 조회 중 오류:", error);
     }
   };
+  const handleNotService = () => {
+    alert("해당 서비스는 5/21일 10:00에 오픈됩니다 축제까지 기다려주세요!");
+  };
   // const sendParamsToBackend = async (paymentKey, orderId, amount, uniqueId) => {
   //   try {
   //     setIsLoading(true);
@@ -122,7 +125,7 @@ const PointBalance = () => {
           <span className="point-text">보유 포인트</span>
           <span className="amount">{userInfo.point} P</span>
         </div>
-        <button className="charges-button" onClick={openModal}>충전하기</button>
+        <button className="charges-button" onClick={handleNotService}>충전하기</button>
       </div>
 
       <MainPaymentModal
