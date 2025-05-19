@@ -3,7 +3,7 @@ import ChatHeader from '../components/Chat/ChatHeader';
 import ChatMessage from '../components/Chat/ChatMessage.jsx';
 import Background from '../components/Background.jsx';
 import { useParams } from "react-router-dom";
-import SockJS from "sockjs-client";
+
 import { Client } from "@stomp/stompjs";
 import instance from "../axiosConfig";
 
@@ -42,67 +42,60 @@ function ChatRoom() {
 
   // 📌 2. 실시간 WebSocket 연결
   useEffect(() => {
-    const socket = new SockJS(`wss://backend.comatching.site/ws/chat?roomId${roomId}`);
-    const stompClient = new Client({
-      webSocketFactory: () => socket,
-      onConnect: () => {
-        console.log("✅ WebSocket 연결됨");
+    const socket = new WebSocket(`wss://backend.comatching.site/ws/chat?roomId=${roomId}`);
+    socketRef.current = socket;
 
-        stompClient.subscribe(`/sub/chat/room/${roomId}`, (message) => {
-          const body = JSON.parse(message.body);
+    socket.onopen = () => {
+      console.log('✅ WebSocket 연결됨');
+    };
 
-          const newMessage = {
-            id: Date.now(), // 고유 ID
-            sender: body.role === "PICKER" ? "me" : "other",
-            message: body.content,
-            time: body.timestamp.split(' ')[1].slice(0, 5),
-          };
+    socket.onmessage = (event) => {
+      const msg = JSON.parse(event.data);
+      const newMessage = {
+        id: Date.now(),
+        sender: msg.role === "PICKER" ? "me" : "other",
+        message: msg.content,
+        time: msg.timestamp?.split(' ')[1]?.slice(0, 5) || new Date().toTimeString().slice(0, 5)
+      };
+      setChatMessages((prev) => [...prev, newMessage]);
+    };
 
-          setChatMessages(prev => [...prev, newMessage]);
-        });
-      },
-      onStompError: (frame) => {
-        console.error("❌ STOMP 오류", frame);
-      },
-    });
+    socket.onerror = (error) => {
+      console.error('❌ WebSocket 오류', error);
+    };
 
-    stompClient.activate();
-    clientRef.current = stompClient;
+    socket.onclose = () => {
+      console.log('❎ WebSocket 연결 종료됨');
+    };
 
     return () => {
-      stompClient.deactivate();
+      socket.close();
     };
   }, [roomId]);
 
   // 📌 3. 메시지 전송 핸들러
-  // 📌 3. 메시지 전송 핸들러
-const handleSend = () => {
-  if (!inputValue.trim() || !clientRef.current?.connected) return;
+  const handleSend = () => {
+    if (!inputValue.trim()) return;
+    if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+      const sendMessage = {
+        chatRoomId: roomId,
+        content: inputValue,
+        chatRole: "PICKER"
+      };
 
-  const sendMessage = {
-    chatRoomId: roomId,
-    content: inputValue,
-    chatRole: "PICKER"  // 본인 역할로 설정 필요
+      socketRef.current.send(JSON.stringify(sendMessage));
+
+      const newMessage = {
+        id: Date.now(),
+        sender: 'me',
+        message: inputValue,
+        time: new Date().toTimeString().slice(0, 5)
+      };
+
+      setChatMessages((prev) => [...prev, newMessage]);
+      setInputValue('');
+    }
   };
-
-  // 1️⃣ 서버에 전송
-  clientRef.current.publish({
-    destination: "/pub/chat/message",
-    body: JSON.stringify(sendMessage)
-  });
-
-  // 2️⃣ 화면에도 즉시 추가
-  const newMessage = {
-    id: Date.now(),
-    sender: "me",
-    message: inputValue,
-    time: new Date().toTimeString().slice(0, 5) // 'HH:mm'
-  };
-  setChatMessages(prev => [...prev, newMessage]);
-
-  // 3️⃣ 입력창 초기화
-  setInputValue('');
-};
 
 
   // 📌 4. 자동 스크롤
