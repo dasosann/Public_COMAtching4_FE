@@ -3,6 +3,7 @@ import ChatHeader from '../components/Chat/ChatHeader';
 import ChatMessage from '../components/Chat/ChatMessage.jsx';
 import Background from '../components/Background.jsx';
 import { useParams , useLocation} from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 import { Client } from "@stomp/stompjs";
 import instance from "../axiosConfig";
@@ -10,7 +11,9 @@ import instance from "../axiosConfig";
 import "../css/pages/ChatRoom.css";
 
 function ChatRoom() {
-  const { roomId } = useParams();
+  const navigate = useNavigate();
+
+    const { roomId } = useParams();
   const location = useLocation();
   const myRole = location.state?.myRole; 
   const [chatMessages, setChatMessages] = useState([]);
@@ -19,6 +22,7 @@ function ChatRoom() {
   const chatBodyRef = useRef(null);
   const clientRef = useRef(null);
   const socketRef = useRef(null);
+
   // 📌 1. 지난 채팅 내역 불러오기
   useEffect(() => {
     if (!myRole) {
