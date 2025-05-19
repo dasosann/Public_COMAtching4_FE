@@ -62,7 +62,7 @@ const AdminUserDetail = () => {
                             <S.TitleSpan>Nickname :</S.TitleSpan>
                             <S.NameSpan>&nbsp;{userData.data.username}&nbsp;&nbsp;</S.NameSpan>
                             {/* 여기에서 데이터받아서 써야한다. */}
-                            {gender==="남" ? <img src='/assets/Admin/male-icon.svg' alt='남성 아이콘'/>:<img src='/assets/Admin/female-icon.svg' alt='여성 아이콘'/> }
+                            {/* {gender==="남" ? <img src='/assets/Admin/male-icon.svg' alt='남성 아이콘'/>:<img src='/assets/Admin/female-icon.svg' alt='여성 아이콘'/> } */}
                         </S.NicknameAndGenderDiv>
                         <S.EmailDiv>
                             <S.TitleSpan>E-mail :</S.TitleSpan>

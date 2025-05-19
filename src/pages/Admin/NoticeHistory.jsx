@@ -218,7 +218,7 @@ const NoticeHistory = () => {
         <div>
             <AdminHeader setAdminSelect={setAdminSelect} adminSelect={adminSelect} />
             <MainWrapper>
-                <AdminDiv style={{ paddingRight: '24px', height: '520px' }}>
+                <AdminDiv style={{ paddingRight: '24px', height: '520px', justifyContent:'start' }}>
                     <L.TitleDiv>공지사항 히스토리</L.TitleDiv>
                     <L.SubTitle>진행한 공지사항의 히스토리</L.SubTitle>
                     <div style={{ overflowY: 'auto' }}>
