@@ -24,7 +24,10 @@ function ChatRoom() {
         const res = await instance.get(`/auth/user/chat/room?roomId=${roomId}`);
         console.log("res",res);
         const data = res.data.data;
-
+        if (!Array.isArray(data)) {
+        console.error("❌ 예상치 못한 응답 형식:", data);
+        return;
+        }
         const formattedMessages = data.map((msg, idx) => ({
           id: idx + 1,
           sender: msg.role === "PICKER" ? "me" : "other",  // 역할에 따라 분기
