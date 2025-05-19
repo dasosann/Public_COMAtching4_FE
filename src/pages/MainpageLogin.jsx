@@ -142,7 +142,7 @@ function MainpageLogin() {
   // }, []);
 
   const handleNotService = () => {
-    alert("해당 서비스는 9/12일 10:00에 오픈됩니다 축제까지 기다려주세요!");
+    alert("해당 서비스는 5/21일 10:00에 오픈됩니다 축제까지 기다려주세요!");
   };
   const handleVisitGuide = () => {
     navigate("/guide");
@@ -182,8 +182,8 @@ function MainpageLogin() {
       <div className="Mainpage__Login">
         
         <div
-          onClick={handleClickmatch}
-          // onClick={handleNotService}
+          // onClick={handleClickmatch}
+          onClick={handleNotService}
         >
           <button className="matching-button">
             AI 매칭하기 ▶
@@ -198,14 +198,15 @@ function MainpageLogin() {
         
         <div className="button-group">
           <BottomNavButton
-            // onClick={handleNotService}
-            onClick={handleVisitcheckresult}
+            onClick={handleNotService}
+            // onClick={handleVisitcheckresult}
             imgSrc={`../../assets/checkresult.svg`}
             imgText="조회버튼"
             buttonText="조회하기"
           />
           <BottomNavButton
-            onClick={handleVisitGuide}
+            onClick={handleNotService}
+            // onClick={handleVisitGuide}
             imgSrc={`../../assets/guidebook.svg`}
             imgText="가이드북"
             buttonText="가이드북"
