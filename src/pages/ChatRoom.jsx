@@ -42,7 +42,7 @@ function ChatRoom() {
 
   // 📌 2. 실시간 WebSocket 연결
   useEffect(() => {
-    const socket = new SockJS(`https://backend1.comatching.site/ws/chat?roomId=${roomId}`);
+    const socket = new SockJS(`wss://backend.comatching.site/ws/chat?roomId${roomId}`);
     const stompClient = new Client({
       webSocketFactory: () => socket,
       onConnect: () => {
