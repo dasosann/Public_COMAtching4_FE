@@ -21,6 +21,7 @@ const NoticeSlideCard = () => {
                     throw new Error('공지사항 요청 실패');
                 }
                 const data = await response.json();
+                console.log("가져온 공지사항",data)
                 setNotices(data.data || []); // 데이터가 없으면 빈 배열
             } catch (err) {
                 setError('공지사항을 불러오는 데 실패했습니다.');
