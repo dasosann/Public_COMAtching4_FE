@@ -17,13 +17,13 @@ function MainpageUnLogin() {
   // 일반적인 형식과 다를텐데 아래 링크로 이동시켜서 백엔드에서 카카오 로그인을 처리한뒤
   // Redirection페이지로 옮겨서 role을 확인하는 과정을 거쳤습니다.
   const handleKakaoLogin = () => {
-    // window.location.href = "https://backend.comatching.site/oauth2/authorization/kakao"
+    window.location.href = "https://backend.comatching.site/oauth2/authorization/kakao"
       // "https://cuk.comatching.site/oauth2/authorization/kakao";
-    alert("내일 오픈합니다!");
+    // alert("내일 오픈합니다!");
   };
   const handleGoogleLogin = () =>{
     window.location.href = "https://backend.comatching.site/oauth2/authorization/google"
-    alert("내일 오픈합니다!");
+    // alert("내일 오픈합니다!");
   
   }
   
