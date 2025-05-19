@@ -28,7 +28,7 @@ function AgreementBox({ handleCloseAgreement }) {
         &nbsp; &nbsp;* COMAtching 참여자 <br />
         4. 개인정보 보유 및 이용기간 <br />
         <br />
-        &nbsp;2024년 5월 24일 23시 59분까지
+        &nbsp;2025년 5월 25일 23시 59분까지
         <br />
         <br /> * 개인정보는 수집 및 이용목적이 달성되면 지체 없이 파기됩니다.
         다만, 관련 법규에 따라 보존할 필요가 있는 경우에는 해당 기간 동안
@@ -41,7 +41,7 @@ function AgreementBox({ handleCloseAgreement }) {
         문의사항이나 민원은 다음으로 문의해 주시기 바랍니다: <br />
         &nbsp;* 최고 정보 관리 책임자 : 가톨릭대학교 중앙동아리 COMA
         <br /> &nbsp;* 개인정보보호책임자 : 가톨릭대학교 정보통신전자공학부
-        19학번 박승원 <br />
+        19학번 천승환 <br />
         &nbsp;* 개인정보 수집 및 이용 주체 : 가톨릭대학교 중앙 IT동아리 COMA{" "}
         <br />
         <br />

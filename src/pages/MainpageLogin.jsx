@@ -189,7 +189,6 @@ function MainpageLogin() {
             AI 매칭하기 ▶
             <TotalUsersCounter
               font_size="15px"
-              numParticipants={userInfo.numParticipants}
             />
           </button>
         </div>
@@ -217,7 +216,7 @@ function MainpageLogin() {
       </div>
 
       
-      {/* <NavBar/> */}
+      {/* <NavBar/>
       {showEventModal && userInfo.eventokay === false && (
         <EventModal
           onParticipate={handleParticipate}
@@ -227,8 +226,8 @@ function MainpageLogin() {
       )}
       {showTutorial && (
         <TutorialSlides onComplete={() => setShowTutorial(false)} />
-      )}
-      <NavBar/>
+      )} */}
+      <NavBar onClick={handleNotService}/>
     </div>
   );
 }
