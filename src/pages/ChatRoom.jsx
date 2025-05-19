@@ -100,7 +100,7 @@ function ChatRoom() {
       const sendMessage = {
         chatRoomId: roomId,
         content: inputValue,
-        chatRole: "PICKER"
+        chatRole: myRole,
       };
 
       socketRef.current.send(JSON.stringify(sendMessage));
