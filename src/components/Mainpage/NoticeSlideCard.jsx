@@ -11,7 +11,7 @@ const NoticeSlideCard = () => {
     useEffect(() => {
         const fetchNotices = async () => {
             try {
-                const response = await fetchRequest('/auth/admin/notice?state=OPEN', {
+                const response = await fetchRequest('/auth/user/notice', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ const NoticeSlideCard = () => {
             {isOpen && (
                 <SliderWrapper>
                     {notices.map((notice, index) => (
-                        <NoticeCard key={index}>
+                        <NoticeCard key={notice.id}>
                             <NoticeTitle>{notice.title}</NoticeTitle>
                             <NoticeContent>{notice.content}</NoticeContent>
                         </NoticeCard>
