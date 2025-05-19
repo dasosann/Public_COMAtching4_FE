@@ -1,6 +1,6 @@
 import React from 'react';
 import "../../css/components/ChatItem.css"
-function ChatItem({ name, age, major, message, time, hasNotification }) {
+function ChatItem({ name, age, major }) {
   return (
     <div className="chat-item">
       <div className="chat-info">
@@ -9,11 +9,8 @@ function ChatItem({ name, age, major, message, time, hasNotification }) {
           <div className="chat-age">{age}</div>
           <div className="chat-major">{major}</div>
         </div>
-        <div className="chat-bottom">
-          {message} · {time}
-        </div>
+        
       </div>
-      {hasNotification && <div className="chat-notification"></div>}
     </div>
   );
 }
