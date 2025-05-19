@@ -24,12 +24,6 @@ const AdminUserWarningHistory = () => {
                 <AdminDiv>
                     <W.WarningTitle>경고 히스토리</W.WarningTitle>
                     <W.WarningSubTitle>자세한 경고 사유 및 누적 횟수 확인</W.WarningSubTitle>
-                    <UserWarningHistoryComponent/>
-                    <UserWarningHistoryComponent/>
-                    <UserWarningHistoryComponent/>
-                    <UserWarningHistoryComponent/>
-                    <UserWarningHistoryComponent/>
-                    <UserWarningHistoryComponent/>
                 </AdminDiv>
             </MainWrapper>
         </div>
