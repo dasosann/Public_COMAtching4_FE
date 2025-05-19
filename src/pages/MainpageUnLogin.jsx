@@ -23,6 +23,8 @@ function MainpageUnLogin() {
   };
   const handleGoogleLogin = () =>{
     window.location.href = "https://backend.comatching.site/oauth2/authorization/google"
+    alert("내일 오픈합니다!");
+  
   }
   
   
