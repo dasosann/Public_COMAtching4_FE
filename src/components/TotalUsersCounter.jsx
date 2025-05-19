@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import * as styles from '../css/components/TotalUsersCounter.css.ts';
+import fetchRequest from '../fetchConfig.jsx';
 
 // 유저가 몇명인지 보여주기 위한 컴포넌트입니다.
 function TotalUsersCounter({ font_size }) {
@@ -8,7 +9,7 @@ function TotalUsersCounter({ font_size }) {
     useEffect(() => {
         const fetchParticipants = async () => {
             try {
-                const response = await fetch('/api/participations', {
+                const response = await fetchRequest('/api/participations', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
