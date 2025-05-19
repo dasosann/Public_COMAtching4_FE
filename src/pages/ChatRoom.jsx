@@ -16,7 +16,7 @@ function ChatRoom() {
   const [focused, setFocused] = useState(false);
   const chatBodyRef = useRef(null);
   const clientRef = useRef(null);
-
+  const socketRef = useRef(null);
   // 📌 1. 지난 채팅 내역 불러오기
   useEffect(() => {
     const fetchChatHistory = async () => {
