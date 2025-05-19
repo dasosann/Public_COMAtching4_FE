@@ -48,7 +48,7 @@ function ChatRoom() {
           id: idx + 1,
           sender: msg.role === myRole ? "me" : "other",  // 역할에 따라 분기
           message: msg.content,
-          time: msg.timestamp.split(' ')[1].slice(0, 5),  // '13:34'
+          time: new Date(msg.timestamp).toTimeString().slice(0, 5), // ✅ 안전하게 처리
         }));
 
         setChatMessages(formattedMessages);
