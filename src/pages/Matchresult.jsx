@@ -21,64 +21,48 @@ function Matchresult() {
   const [resultPoint, setResultPoint] = useRecoilState(userState);
   const [loading, setLoading] = useState(false);
   
-   // 목데이터 설정
-   useEffect(() => {
-    const mockData = {
-      age: 25,
-      comment: "활발한 사람",
-      contactFrequency: "매일",
-      currentPoint: 500,
-      gender: "여성",
-      hobby: ["헬스", "독서", "영화"],
-      major: "컴퓨터 공학",
-      mbti: "ENTP",
-      socialId: "@instagram_id",
-      song: "Love Yourself - Justin Bieber",
-    };
-    setMatchResult(mockData);
-    setResultPoint((prev) => ({ ...prev, point: mockData.currentPoint }));
-  }, [setMatchResult, setResultPoint]);
+   
   
   //같은 조건으로 다시 매칭하기 핸들러
   const handleSubmit = async () => {
     
-    // if (MatchState.point > resultPoint.point) {
-    //   alert("포인트가 부족합니다!!");
-    //   navigate("/charge-request", { replace: true }); 
-    //   return; // 동작 중단
-    // }
-    // try {
-    //   setLoading(true);
+    if (MatchState.point > resultPoint.point) {
+      alert("포인트가 부족합니다!!");
+      navigate("/charge-request", { replace: true }); 
+      return; // 동작 중단
+    }
+    try {
+      setLoading(true);
       
-    //   const response = await instance.post(
-    //     "/auth/user/api/match/request",
-    //     MatchState.formData.FormData
-    //   );
-    //   if (response.data.status === 200) {
-    //     await setMatchResult((prev) => ({
-    //       ...prev,
-    //       age: response.data.data.age,
-    //       comment: response.data.data.comment,
-    //       contactFrequency: response.data.data.contactFrequency,
-    //       currentPoint: response.data.data.currentPoint,
-    //       gender: response.data.data.gender,
-    //       hobby: response.data.data.hobby,
-    //       major: response.data.data.major,
-    //       mbti: response.data.data.mbti,
-    //       socialId: response.data.data.contactId,
-    //       song: response.data.data.song,
-    //     }));
-    //     await setResultPoint((prev) => ({
-    //       ...prev,
-    //       point: response.data.data.currentPoint,
-    //     }));
-    //     setLoading(false);
-    //   } else {
-    //     throw new Error("Unexpected response code or status");
-    //   }
-    // } catch (error) {
-    //   console.error("Error during match request:", error);
-    // }
+      const response = await instance.post(
+        "/auth/user/api/match/request",
+        MatchState.formData.FormData
+      );
+      if (response.data.status === 200) {
+        await setMatchResult((prev) => ({
+          ...prev,
+          age: response.data.data.age,
+          comment: response.data.data.comment,
+          contactFrequency: response.data.data.contactFrequency,
+          currentPoint: response.data.data.currentPoint,
+          gender: response.data.data.gender,
+          hobby: response.data.data.hobby,
+          major: response.data.data.major,
+          mbti: response.data.data.mbti,
+          socialId: response.data.data.contactId,
+          song: response.data.data.song,
+        }));
+        await setResultPoint((prev) => ({
+          ...prev,
+          point: response.data.data.currentPoint,
+        }));
+        setLoading(false);
+      } else {
+        throw new Error("Unexpected response code or status");
+      }
+    } catch (error) {
+      console.error("Error during match request:", error);
+    }
   };
   
   
@@ -126,13 +110,8 @@ function Matchresult() {
     navigate("/");
   };
   const handleSendText = () => {
-  const roomId = MatchResult.roomId; // MatchResult에 roomId가 있다고 가정
-  if (!roomId) {
-    alert("roomId가 없습니다!");
-    return;
-  }
-  navigate(`/chat/${roomId}`);
-};
+    navigate(`/chat`);
+  };
 
   console.log(resultData);
   return (
