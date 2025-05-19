@@ -5,6 +5,7 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import E from '../../css/pages/Admin/EventFreeMatchStyle';
 import Modal from '../../css/pages/Admin/AdminModalAll';
 import Dropdown from '../../components/Admin/AdminDropDown';
+import fetchRequest from '../../fetchConfig';
 
 const NoticeReservation = () => {
     const navigate = useNavigate();
@@ -127,14 +128,15 @@ const NoticeReservation = () => {
         console.log("백엔드로 보내는 데이터 로그", noticeData)
         const backendAddress = import.meta.env.VITE_BACKEND_ADDRESS;
         try {
-            const response = await fetch(`${backendAddress}/auth/admin/notice`, {
+            const response = await fetchRequest(`/auth/admin/notice`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(noticeData),
             });
-
+            const data = await response.json();
+            console.log("json화 한 data",data)
             if (!response.ok) {
                 throw new Error('공지사항 등록에 실패했습니다.');
             }

@@ -62,10 +62,10 @@ const Mypage = () => {
             <button className='mypage-recharge-btn' onClick={openModal}>충전하기</button>
             
         </div>
-        <div className='mypage-history-btns'>
+        {/* <div className='mypage-history-btns'>
             <button className='mypage-history-btn'>충전내역</button>
             <button className='mypage-history-btn'>사용내역</button>
-        </div>
+        </div> */}
       </div>
       
       <SupportSection />

@@ -1,6 +1,8 @@
 import React from 'react';
 import "../../css/components/SupportSection.css"
+import { useNavigate } from 'react-router-dom';
 const SupportSection = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div className='mypage-support'>
@@ -9,14 +11,14 @@ const SupportSection = () => {
           <span>공지사항</span>
           <img src='../assets/Common/gt.svg' alt='>' />
         </div>
-        <div className='mypage-support-item'>
+        <div className='mypage-support-item' onClick={()=>navigate('/guide')}>
           <span>가이드북</span>
           <img src='../assets/Common/gt.svg' alt='>' />
         </div>
-        <div className='mypage-support-item'>
+        {/* <div className='mypage-support-item'>
           <span>신고하기</span>
           <img src='../assets/Common/gt.svg' alt='>' />
-        </div>
+        </div> */}
       </div>
       
       <div className='mypage-etc'>
