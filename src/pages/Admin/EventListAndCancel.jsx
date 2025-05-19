@@ -71,7 +71,7 @@ const EachEventComponent = ({data}) =>{
     const endDateObj = new Date(data.end);
     const startDate = `${startDateObj.getFullYear()}-${String(startDateObj.getMonth() + 1).padStart(2, '0')}-${String(startDateObj.getDate()).padStart(2, '0')}`;
     const startTime= startDateObj.toTimeString().slice(0, 5); // HH:MM
-    const endTime= endDateObj.toTimeString().slice(0, 5);;    // HH:MM
+    const endTime= endDateObj.toTimeString().slice(0, 5);    // HH:MM
     console.log("사용해야할데이터",data)
     console.log ("시작날짜", startDate, "시작시간",startTime, "종료시간",endTime)
     const [showSecondModal, setShowSecondModal] = useState(false);  // 두 번째 모달 표시 여부
@@ -88,13 +88,13 @@ const EachEventComponent = ({data}) =>{
     };
     return(
         <L.ComponentWrapper>
-            <L.FirstDiv><span style={{color:'#828282',fontWeight:'500'}}>실행전</span><span>{data.eventType}</span></L.FirstDiv>
+            <L.FirstDiv><span style={{color:'#828282',fontWeight:'500'}}>실행전</span><span>{data.eventType} {data.discountRate}%</span></L.FirstDiv>
             <L.SecondDiv>
                 <div style={{display:'flex', gap:'16px'}}><span style={{width:'137px'}}>이벤트 시작일:</span><L.SecondSpan style={{width:'177px'}}>{startDate}</L.SecondSpan></div>
                 <div style={{display:'flex', gap:'8px', width:'293px'}}><span style={{width:'96px'}}>시작 시각:</span><L.SecondSpan style={{width:'130px'}}>{startTime}</L.SecondSpan></div>
                 <div style={{display:'flex', gap:'8px', width:'293px'}}><span style={{width:'107px'}}>종료 시각:</span> <L.SecondSpan style={{width:'130px'}}>{endTime}</L.SecondSpan></div>
             </L.SecondDiv>
-            <L.Button onClick={()=>setShowModal(true)}>이벤트 취소</L.Button>
+            {/* <L.Button onClick={()=>setShowModal(true)}>이벤트 취소</L.Button> */}
             {showModal && (
                     <Modal.Overlay>
                         <Modal.ModalContainer>
@@ -126,7 +126,7 @@ const EventListAndCancel = () => {
     useEffect(()=>{
         const getEventList = async ()=>{
             try{
-                const response = await fetchRequest('/admin/event/inquiry?');
+                const response = await fetchRequest('/auth/admin/event?status=OPEN');
                 const data = await response.json();
                 console.log("불러온 이벤트 리스트",data)
                 setEventList(data.data);
@@ -187,7 +187,7 @@ const EventListAndCancel = () => {
         <div>
             <AdminHeader setAdminSelect={setAdminSelect} adminSelect={adminSelect} />
             <MainWrapper>
-                <AdminDiv style={{paddingRight:'24px', height:'530px'}}>
+                <AdminDiv style={{paddingRight:'24px', height:'530px', justifyContent:'start'}}>
                     <L.TitleDiv>이벤트 예약목록 및 <L.RedSpan>취소</L.RedSpan></L.TitleDiv>
                     <L.SubTitle>예약 이벤트 관리기능</L.SubTitle>
                     <div style={{maxHeight:'514px', overflowY:'auto'}}>{eventList.map((data,i)=><EachEventComponent key={i} data={data}/>)}</div>

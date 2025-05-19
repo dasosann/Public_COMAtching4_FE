@@ -135,7 +135,7 @@ const EventDiscount = () => {
         };
         console.log("보내지는 eventData",eventData)
         // fetch로 데이터 전송
-        await fetchRequest('/admin/event/register/discount', {
+        await fetchRequest('/auth/admin/event/discount', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

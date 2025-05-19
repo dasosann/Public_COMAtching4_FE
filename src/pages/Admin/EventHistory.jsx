@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AdminDiv, MainWrapper } from '../../css/pages/Admin/AdminCSS';
 import { AdminHeader } from '../../components/Admin/AdminHeader';
 import styled from 'styled-components';
 import Modal from '../../css/pages/Admin/AdminModalAll';
+import fetchRequest from '../../fetchConfig';
 const L = {};
 L.TitleDiv = styled.div`
     font-size: 32px;
@@ -80,7 +81,7 @@ const EachEventHistoryComponent = ({data}) =>{
     };
     return(
         <L.ComponentWrapper style={{height:'132px'}}>
-            <L.FirstDiv><span style={{color:'#828282',fontWeight:'500'}}>실행 완료</span><span>{data.eventType}</span></L.FirstDiv>
+            <L.FirstDiv><span style={{color:'#828282',fontWeight:'500'}}>실행 완료</span>{data.title} {data.discountRate}%</L.FirstDiv>
             <L.SecondDiv>
                 <div style={{display:'flex', gap:'16px'}}><span style={{width:'137px'}}>이벤트 시작일:</span><L.SecondSpan style={{width:'177px'}}>{data.startDate}</L.SecondSpan></div>
                 <div style={{display:'flex', gap:'8px', width:'293px'}}><span style={{width:'96px'}}>시작 시각:</span><L.SecondSpan style={{width:'130px'}}>{data.startTime}</L.SecondSpan></div>
@@ -113,52 +114,74 @@ const EachEventHistoryComponent = ({data}) =>{
     )
 }
 const EventHistory = () => {
-    const eventList = [
-        {
-          eventType: "매칭 기회 제공 이벤트",
-          startDate: "2025-04-01",
-          startTime: "10:00",
-          endTime: "12:00"
-        },
-        {
-          eventType: "할인 이벤트",
-          startDate: "2025-05-15",
-          startTime: "09:00 AM",
-          endTime: "18:00"
-        },
-        {
-          eventType: "특별 프로모션",
-          startDate: "2025-06-20",
-          startTime: "11:00 AM",
-          endTime: "14:00"
-        },
-        {
-          eventType: "회원 전용 이벤트",
-          startDate: "2025-07-10",
-          startTime: "01:00 PM",
-          endTime: "15:00"
-        },
-        {
-          eventType: "회원 전용 이벤트",
-          startDate: "2025-07-10",
-          startTime: "01:00 PM",
-          endTime: "16:00"
-        },
-        {
-          eventType: "회원 전용 이벤트",
-          startDate: "2025-07-10",
-          startTime: "01:00 PM",
-          endTime: "03:00"
-        },
-        {
-          eventType: "회원 전용 이벤트",
-          startDate: "2025-07-10",
-          startTime: "01:00 PM",
-          endTime: "03:00 PM"
-        },
-      ];
+    // const eventList = [
+    //     {
+    //       eventType: "매칭 기회 제공 이벤트",
+    //       startDate: "2025-04-01",
+    //       startTime: "10:00",
+    //       endTime: "12:00"
+    //     },
+    //     {
+    //       eventType: "할인 이벤트",
+    //       startDate: "2025-05-15",
+    //       startTime: "09:00 AM",
+    //       endTime: "18:00"
+    //     },
+    //     {
+    //       eventType: "특별 프로모션",
+    //       startDate: "2025-06-20",
+    //       startTime: "11:00 AM",
+    //       endTime: "14:00"
+    //     },
+    //     {
+    //       eventType: "회원 전용 이벤트",
+    //       startDate: "2025-07-10",
+    //       startTime: "01:00 PM",
+    //       endTime: "15:00"
+    //     },
+    //     {
+    //       eventType: "회원 전용 이벤트",
+    //       startDate: "2025-07-10",
+    //       startTime: "01:00 PM",
+    //       endTime: "16:00"
+    //     },
+    //     {
+    //       eventType: "회원 전용 이벤트",
+    //       startDate: "2025-07-10",
+    //       startTime: "01:00 PM",
+    //       endTime: "03:00"
+    //     },
+    //     {
+    //       eventType: "회원 전용 이벤트",
+    //       startDate: "2025-07-10",
+    //       startTime: "01:00 PM",
+    //       endTime: "03:00 PM"
+    //     },
+    //   ];
     const [adminSelect, setAdminSelect] = useState('가입자관리');
-    
+    const [eventHistory,setEventHistory] = useState([]);
+    useEffect(()=>{
+        const getEventList = async ()=>{
+            try{
+                const response = await fetchRequest('/auth/admin/event?status=CLOSED',{});
+                const data = await response.json();
+                console.log("불러온 이벤트 리스트",data)
+                const mappedData = data.data.map(item => ({
+                    id: item.eventId,
+                    title: item.eventType,
+                    discountRate : item.discountRate,
+                    startDate: item.start.split('T')[0], // e.g., "2025-05-14"
+                    startTime: item.start.split('T')[1].slice(0, 5), // e.g., "17:04"
+                    endTime: item.end.split('T')[1].slice(0, 5), // e.g., "17:04"
+                }));
+                console.log("시간 변화한 히스토리배열 ",mappedData)
+                setEventHistory(mappedData);
+            }catch(error){
+                console.error("이벤트 리스트 가져와서 처리 중 오류",error);
+            }
+        }
+        getEventList();
+    },[])
     
     return (
         <div>
@@ -167,7 +190,7 @@ const EventHistory = () => {
                 <AdminDiv style={{paddingRight:'24px', height:'520px'}}>
                     <L.TitleDiv>이벤트 히스토리</L.TitleDiv>
                     <L.SubTitle>진행한 이벤트의 히스토리</L.SubTitle>
-                    <div style={{overflowY:'auto'}}>{eventList.map((data,i)=><EachEventHistoryComponent key={i} data={data}/>)}</div>
+                    <div style={{overflowY:'auto'}}>{eventHistory.map((data,i)=><EachEventHistoryComponent key={i} data={data}/>)}</div>
                 </AdminDiv> 
             </MainWrapper>
         </div>
