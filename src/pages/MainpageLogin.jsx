@@ -227,7 +227,7 @@ function MainpageLogin() {
       {showTutorial && (
         <TutorialSlides onComplete={() => setShowTutorial(false)} />
       )} */}
-      <NavBar onClick={handleNotService}/>
+      {/* <NavBar/> */}
     </div>
   );
 }
