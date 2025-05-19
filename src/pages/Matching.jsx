@@ -158,7 +158,7 @@ useEffect(() => {
     }
 
     const FormData = {
-      importantOption: MatchState.formData.importantOption || "None", // 중요 옵션이 MBTI일 경우
+      importantOption: MatchState.formData.importantOption || "UNSELECTED", // 중요 옵션이 MBTI일 경우
       mbtiOption: MatchState.selectedMBTI.filter((l) => l !== "X").join(""),
       hobbyOption: MatchState.formData.hobbyOption,
       ageOption: MatchState.formData.ageOption,
