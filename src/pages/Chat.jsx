@@ -21,6 +21,7 @@ function Chat() {
           name: chat.myRole === "PICKER" ? chat.pickedName : chat.pickerName,
           age: chat.age || 20,       // age가 있으면 그대로, 없으면 null
           major: chat.major || "컴퓨터공학과",   // major가 있으면 그대로, 없으면 null
+          myRole: chat.myRole,
         }));
 
         setChatList(parsedChatList);
