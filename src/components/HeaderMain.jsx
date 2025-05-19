@@ -141,7 +141,7 @@ const get1000Button = async () => {
             className={styles.iconImage}
             src="/assets/Mainpage/kr-currency.svg"
             alt="알림 아이콘"
-            onClick={openModal}
+            // onClick={openModal}
           />
         </div>
       </div>
