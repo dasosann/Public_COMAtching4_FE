@@ -76,14 +76,20 @@ const EachNoticeComponent = ({ data, onDelete }) => {
 
     const handleFirstModalConfirm = async () => {
         try {
+            console.log(data.id)
             const response = await fetchRequest(`/auth/admin/notice?id=${data.id}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
                 method: 'DELETE',
             });
-
-            if (response.Code==="GEN-000") {
+            const content =await response.json();
+            console.log("json화 한 삭제 응답",content);
+            if (content.code==="GEN-000") {
                 setShowModal(false);
                 setShowSecondModal(true);
                 onDelete(data.id); // 성공 시 목록 갱신
+                alert("공지가 삭제되었습니다.");
             } else {
                 alert('공지 삭제 중 오류가 발생했습니다.');
             }
