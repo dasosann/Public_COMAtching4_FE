@@ -7,7 +7,7 @@ import hobbyData from "../../data/hobbyData";
 
 const MatchProfiles = ({ profiles = [] }) => {
   const settings = {
-    dots: true,
+    dots: false,
     infinite: false,
     speed: 500,
     slidesToShow: 1,
