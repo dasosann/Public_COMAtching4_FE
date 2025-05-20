@@ -46,24 +46,24 @@ function Matching() {
   
 
   
-//   useEffect(() => {
-//     // Fetch currentPoint from backend when component mounts
-//     const fetchCurrentPoint = async () => {
-//       try {
-//         const response = await instance.get("/auth/user/api/currentPoint");
+  useEffect(() => {
+    // Fetch currentPoint from backend when component mounts
+    const fetchCurrentPoint = async () => {
+      try {
+        const response = await instance.get("/auth/user/api/currentPoint");
         
-//         // Assuming response.data.currentPoint is the point value you want to set in Recoil
-//         setUserPoint((prev) => ({
-//           ...prev,
-//           point: response.data.data.currentPoint, // Update the point in Recoil
-//         }));
-//       } catch (error) {
-//         console.error("Failed to fetch currentPoint:", error);
-//       }
-//     };
+        // Assuming response.data.currentPoint is the point value you want to set in Recoil
+        setUserPoint((prev) => ({
+          ...prev,
+          point: response.data.data.currentPoint, // Update the point in Recoil
+        }));
+      } catch (error) {
+        console.error("Failed to fetch currentPoint:", error);
+      }
+    };
 
-//     fetchCurrentPoint();
-// }, [setUserPoint]); 
+    fetchCurrentPoint();
+}, [setUserPoint]); 
 
   
 const handleHobbyClick = (index) => {
