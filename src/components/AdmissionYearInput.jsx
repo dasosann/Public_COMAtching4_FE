@@ -8,8 +8,8 @@ function AdmissionYearInput({ value, onChange }) {
         let errorMessage = "";
 
         // Validate that the admission year is between 2015 and 2024
-        if (!/^(1[5-9]|2[0-4])$/.test(value)) {
-        errorMessage = "입학년도는 15부터 24까지의 숫자로 입력하세요.";
+        if (!/^(1[5-9]|2[0-5])$/.test(value)) {
+        errorMessage = "입학년도는 15부터 25까지의 숫자로 입력하세요.";
         onChange({ target: { name, value: "" } });
         }
 
