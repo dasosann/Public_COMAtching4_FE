@@ -163,7 +163,7 @@ const EventHistory = () => {
     useEffect(()=>{
         const getEventList = async ()=>{
             try{
-                const response = await fetchRequest('/auth/admin/event?status=CLOSED',{});
+                const response = await fetchRequest('/auth/admin/event?status=CLOSED');
                 const data = await response.json();
                 console.log("불러온 이벤트 리스트",data)
                 const mappedData = data.data.map(item => ({

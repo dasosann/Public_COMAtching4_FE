@@ -130,91 +130,91 @@ const SearchYesMatching = ({ matchingData,userNumber,username}) => {
     setSearchQuery(e.target.value);
   };
 
-  useEffect(() => {
-    console.log('Setting up IntersectionObserver');
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        console.log('IntersectionObserver entry:', entry.isIntersecting, 'BoundingClientRect:', entry.boundingClientRect);
-        if (entry.isIntersecting) {
-          console.log('MessageContainer is visible');
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
+  // useEffect(() => {
+  //   console.log('Setting up IntersectionObserver');
+  //   const observer = new IntersectionObserver(
+  //     ([entry]) => {
+  //       console.log('IntersectionObserver entry:', entry.isIntersecting, 'BoundingClientRect:', entry.boundingClientRect);
+  //       if (entry.isIntersecting) {
+  //         console.log('MessageContainer is visible');
+  //         setIsVisible(true);
+  //         observer.disconnect();
+  //       }
+  //     },
+  //     { threshold: 0.1 }
+  //   );
 
-    if (messageContainerRef.current) {
-      observer.observe(messageContainerRef.current);
-    }
+  //   if (messageContainerRef.current) {
+  //     observer.observe(messageContainerRef.current);
+  //   }
 
-    return () => {
-      if (messageContainerRef.current) {
-        observer.unobserve(messageContainerRef.current);
-      }
-    };
-  }, []);
+  //   return () => {
+  //     if (messageContainerRef.current) {
+  //       observer.unobserve(messageContainerRef.current);
+  //     }
+  //   };
+  // }, []);
 
   // 스크롤 애니메이션 함수
-  const scrollToMessageContainerBottom = () => {
-    if (messageContainerRef.current) {
-      setTimeout(() => {
-        const startTime = performance.now();
-        const duration = 1000;
-        const startScroll = window.scrollY;
-        const rect = messageContainerRef.current.getBoundingClientRect();
-        const targetScroll = window.scrollY + rect.top + rect.height - window.innerHeight;
+  // const scrollToMessageContainerBottom = () => {
+  //   if (messageContainerRef.current) {
+  //     setTimeout(() => {
+  //       const startTime = performance.now();
+  //       const duration = 1000;
+  //       const startScroll = window.scrollY;
+  //       const rect = messageContainerRef.current.getBoundingClientRect();
+  //       const targetScroll = window.scrollY + rect.top + rect.height - window.innerHeight;
 
-        const animateScroll = (currentTime) => {
-          const elapsed = currentTime - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          const easeInOut = progress * (2 - progress);
-          const scrollPosition = startScroll + (targetScroll - startScroll) * easeInOut;
+  //       const animateScroll = (currentTime) => {
+  //         const elapsed = currentTime - startTime;
+  //         const progress = Math.min(elapsed / duration, 1);
+  //         const easeInOut = progress * (2 - progress);
+  //         const scrollPosition = startScroll + (targetScroll - startScroll) * easeInOut;
 
-          window.scrollTo({ top: scrollPosition, behavior: 'auto' });
+  //         window.scrollTo({ top: scrollPosition, behavior: 'auto' });
 
-          if (progress < 1) {
-            requestAnimationFrame(animateScroll);
-          } else {
-            const finalRect = messageContainerRef.current.getBoundingClientRect();
-            const finalTarget = window.scrollY + finalRect.top + finalRect.height - window.innerHeight;
-            if (Math.abs(window.scrollY - finalTarget) > 10) {
-              window.scrollTo({ top: finalTarget, behavior: 'smooth' });
-            }
-          }
-        };
+  //         if (progress < 1) {
+  //           requestAnimationFrame(animateScroll);
+  //         } else {
+  //           const finalRect = messageContainerRef.current.getBoundingClientRect();
+  //           const finalTarget = window.scrollY + finalRect.top + finalRect.height - window.innerHeight;
+  //           if (Math.abs(window.scrollY - finalTarget) > 10) {
+  //             window.scrollTo({ top: finalTarget, behavior: 'smooth' });
+  //           }
+  //         }
+  //       };
 
-        requestAnimationFrame(animateScroll);
-      }, 100);
-    }
-  };
+  //       requestAnimationFrame(animateScroll);
+  //     }, 100);
+  //   }
+  // };
 
-  useEffect(() => {
-    console.log('isVisible:', isVisible, 'textStage:', textStage);
-    if (!isVisible) return;
+  // useEffect(() => {
+  //   console.log('isVisible:', isVisible, 'textStage:', textStage);
+  //   if (!isVisible) return;
 
-    const interval = setInterval(() => {
-      setTextStage((prevStage) => {
-        if (prevStage === 0) {
-          return 1;
-        }
-        if (prevStage === 1) {
-          return 2;
-        }
-        return prevStage;
-      });
-    }, 1000);
+  //   const interval = setInterval(() => {
+  //     setTextStage((prevStage) => {
+  //       if (prevStage === 0) {
+  //         return 1;
+  //       }
+  //       if (prevStage === 1) {
+  //         return 2;
+  //       }
+  //       return prevStage;
+  //     });
+  //   }, 1000);
 
-    scrollToMessageContainerBottom();
+  //   scrollToMessageContainerBottom();
 
-    return () => clearInterval(interval);
-  }, [isVisible]);
+  //   return () => clearInterval(interval);
+  // }, [isVisible]);
 
-  useEffect(() => {
-    if (isVisible && textStage > 0) {
-      scrollToMessageContainerBottom();
-    }
-  }, [textStage, isVisible]);
+  // useEffect(() => {
+  //   if (isVisible && textStage > 0) {
+  //     scrollToMessageContainerBottom();
+  //   }
+  // }, [textStage, isVisible]);
 
   useEffect(() => {
     if (isModalOpen) {
@@ -250,7 +250,7 @@ const SearchYesMatching = ({ matchingData,userNumber,username}) => {
           <SearchResultCard key={index} profile={profile} />
         ))}
       </Y.CardWrapper>
-      <Y.MessageContainer ref={messageContainerRef}>
+      {/* <Y.MessageContainer ref={messageContainerRef}>
         {!isVisible && (
           <div style={{ color: 'red', textAlign: 'center' }}>
             내가 뽑은 매칭 리스트를 가져오는 중이에요......
@@ -272,7 +272,7 @@ const SearchYesMatching = ({ matchingData,userNumber,username}) => {
             <img src="/assets/white-arrow.svg" alt="화살표" />
           </Y.MatchingButton>
         )}
-      </Y.MessageContainer>
+      </Y.MessageContainer> */}
       {isModalOpen && (
         <TypeSelectModal
           setSortType={setSortType}
