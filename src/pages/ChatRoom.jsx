@@ -73,7 +73,7 @@ function ChatRoom() {
       const msg = JSON.parse(event.data);
 
       if (msg.chatRole === myRole) return;
-      
+
       const newMessage = {
         id: Date.now(),
         sender: msg.role === myRole ? "me" : "other",

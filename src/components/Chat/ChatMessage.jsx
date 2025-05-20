@@ -2,6 +2,8 @@ import React from 'react';
 import '../css/components/ChatMessage.css';
 
 function ChatMessage({ sender, message, time }) {
+  if (!message || message.trim() === "") return null;
+  
   return (
     <div className={`chatroom-message ${sender === 'me' ? 'chatroom-other-message' : 'chatroom-my-message'}`}>
       <div className="chatroom-message-wrapper">
