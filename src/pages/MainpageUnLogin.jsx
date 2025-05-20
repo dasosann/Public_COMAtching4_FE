@@ -7,36 +7,25 @@ import axios from "axios";
 import Background from "../components/Background.jsx";
 import UnloginModal from "../components/Mainpage/UnloginModal.jsx";
 import HeaderUnlogin from "../components/Mainpage/Header.jsx";
-// 로그인 되지 않은 메인페이지입니다.
-function MainpageUnLogin() {
-  const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 훅 사용
-  const [numParticipants, setNumParticipants] = useState(null); // 참가자 수를 저장할 상태 변수
-  const [showModal, setShowModal] = useState(false); // 모달 상태
-  
-  // 카카오 로그인 핸들러
-  // 일반적인 형식과 다를텐데 아래 링크로 이동시켜서 백엔드에서 카카오 로그인을 처리한뒤
-  // Redirection페이지로 옮겨서 role을 확인하는 과정을 거쳤습니다.
-  const handleKakaoLogin = () => {
-    window.location.href = "https://backend.comatching.site/oauth2/authorization/kakao"
-      // "https://cuk.comatching.site/oauth2/authorization/kakao";
-    // alert("내일 오픈합니다!");
-  };
-  const handleGoogleLogin = () =>{
-    window.location.href = "https://backend.comatching.site/oauth2/authorization/google"
-    // alert("내일 오픈합니다!");
-  
-  }
-  
-  
+import { motion, AnimatePresence } from "framer-motion"; // ✅ 추가
 
-  // 참가자 수를 가져오는 비동기 함수
+function MainpageUnLogin() {
+  const navigate = useNavigate();
+  const [numParticipants, setNumParticipants] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleKakaoLogin = () => {
+    window.location.href = "https://backend.comatching.site/oauth2/authorization/kakao";
+  };
+
+  const handleGoogleLogin = () => {
+    window.location.href = "https://backend.comatching.site/oauth2/authorization/google";
+  };
+
   useEffect(() => {
-    // 컴포넌트가 마운트될 때 API 요청을 보냄
     const fetchData = async () => {
       try {
-        // const response = await axios.get("https://cuk.comatching.site/api/participations");
         const response = await axios.get("https://backend.comatching.site/api/participations");
-
         if (response.status === 200) {
           setNumParticipants(response.data.data);
         }
@@ -48,41 +37,87 @@ function MainpageUnLogin() {
   }, [setNumParticipants]);
 
   return (
-    <div className="container">
+    <motion.div
+      className="container"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <Background />
-      
       <HeaderUnlogin />
-      <div className="greeting-message">
-        반갑습니다<br></br>
-        코매칭이라면 당신은<br></br>
+
+      {/* 인삿말 애니메이션 */}
+      <motion.div
+        className="greeting-message"
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        반갑습니다<br />
+        코매칭이라면 당신은<br />
         이미 커플입니다
-      </div>
-      
-      <div  style={{ marginTop: '69px' }}>
-        <div className="bubble" >
-            <TotalUsersCounter
-              font_size="16px"
-              numParticipants={numParticipants}
-            />
+      </motion.div>
+
+      <div style={{ marginTop: "69px" }}>
+        <div className="bubble">
+          <TotalUsersCounter font_size="16px" numParticipants={numParticipants} />
         </div>
-        <button className="kakao-login" onClick={handleKakaoLogin}>
-            <div className="kakao-login-element">
-              <img
-                src={`${import.meta.env.VITE_PUBLIC_URL}../../assets/kakao.svg`}
-                alt="카카오"
-              />
-              <p>카카오로 시작하기</p>
-            </div>
-        </button>
+        <motion.button
+        className="kakao-login"
+        onClick={handleKakaoLogin}
+        initial={{ y: 30, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.2, duration: 0.5 }}
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.98 }}
+      >
+        <div className="kakao-login-element">
+          <img
+            src={`${import.meta.env.VITE_PUBLIC_URL}../../assets/kakao.svg`}
+            alt="카카오"
+          />
+          <p>카카오로 시작하기</p>
+        </div>
+      </motion.button>
+        
       </div>
-      <div className="help-text">또는</div>
-        <div>
-          <a className="privacy-button"  onClick={() => setShowModal(true)}>
-            다른방법 로그인
-          </a>
-        </div>  
-        {showModal && <UnloginModal onClose={() => setShowModal(false)} handleGoogleLogin={handleGoogleLogin} handleKakaoLogin={handleKakaoLogin} />}
-    </div>
+
+      <motion.div
+        className="help-text"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+      >
+        또는
+      </motion.div>
+
+      <motion.a
+        className="privacy-button"
+        onClick={() => setShowModal(true)}
+        whileHover={{ scale: 1.05 }}
+      >
+        다른방법 로그인
+      </motion.a>
+
+      {/* 모달 등장 애니메이션 */}
+      <AnimatePresence>
+        {showModal && (
+          <motion.div
+            key="modal"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 40 }}
+            transition={{ duration: 0.3 }}
+          >
+            <UnloginModal
+              onClose={() => setShowModal(false)}
+              handleGoogleLogin={handleGoogleLogin}
+              handleKakaoLogin={handleKakaoLogin}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 }
 

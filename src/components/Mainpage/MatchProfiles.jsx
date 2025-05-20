@@ -14,6 +14,8 @@ const MatchProfiles = ({ profiles = [] }) => {
     slidesToScroll: 1,
     swipe: true,
     arrows: false,
+    autoplay: true,           // ✅ 자동 재생 활성화
+    autoplaySpeed: 2000,      // ✅ 4초마다 넘어감 (단위: ms)
   };
 
   const mapHobbiesWithIcons = (hobbyList) => {

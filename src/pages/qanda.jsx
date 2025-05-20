@@ -5,7 +5,7 @@ import HeaderBack from "../components/HeaderBack";
 
 const qnaData = [
   {
-    question: "1. 계좌 번호를 모르겠어요?",
+    question: "계좌 번호를 모르겠어요?",
     answer: "토스뱅크 1001-4935-3543 예금주: 서승준",
   },
   {
