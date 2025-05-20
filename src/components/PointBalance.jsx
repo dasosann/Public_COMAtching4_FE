@@ -17,7 +17,7 @@ const PointBalance = () => {
     const [isLoading, setIsLoading] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
-    const [userInfo, setUserInfo] = useState({ userPoint: 0, realName: null });
+    const [userInfo, setUserInfo] = useState({ point: 0, realName: null });
 
     const fetchUserPoints = async () => {
         try {
