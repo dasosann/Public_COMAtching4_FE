@@ -23,11 +23,11 @@ const SupportSection = () => {
       
       <div className='mypage-etc'>
         <p className='mypage-etc-title'>기타</p>
-        <div className='mypage-support-item'>
+        <div className='mypage-support-item' onClick={()=>navigate('/googleagree')}>
           <span>이용약관</span>
           <img src='../assets/Common/gt.svg' alt='>' />
         </div>
-        <div className='mypage-support-item'>
+        <div className='mypage-support-item' >
           <span>회사정보</span>
           <img src='../assets/Common/gt.svg' alt='>' />
         </div>

@@ -127,7 +127,6 @@ const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,am
           userPoint={userInfo.point}
           />
         )}
-       
       </P.ModalWrapper>
 
     </div>
