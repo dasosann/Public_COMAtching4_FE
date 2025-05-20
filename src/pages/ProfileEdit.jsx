@@ -25,6 +25,12 @@ const ProfileEdit = () => {
   const [isInterestModalOpen, setIsInterestModalOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
+  const convertFromServer = (value) => {
+  if (value === "자주") return "많음";
+  if (value === "가끔") return "적음";
+  return value; // 보통은 그대로
+};
+
   // 모달이 열릴 때 스크롤 막기
   useEffect(() => {
     if (isInterestModalOpen) {
@@ -56,7 +62,7 @@ const ProfileEdit = () => {
             favoriteSong: userData.song ?? '',
             mbti: userData.mbti ?? '',
             interests: userData.hobbies ?? [],
-            contactFrequency: userData.contactFrequency ?? '',
+            contactFrequency: convertFromServer(userData.contactFrequency ?? ''),
             gender: userData.gender ?? '',
             introduction: userData.comment ?? '',
             schoolAuth: userData.schoolAuth ?? false,
