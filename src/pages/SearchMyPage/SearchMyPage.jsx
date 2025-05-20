@@ -75,28 +75,28 @@ const SearchMyPage = () => {
   }, [pathname]);
 
   // API 호출로 매칭 데이터 가져오기
-  // useEffect(() => {
-  //   const fetchMatchingData = async () => {
-  //     try {
-  //       setLoading(true);
-  //       console.log('Fetching data from /auth/user/api/history/matching');
-  //       const response = await fetchRequest('/auth/user/api/history/matching', {
-  //         method: 'GET',
-  //       });
-  //       console.log('Response status:', response.status);
-  //       const data = await response.json();
-  //       console.log('받아온 데이터:', data);
-  //       setMatchingData(data.data || []); // API 응답이 배열이라고 가정
-  //     } catch (error) {
-  //       console.error('Failed to fetch matching data:', error);
-  //       setMatchingData([]); // 에러 발생 시 빈 배열 설정
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchMatchingData = async () => {
+      try {
+        setLoading(true);
+        console.log('Fetching data from /auth/user/api/history/matching');
+        const response = await fetchRequest('/auth/user/api/history/matching', {
+          method: 'GET',
+        });
+        console.log('Response status:', response.status);
+        const data = await response.json();
+        console.log('받아온 데이터:', data);
+        setMatchingData(data.data || []); // API 응답이 배열이라고 가정
+      } catch (error) {
+        console.error('Failed to fetch matching data:', error);
+        setMatchingData([]); // 에러 발생 시 빈 배열 설정
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  //   fetchMatchingData();
-  // }, []);
+    fetchMatchingData();
+  }, []);
 
   useEffect(() => {
     if (mainContainerRef.current) {
