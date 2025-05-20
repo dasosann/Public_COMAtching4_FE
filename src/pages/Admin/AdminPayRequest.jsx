@@ -6,7 +6,7 @@ import S from '../../css/pages/Admin/AdminSearch';
 import P from '../../css/pages/Admin/AdminPaymentHistoryStyle';
 import fetchRequest from '../../fetchConfig';
 
-const RequestUserComponent = ({ orderId, point, username, price, requestAt, productName, onUpdate }) => {
+const RequestUserComponent = ({ orderId, point, username, price, requestAt, productName, onUpdate,realName }) => {
   const formatDateTime = (isoString) => {
     if (!isoString || typeof isoString !== 'string') {
         return '알 수 없음'; // 잘못된 입력 처리
@@ -68,7 +68,8 @@ const RequestUserComponent = ({ orderId, point, username, price, requestAt, prod
   return (
     <P.ComponentWrapper>
       <P.PaymentStatusDiv style={{ padding: '0', justifyContent: 'start', gap: '20px' }}>
-        <R.UserIdDiv>userID : <R.IdSpan>{username}</R.IdSpan></R.UserIdDiv>
+        <R.UserIdDiv>닉네임 : <R.IdSpan>{username}</R.IdSpan></R.UserIdDiv>
+        <R.UserIdDiv>입금자명 : <R.IdSpan>{realName}</R.IdSpan></R.UserIdDiv>
         <P.DateText>요청시각 : {formatDateTime(requestAt)}</P.DateText>
         <P.OrderNumberText style={{ margin: '0' }}>주문번호 : {orderId}</P.OrderNumberText>
       </P.PaymentStatusDiv>

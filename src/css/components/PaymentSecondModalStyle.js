@@ -42,4 +42,24 @@ P.ArrowImg = styled.img`
   right:0px ;
   top: 8px;
 `
+P.NameButton = styled.button`
+  all: unset;
+  width: 100%;
+  height: 48px;
+  background-color : ${({isChecked})=>isChecked ? "#1A1A1A" : "#E5E5E5" };
+  display: flex;
+  font-size: 20px;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+`
+P.NameInput = styled.input`
+  all: unset;
+  font-size: 20px;
+  color: #fff;
+  font-weight: 600;
+  width: 80px;
+`
 export default P;
