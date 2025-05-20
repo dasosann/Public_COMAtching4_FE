@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../css/components/ChatHeader.css';
 import ProfileModal from './ProfileModal';
-function ChatHeader({ nickname, age, major }) {
+function ChatHeader({ nickname, age, major ,onExit }) {
   const navigate = useNavigate();
   // const [showProfile, setShowProfile] = useState(false);
 
@@ -27,7 +27,7 @@ function ChatHeader({ nickname, age, major }) {
   return (
     <>
       <div className="chat-header">
-        <button className="back-button" onClick={handleBackClick}>
+        <button className="back-button" onClick={onExit}>
           <img src="/assets/Chat/pre.svg" alt="back" />
         </button>
 

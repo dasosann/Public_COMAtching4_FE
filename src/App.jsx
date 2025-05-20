@@ -57,6 +57,7 @@ import SearchMyPage from "./pages/SearchMyPage/SearchMyPage.jsx";
 import MyNotice from "./pages/notice/MyNotice.jsx";
 import GoogleAgreeInformation from "./pages/GoogleAgreeInformation.jsx";
 import GooglePersoanInformationAgree from "./pages/GooglePersoanInformationAgree.jsx";
+import QnAPage from "./pages/qanda.jsx";
 export default function App() {
   return (
     <RecoilRoot>
@@ -159,7 +160,7 @@ export default function App() {
 
             <Route path="/success" element={<SuccessPage/>} />
             {/* <Route path="/test" element={<PaymentCallTest/>} /> */}
-            
+            <Route path="/qa" element={<QnAPage/>} />
 
 
           </Routes>

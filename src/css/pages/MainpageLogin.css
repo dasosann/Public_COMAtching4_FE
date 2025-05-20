@@ -1,6 +1,5 @@
 .Mainpage__Login {
   width: 100%;
-  margin-top: 27px;
   display: inline-block;
   border-radius: 32px;
   margin-bottom: 50px;
@@ -8,12 +7,12 @@
 }
 
 .matching-button {
-  margin-top: 20px;
   color: #0c0c0c;
   width: 100%;
   height: 120px;
   border-radius: 32px;
   font-size: 24px;
+  margin-top: 20px;
   font-weight: bold;
   background-color: rgba(255, 255, 255, 0.8); /* White with 80% opacity */
   border: 2px solid #ff6b81;

@@ -135,6 +135,10 @@ function ChatRoom() {
         nickname={location.state?.name}
         age={`${location.state?.age}살`}
         major={location.state?.major}
+        onExit={() => {
+          socketRef.current?.close();  // ✅ 명시적 종료
+          navigate("/chat");
+        }}
       />
 
       
