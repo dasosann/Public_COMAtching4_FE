@@ -1,12 +1,21 @@
 import React from 'react';
+import Modal from 'react-modal';
 import '../css/components/TermsAgreementModal.css';
-import { useNavigate } from 'react-router-dom';
 
-const GoogleAgreeInformation = () => {
-    const navigate =useNavigate();
+const PersonalInfoAgreementModal = ({ isOpen, onRequestClose }) => {
   return (
-    <div className="agreement-box_TERM" style={{width:'90%',height:'100%'}}>
-      <p style={{ textAlign: "left" }}>
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={onRequestClose}
+      className="modal-content"
+      overlayClassName="modal-overlay"
+      contentLabel="Personal Information Agreement Modal"
+    >
+      <div className="agreement-box_TERM" style={{mineight:'100vh'}}>
+         <div className="cancel-button_TERM" onClick={onRequestClose}>
+          닫기
+        </div>
+        <p style={{ textAlign: "left"}}>
         <strong>COMAtching 이용약관</strong>
         <br />
         <br />
@@ -235,15 +244,14 @@ const GoogleAgreeInformation = () => {
         <br />
         - 공지일자: 2025년 3월 30일
         <br />
-        - 적용일자: 2025년 5월 21일
+        - 적용일자: 2025년 5월 22일
         <br />
-        본 약관은 2025년 5월 21일부터 적용됩니다.
+        본 약관은 2025년 5월 22일부터 적용됩니다.
       </p>
-      <div className="cancel-button_TERM" onClick={()=>navigate('/mypage')}>
-        닫기
+       
       </div>
-    </div>
+    </Modal>
   );
 };
 
-export default GoogleAgreeInformation;
+export default PersonalInfoAgreementModal;
