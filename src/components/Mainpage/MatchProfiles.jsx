@@ -67,7 +67,7 @@ const MatchProfiles = ({ profiles = [] }) => {
                       />
                     ) : (
                       <img
-                        src="/assets/Mainpage/kakao.png"
+                        src="/assets/kakao.png"
                         alt="Kakao Link"
                         style={{ cursor: profile.contact_id ? "pointer" : "default", opacity: profile.contact_id ? 1 : 0.5 }}
                       />
