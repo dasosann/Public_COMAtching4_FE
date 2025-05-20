@@ -10,6 +10,7 @@ const TypeSelectModal = ({ setSortType, setIsModalOpen, sortType }) => {
     setIsModalOpen(false);
   };
 
+
   return (
     <Y.ModalOverlay onClick={() => setIsModalOpen(false)}>
       <Y.ModalContent onClick={(e) => e.stopPropagation()}>
@@ -52,7 +53,7 @@ const TypeSelectModal = ({ setSortType, setIsModalOpen, sortType }) => {
   );
 };
 
-const SearchYesMatching = ({ matchingData,userNumber}) => {
+const SearchYesMatching = ({ matchingData,userNumber,username}) => {
   const [sortType, setSortType] = useState('오래된순');
   const [textStage, setTextStage] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -61,24 +62,24 @@ const SearchYesMatching = ({ matchingData,userNumber}) => {
   const [isVisible, setIsVisible] = useState(false);
   const [sortedProfiles, setSortedProfiles] = useState([]);
   const [filteredProfiles, setFilteredProfiles] = useState(matchingData); // 필터링된 프로필
-
   // SearchResultCard에 맞게 데이터 매핑
   const mappedProfiles = useMemo(() => {
-    return matchingData.map((profile) => ({
-      id: profile.contactId,
-      nickname: profile.username, // username → nickname
-      major: profile.major,
-      mbti: profile.mbti,
-      age: profile.age,
-      contact_id: profile.contactId, // contactId → contact_id
-      song: profile.song,
-      comment: profile.comment,
-      hobby: profile.hobbyList,
-      contactFrequency: profile.contactFrequency,
-      matchedAt: profile.matchedAt, // 원본 필드 유지
+    const profiles = matchingData.map((profile) => ({
+      username: profile.username || '알 수 없음', // contactId를 닉네임으로 사용
+      mbti: profile.mbti || 'N/A',
+      age: profile.age || 0,
+      contactId: profile.contactId || '',
+      song: profile.song || '',
+      comment: profile.comment || '',
+      hobbyList: profile.hobbyList || [],
+      contactFrequency: profile.contactFrequency || '',
+      major: profile.major || '',
+      gender: profile.gender || '',
+      matchedAt: profile.matchedAt || new Date().toISOString(),
     }));
+    console.log('mappedProfiles:', profiles); // mappedProfiles 로그 추가
+    return profiles;
   }, [matchingData]);
-
   // 검색어로 프로필 필터링
   const handleSearchClick = () => {
     console.log('Search query:', searchQuery);
@@ -88,11 +89,11 @@ const SearchYesMatching = ({ matchingData,userNumber}) => {
     }
     const query = searchQuery.toLowerCase();
     const result = mappedProfiles.filter((profile) => {
-      const hobbies = Array.isArray(profile.hobby) ? profile.hobby : [];
+      const hobbies = Array.isArray(profile.hobbyList) ? profile.hobbyList : [];
       const matches = (
         profile.age.toString().includes(query) ||
         (profile.major || '').toLowerCase().includes(query) ||
-        (profile.nickname || '').toLowerCase().includes(query) ||
+        (profile.username || '').toLowerCase().includes(query) ||
         (profile.mbti || '').toLowerCase().includes(query) ||
         hobbies.some((hobby) => (hobby || '').toLowerCase().includes(query))
       );
@@ -165,14 +166,6 @@ const SearchYesMatching = ({ matchingData,userNumber}) => {
         const rect = messageContainerRef.current.getBoundingClientRect();
         const targetScroll = window.scrollY + rect.top + rect.height - window.innerHeight;
 
-        console.log('Scroll Info:', {
-          startScroll,
-          rectTop: rect.top,
-          rectHeight: rect.height,
-          windowHeight: window.innerHeight,
-          targetScroll,
-        });
-
         const animateScroll = (currentTime) => {
           const elapsed = currentTime - startTime;
           const progress = Math.min(elapsed / duration, 1);
@@ -180,7 +173,6 @@ const SearchYesMatching = ({ matchingData,userNumber}) => {
           const scrollPosition = startScroll + (targetScroll - startScroll) * easeInOut;
 
           window.scrollTo({ top: scrollPosition, behavior: 'auto' });
-          console.log('Scrolling: progress:', progress, 'scrollPosition:', scrollPosition);
 
           if (progress < 1) {
             requestAnimationFrame(animateScroll);
@@ -188,10 +180,8 @@ const SearchYesMatching = ({ matchingData,userNumber}) => {
             const finalRect = messageContainerRef.current.getBoundingClientRect();
             const finalTarget = window.scrollY + finalRect.top + finalRect.height - window.innerHeight;
             if (Math.abs(window.scrollY - finalTarget) > 10) {
-              console.log('Correcting scroll position to:', finalTarget);
               window.scrollTo({ top: finalTarget, behavior: 'smooth' });
             }
-            console.log('Scroll animation completed');
           }
         };
 
@@ -277,7 +267,7 @@ const SearchYesMatching = ({ matchingData,userNumber}) => {
         )}
         {isVisible && (textStage === 1 || textStage === 2) && (
           <Y.MoveText key="stage1" data-stage="stage1">
-            아직 {userNumber}명이 겨울이오길님을 기다리고 있어요!
+            아직 {userNumber}명이 {username}님을 기다리고 있어요!
           </Y.MoveText>
         )}
         {isVisible && textStage === 2 && (

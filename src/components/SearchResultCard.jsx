@@ -2,11 +2,11 @@ import React, { useState, useRef, useEffect } from "react";
 import C from '../css/components/SearchResultCardStyle.js';
 import { mapHobbiesWithIconsButton } from "../utils/profileUtils.js";
 import '../css/components/SearchResultCard.css';
-const SearchResultCard = ({ profile }) => {
+const SearchResultCard = ({ profile}) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [contentHeight, setContentHeight] = useState(0);
   const contentRef = useRef(null);
-
+  console.log("Profile카드가 받는 변수", profile);
   // 토글 함수
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
@@ -36,8 +36,8 @@ const SearchResultCard = ({ profile }) => {
     }
   };
 
-  const hobbiesWithIcons = Array.isArray(mapHobbiesWithIconsButton(profile.hobby || []))
-    ? mapHobbiesWithIconsButton(profile.hobby || [])
+  const hobbiesWithIcons = Array.isArray(mapHobbiesWithIconsButton(profile.hobbyList || []))
+    ? mapHobbiesWithIconsButton(profile.hobbyList || [])
     : ['취미 없음'];
 
   return (
@@ -48,7 +48,7 @@ const SearchResultCard = ({ profile }) => {
         style={{ height: `${contentHeight}px` }} // 동적 높이 적용
       >
         <C.NameDiv isExpanded={isExpanded}>
-          <span>{profile.nickname}</span>
+          <span>{profile.username}</span>
           <img
             src={isExpanded ? "/assets/gray-arrow-up.svg" : "/assets/gray-arrow-bottom.svg"}
             alt="화살표"
@@ -94,18 +94,18 @@ const SearchResultCard = ({ profile }) => {
       </C.InformationContainer>
       <div className="contact-container2">
         <div
-          className={`profile-contact2 ${profile.contact_id?.startsWith("@") ? "instagram" : "kakao"}`}
+          className={`profile-contact2 ${profile.contactId?.startsWith("@") ? "instagram" : "kakao"}`}
         >
           <div className="profile-text" onClick={handleCopyContactId}>
-            {profile.contact_id || "연락처 없음"}
+            {profile.contactId || "연락처 없음"}
           </div>
           <div className="profile-right">
-            {profile.contact_id?.startsWith("@") ? (
+            {profile.contactId?.startsWith("@") ? (
               <img
                 src="/assets/Mainpage/send.svg"
                 alt="Instagram Link"
                 onClick={() => {
-                  const cleanedContactId = profile.contact_id.replace("@", "");
+                  const cleanedContactId = profile.contactId.replace("@", "");
                   window.open(`https://www.instagram.com/${cleanedContactId}`, "_blank");
                 }}
               />
@@ -113,7 +113,7 @@ const SearchResultCard = ({ profile }) => {
               <img
                 src="/assets/Mainpage/kakao.png"
                 alt="Kakao Link"
-                style={{ cursor: profile.contact_id ? "pointer" : "default", opacity: profile.contact_id ? 1 : 0.5 }}
+                style={{ cursor: profile.contactId ? "pointer" : "default", opacity: profile.contact_id ? 1 : 0.5 }}
               />
             )}
             <img src="/assets/Mainpage/more.svg" alt="More Options" />
