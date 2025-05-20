@@ -504,7 +504,7 @@ useEffect(() => {
             <div className="match-title-mbti">
               <div
                 className="match-premium-option"
-                onClick={() => handleButtonClick(3, 300)} // 클릭 이벤트 추가
+                onClick={() => handleButtonClick(3, 200)} // 클릭 이벤트 추가
               >
                 <div>
                   <div className="match-title-text">
@@ -518,7 +518,7 @@ useEffect(() => {
                 <MatchOptionButtonclass
                   state={MatchState.isUseOption[3]}
                   num={3}
-                  money={300}
+                  money={200}
                   handleButtonClick={(e) => {
                     e.stopPropagation(); // 이벤트 전파 중지
                     handleButtonClick(0, 100);
