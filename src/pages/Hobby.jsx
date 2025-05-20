@@ -38,11 +38,11 @@ function Hobby() {
   };
   const handleCustomHobbyKeyDown = (e) => {
     if (e.key === "Enter" && customHobbyInput.trim() !== "") {
-      if (customHobbies.length < 10) {
+      if (customHobbies.length < 3) {
         setCustomHobbies((prev) => [...prev, customHobbyInput.trim()]);
         setCustomHobbyInput(""); // 입력 필드 초기화
       } else {
-        alert("최대 10개의 관심사만 추가할 수 있습니다.");
+        alert("최대 3개의 관심사만 추가할 수 있습니다.");
       }
     }
   };
@@ -99,7 +99,7 @@ function Hobby() {
     const isAlreadySelected = pickHobby.hobby.includes(name);
     const updatedHobbies = isAlreadySelected
       ? pickHobby.hobby.filter((hobby) => hobby !== name)
-      : pickHobby.hobby.length < 10
+      : pickHobby.hobby.length < 3
       ? [...pickHobby.hobby, name]
       : pickHobby.hobby;
 
@@ -116,7 +116,7 @@ function Hobby() {
       <div className="text-container">
         <div className="main-text">당신의 관심사를 알려주세요.</div>
         <div className="sub-text">
-          요즘 관심있는 것들을 3개 이상 선택해주세요. <br /> 최대 10개까지 선택할 수
+          요즘 관심있는 것들을 1개 이상 선택해주세요. <br /> 최대 3개까지 선택할 수
           있어요.
         </div>
       </div>
