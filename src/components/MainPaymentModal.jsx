@@ -26,7 +26,6 @@ const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,am
   const [didAnimateOnce, setDidAnimateOnce] = useState(false);
   const [point, setChargePoint] = useState();
   const [discountRate, setDiscountRate] = useState(0); // 할인율 상태 추가
-
   // const closeModal = () => setIsOpen(false);
   
   

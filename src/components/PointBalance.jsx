@@ -17,7 +17,7 @@ const PointBalance = () => {
     const [isLoading, setIsLoading] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
-    const [userInfo, setUserInfo] = useState({ point: 0, realName: null });
+    const [userInfo, setUserInfo] = useState({ userPoint: 0, realName: null });
 
     const fetchUserPoints = async () => {
         try {
@@ -27,7 +27,8 @@ const PointBalance = () => {
             console.log('포인트 가져올때 세션이 만료되엇을때 응답', response);
             if (response.ok) {
                 const data = await response.json();
-                setUserInfo((prev) => ({
+                console.log("data",data);
+                setUserInfo( ({
                     point: data.data.point || 0,
                     realName: data.data.realName || null,
                 }));
