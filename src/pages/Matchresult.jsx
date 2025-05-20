@@ -215,7 +215,7 @@ function Matchresult() {
                   {/* <button className="SendText-button" onClick={handleSendText}>
                     쪽지 보내기
                   </button> */}
-                  <button className="SendText-button" onClick={handleHome}>
+                  <button className="SendText-button" onClick={handleSendText}>
                     쪽지 보내기 
                   </button>
                 </div>
