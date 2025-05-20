@@ -6,7 +6,6 @@ const SearchResultCard = ({ profile}) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [contentHeight, setContentHeight] = useState(0);
   const contentRef = useRef(null);
-  console.log("Profile카드가 받는 변수", profile);
   // 토글 함수
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);

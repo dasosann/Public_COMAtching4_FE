@@ -143,10 +143,8 @@ const SearchYesMatching = ({ matchingData,userNumber,username}) => {
     );
 
     if (messageContainerRef.current) {
-      console.log('Observing MessageContainer:', messageContainerRef.current);
       observer.observe(messageContainerRef.current);
     } else {
-      console.log('messageContainerRef.current is null');
     }
 
     return () => {
@@ -197,11 +195,9 @@ const SearchYesMatching = ({ matchingData,userNumber,username}) => {
     const interval = setInterval(() => {
       setTextStage((prevStage) => {
         if (prevStage === 0) {
-          console.log('Transition to textStage 1');
           return 1;
         }
         if (prevStage === 1) {
-          console.log('Transition to textStage 2 - Button should render');
           return 2;
         }
         return prevStage;
