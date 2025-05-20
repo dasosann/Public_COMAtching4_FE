@@ -105,7 +105,7 @@ const PaymentSecondModal = ({ isOpen, pointPrice, productName, discount, closeSe
             onClick={handleImageClick}
           />
           <span onClick={handleImageClick}>포인트 사용 약관 동의 </span>
-          <P.EssentialText> 필수</P.EssentialText>
+          <P.EssentialText>&nbsp;&nbsp;필수</P.EssentialText>
           <P.ArrowImg onClick={openModal} src="/assets/MainPayment/gray-arrow-right.svg" alt="view agreement" />
         </P.AgreePointRule>
         <P.NameButton isChecked={isChecked}>

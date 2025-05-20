@@ -32,4 +32,25 @@ C.BonusText = styled.span`
     font-size: 10px;
 
 `
+C.DiscountDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+`
+C.DisCountRate = styled.div`
+    color: #ff4d61;
+    font-size: 12px;
+    font-weight: 700;
+    height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+`
+C.DisCountMoney = styled.div`
+    font-size: 12px;
+    font-weight: 500;
+    color: #999;
+    height: 14px;
+    text-align: end;
+`
 export default C;
