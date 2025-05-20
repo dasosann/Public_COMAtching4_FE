@@ -54,7 +54,7 @@ const TypeSelectModal = ({ setSortType, setIsModalOpen, sortType }) => {
 };
 
 const SearchYesMatching = ({ matchingData,userNumber,username}) => {
-  const [sortType, setSortType] = useState('오래된순');
+  const [sortType, setSortType] = useState('최신순');
   const [textStage, setTextStage] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState(''); // 검색어 상태 추가
@@ -111,9 +111,9 @@ const SearchYesMatching = ({ matchingData,userNumber,username}) => {
       const profilesCopy = [...filteredProfiles];
       switch (sortType) {
         case '최신순':
-          return profilesCopy.reverse(); // 배열 역순
+          return profilesCopy; // 배열 역순
         case '오래된순':
-          return profilesCopy; // 원본 순서 유지
+          return profilesCopy.reverse(); // 원본 순서 유지
         case '나이순':
           return profilesCopy.sort((a, b) => a.age - b.age); // 오름차순
         default:
