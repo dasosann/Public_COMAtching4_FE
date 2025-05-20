@@ -16,7 +16,7 @@ const PaymentSecondModal = ({ isOpen, pointPrice, productName, discount, closeSe
 
   // 계좌번호 복사 함수
   const copyAccountNumber = async () => {
-    const accountNumber = "토스뱅크 1001-4935-3543";
+    const accountNumber = "1001-4935-3543";
     try {
       await navigator.clipboard.writeText(accountNumber);
       alert(`계좌번호가 복사되었습니다!\n계좌번호: ${accountNumber}`);
