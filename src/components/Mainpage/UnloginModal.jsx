@@ -21,12 +21,7 @@ function UnloginModal({onClose,handleKakaoLogin,handleGoogleLogin}) {
                     </button>
                     
                 </div>
-                <div className="unlogin-modal-email">
-                    혹은
-                    <div className="mts"></div>
-                    
-                    <span className="unlogin-modal-email-link">이메일 로그인</span>
-                </div>
+                
                 <button className="unlogin-modal-close" onClick={onClose}>
                     <img src="/assets/Mainpage/x.svg" alt="" />
                 </button>
