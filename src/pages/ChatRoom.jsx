@@ -131,7 +131,12 @@ function ChatRoom() {
   return (
     <div>
       <Background />
-      <ChatHeader nickname="겨울이오길" age="22살" major="정보보안공학부" />
+      <ChatHeader
+        nickname={location.state?.name}
+        age={`${location.state?.age}살`}
+        major={location.state?.major}
+      />
+
       
       <div className="chat-body" ref={chatBodyRef}>
         {chatMessages.map((chat) => (
