@@ -97,7 +97,7 @@ function MainpageLogin() {
     alert("해당 서비스는 5/21일 10:00에 오픈됩니다 축제까지 기다려주세요!");
   };
   const handleVisitGuide = () => {
-    navigate("/guide");
+    navigate("/qa");
   };
   const handleCharge = () => {
     navigate("/charge");
@@ -156,11 +156,11 @@ function MainpageLogin() {
             buttonText="조회하기"
           />
           <BottomNavButton
-            onClick={handleNotService}
-            // onClick={handleVisitGuide}
+            // onClick={handleNotService}
+            onClick={handleVisitGuide}
             imgSrc={`../../assets/guidebook.svg`}
-            imgText="가이드북"
-            buttonText="가이드북"
+            imgText="Q&A"
+            buttonText="Q&A"
           />
         </div>
           <div  style={{ height: '50px' }}></div>
