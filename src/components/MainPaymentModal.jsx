@@ -65,8 +65,7 @@ const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,am
                         const data = await response.json();
                         console.log('이벤트 데이터:', data);
                         // 이벤트가 있으면 할인율 설정, 없으면 0
-                        const event = data.data && data.data.length > 0 ? data.data[0] : null;
-                        setDiscountRate(event && event.discountRate ? event.discountRate : 0);
+                        setDiscountRate(data.data.isActive ? data.data.discountRate : 0);
                     } else {
                         console.error('이벤트 데이터 가져오기 실패:', response.status);
                         setDiscountRate(0);
