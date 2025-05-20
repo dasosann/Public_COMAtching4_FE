@@ -55,6 +55,8 @@ import NoticeListAndCancel from "./pages/Admin/NoticeListAndCancel.jsx";
 import NoticeHistory from "./pages/Admin/NoticeHistory.jsx";
 import SearchMyPage from "./pages/SearchMyPage/SearchMyPage.jsx";
 import MyNotice from "./pages/notice/MyNotice.jsx";
+import GoogleAgreeInformation from "./pages/GoogleAgreeInformation.jsx";
+import GooglePersoanInformationAgree from "./pages/GooglePersoanInformationAgree.jsx";
 export default function App() {
   return (
     <RecoilRoot>
@@ -65,6 +67,8 @@ export default function App() {
             <Route path="/" element={<MainpageUnLogin />} />
             <Route path="/login" element={<MainpageLogin />} />
             <Route path="/guide" element={<Guide />} />
+            <Route path="/googleAgree" element={<GoogleAgreeInformation />} />
+            <Route path="/googlePersonalAgree" element={<GooglePersoanInformationAgree />} />
             <Route path="/match-result" element={<Matchresult />} />
             <Route path="/check-result" element={<Checkresult />} />
             <Route path="/chat" element={<Chat />} />
