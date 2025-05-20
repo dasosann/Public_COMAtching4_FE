@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import SearchResultCard from '../../components/SearchResultCard';
 import Y from '../../css/pages/MyPageSearch/SearchYesMatchingStyle';
+import { useNavigate } from 'react-router-dom';
 
 const TypeSelectModal = ({ setSortType, setIsModalOpen, sortType }) => {
   const [tempSortType, setTempSortType] = useState(sortType);
@@ -54,7 +55,7 @@ const TypeSelectModal = ({ setSortType, setIsModalOpen, sortType }) => {
 };
 
 const SearchYesMatching = ({ matchingData,userNumber,username}) => {
-  const [sortType, setSortType] = useState('오래된순');
+  const [sortType, setSortType] = useState('최신순');
   const [textStage, setTextStage] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState(''); // 검색어 상태 추가
@@ -62,6 +63,7 @@ const SearchYesMatching = ({ matchingData,userNumber,username}) => {
   const [isVisible, setIsVisible] = useState(false);
   const [sortedProfiles, setSortedProfiles] = useState([]);
   const [filteredProfiles, setFilteredProfiles] = useState(matchingData); // 필터링된 프로필
+  const navigate = useNavigate();
   // SearchResultCard에 맞게 데이터 매핑
   const mappedProfiles = useMemo(() => {
     const profiles = matchingData.map((profile) => ({
@@ -111,9 +113,9 @@ const SearchYesMatching = ({ matchingData,userNumber,username}) => {
       const profilesCopy = [...filteredProfiles];
       switch (sortType) {
         case '최신순':
-          return profilesCopy.reverse(); // 배열 역순
+          return profilesCopy; // 배열 역순
         case '오래된순':
-          return profilesCopy; // 원본 순서 유지
+          return profilesCopy.reverse(); // 원본 순서 유지
         case '나이순':
           return profilesCopy.sort((a, b) => a.age - b.age); // 오름차순
         default:
@@ -144,7 +146,6 @@ const SearchYesMatching = ({ matchingData,userNumber,username}) => {
 
     if (messageContainerRef.current) {
       observer.observe(messageContainerRef.current);
-    } else {
     }
 
     return () => {
