@@ -26,7 +26,6 @@ const PointBalance = () => {
             });
             if (response.ok) {
                 const data = await response.json();
-                console.log("data",data);
                 setUserInfo( ({
                     point: data.data.point || 0,
                     realName: data.data.realName || null,

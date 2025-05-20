@@ -79,12 +79,10 @@ const SearchYesMatching = ({ matchingData,userNumber,username}) => {
       gender: profile.gender || '',
       matchedAt: profile.matchedAt || new Date().toISOString(),
     }));
-    console.log('mappedProfiles:', profiles); // mappedProfiles 로그 추가
     return profiles;
   }, [matchingData]);
   // 검색어로 프로필 필터링
   const handleSearchClick = () => {
-    console.log('Search query:', searchQuery);
     if (!searchQuery.trim()) {
       setFilteredProfiles(mappedProfiles);
       return;
@@ -99,10 +97,8 @@ const SearchYesMatching = ({ matchingData,userNumber,username}) => {
         (profile.mbti || '').toLowerCase().includes(query) ||
         hobbies.some((hobby) => (hobby || '').toLowerCase().includes(query))
       );
-      console.log(`Profile ${profile.id} matches:`, matches, 'Profile data:', profile);
       return matches;
     });
-    console.log('Filtered profiles:', result);
     setFilteredProfiles(result);
   };
 

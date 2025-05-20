@@ -8,7 +8,6 @@ const MyNotice = () => {
 
   // 메뉴 클릭 핸들러
   const handleMenuClick = (menuName) => {
-    console.log('Menu clicked:', menuName);
     setMenu(menuName);
   };
 

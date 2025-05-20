@@ -41,7 +41,6 @@ const PointChargeListModal = ({ isOpen, onClose, closeAllModal, userPoint }) => 
       .then((result) => {
         // 백엔드 응답이 {status, code, data} 형식이므로 data 프로퍼티를 사용
         if (result.status === 200 && result.data) {
-          console.log("백엔드에서 가져온 결제내역",result.data)
           setChargeHistory(result.data);
         } else {
           console.error('유효하지 않은 응답입니다:', result);

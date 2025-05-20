@@ -40,10 +40,6 @@ const ChargeMenuComponent = ({
     setPointPrice(formattedFinalPrice);
     setChargePoint(point);
     setDiscount(discount);
-    console.log('가격:', formattedFinalPrice);
-    console.log('상품명:', type);
-    console.log('할인:', discount);
-    console.log('이벤트 할인율:', discountRate);
     openSecondModal();
   };
 

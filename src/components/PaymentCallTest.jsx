@@ -29,7 +29,6 @@ const PaymentCallTest = () => {
       });
       if(response.ok){
         const data = await response.json();
-        console.log("백엔드 응답 정상적:", data);
         setPaymentStatus('success')
         
       }else{
@@ -60,7 +59,6 @@ const PaymentCallTest = () => {
       }
       if (paymentKey && orderId && amount&&!hasSent.current) {
         const uniqueId = uuidv4();
-        console.log(uniqueId); // 예: d2eebf8f-6c19-4b5e-b501-d6c7b7de5a1e
         hasSent.current = true;
         sendParamsToBackend(paymentKey, orderId, amount, uniqueId);
       }
