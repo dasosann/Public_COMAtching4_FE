@@ -78,6 +78,7 @@ const Mypage = () => {
         paymentStatus={paymentStatus}
         setPaymentStatus={setPaymentStatus}
         amount={amount}
+        userPoint = {userData.point}
       />
       <div  style={{ height: '100px' }}></div>
     </div>

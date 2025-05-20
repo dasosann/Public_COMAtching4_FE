@@ -107,5 +107,4 @@ const SearchMyPage = () => {
     </E.MainContainer>
   );
 };
-
 export default SearchMyPage;

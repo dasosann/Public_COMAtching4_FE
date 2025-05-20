@@ -21,7 +21,7 @@ const formatAmount = (amount) => {
     return amount.toLocaleString();
   };
   
-const PointChargeListModal = ({ isOpen, onClose, closeAllModal }) => {
+const PointChargeListModal = ({ isOpen, onClose, closeAllModal, userPoint }) => {
   const handleClose = () => {
     onClose();
     closeAllModal();
@@ -59,7 +59,7 @@ const PointChargeListModal = ({ isOpen, onClose, closeAllModal }) => {
         <P.ChargePointText>충전 내역</P.ChargePointText>
         <P.CloseButton onClick={handleClose}>닫기</P.CloseButton>
       </C.Header>
-      <MyPointChargeWithoutChargeList  />
+      <MyPointChargeWithoutChargeList userPoint={userPoint} />
       <div style={{ overflow: "auto", height: '400px', marginTop: '23px' }}>
         {chargeHistory && chargeHistory.length > 0 ? (
           chargeHistory.map((item, index) => (
