@@ -52,5 +52,6 @@ C.DisCountMoney = styled.div`
     color: #999;
     height: 14px;
     text-align: end;
+    text-decoration: line-through;
 `
 export default C;
