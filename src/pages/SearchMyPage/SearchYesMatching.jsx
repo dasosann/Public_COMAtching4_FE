@@ -66,11 +66,11 @@ const SearchYesMatching = ({ matchingData,userNumber}) => {
   const mappedProfiles = useMemo(() => {
     return matchingData.map((profile) => ({
       id: profile.socialId,
-      nickname: profile.nickname, // username → nickname
+      nickname: profile.username, // username → nickname
       major: profile.major,
       mbti: profile.mbti,
       age: profile.age,
-      contact_id: profile.contact_id, // contactId → contact_id
+      contact_id: profile.contactId, // contactId → contact_id
       song: profile.song,
       comment: profile.comment,
       hobby: profile.hobby,
