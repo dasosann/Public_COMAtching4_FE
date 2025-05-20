@@ -63,7 +63,6 @@ const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,am
                     });
                     if (response.ok) {
                         const data = await response.json();
-                        console.log('이벤트 데이터:', data);
                         // 이벤트가 있으면 할인율 설정, 없으면 0
                         setDiscountRate(data.data.isActive ? data.data.discountRate : 0);
                     } else {

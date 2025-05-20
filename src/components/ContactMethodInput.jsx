@@ -43,7 +43,6 @@ function ContactMethodInput({ handleChange, isContactVerified,setIsContactVerifi
       setIsContactVerified(true);
     } else if (user.contact === "instagram") {
       if (!instagramPattern.test(user.contact_id)) {
-        console.log(user.contact_id);
         alert(
           "인스타 아이디는 @을 붙이고 영어, 숫자, 언더바(_), 마침표(.)만 가능합니다."
         );
@@ -58,7 +57,6 @@ function ContactMethodInput({ handleChange, isContactVerified,setIsContactVerifi
     // 중복 여부 확인
    
   };
-  console.log(isContactVerified);
   return (
     <div className={styles.contactInput}>
       <MyInput

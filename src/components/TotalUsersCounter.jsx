@@ -16,7 +16,6 @@ function TotalUsersCounter({ font_size }) {
                     },
                 });
                 const data = await response.json();
-                console.log('불러온 사용자 수:', data);
                 // 응답 구조에 따라 사용자 수 추출 (예: data.data.count)
                 const count = data.data;
                 setNumParticipants(count);

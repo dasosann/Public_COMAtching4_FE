@@ -22,7 +22,6 @@ const SearchMyPage = () => {
         method: 'GET',
       });
       const data = await response.json();
-      console.log('참가자수:', data);
       setUserNumber(data.data || 0);
     } catch (error) {
       console.error('사용자 수 가져오는 중 오류 발생:', error);
@@ -32,13 +31,10 @@ const SearchMyPage = () => {
   // 사용자 프로필 (nickname) 가져오기
   const fetchNickname = async () => {
     try {
-      console.log('Fetching nickname from /auth/user/profile');
       const response = await fetchRequest('/auth/user/profile', {
         method: 'GET',
       });
-      console.log('Nickname response status:', response.status);
       const data = await response.json();
-      console.log('받아온 닉네임 데이터:', data);
       setNickname(data.data?.username || '알 수 없음'); // nickname 필드 추출, 기본값 설정
     } catch (error) {
       console.error('Failed to fetch nickname:', error);
@@ -50,13 +46,10 @@ const SearchMyPage = () => {
   const fetchMatchingData = async () => {
     try {
       setLoading(true);
-      console.log('Fetching data from /auth/user/api/history/matching');
       const response = await fetchRequest('/auth/user/api/history/matching', {
         method: 'GET',
       });
-      console.log('Response status:', response.status);
       const data = await response.json();
-      console.log('받아온 매칭 데이터:', data);
       setMatchingData(data.data || []);
     } catch (error) {
       console.error('Failed to fetch matching data:', error);

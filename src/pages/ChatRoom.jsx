@@ -35,12 +35,9 @@ function ChatRoom() {
     const fetchChatHistory = async () => {
       try {
         const res = await instance.get(`/auth/user/chat/room?roomId=${roomId}`);
-        console.log("res",res);
         const data = res.data.data;
         if (!Array.isArray(data)) {
-            console.log("res", res);
-            console.log("res.data", res.data);
-            console.log("res.data.data", res.data.data);
+           
 
             return;
         }
