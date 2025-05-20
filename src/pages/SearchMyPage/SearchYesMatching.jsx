@@ -65,7 +65,7 @@ const SearchYesMatching = ({ matchingData,userNumber}) => {
   // SearchResultCard에 맞게 데이터 매핑
   const mappedProfiles = useMemo(() => {
     return matchingData.map((profile) => ({
-      id: profile.socialId,
+      id: profile.contactId,
       nickname: profile.username, // username → nickname
       major: profile.major,
       mbti: profile.mbti,
@@ -73,7 +73,7 @@ const SearchYesMatching = ({ matchingData,userNumber}) => {
       contact_id: profile.contactId, // contactId → contact_id
       song: profile.song,
       comment: profile.comment,
-      hobby: profile.hobby,
+      hobby: profile.hobbyList,
       contactFrequency: profile.contactFrequency,
       matchedAt: profile.matchedAt, // 원본 필드 유지
     }));
