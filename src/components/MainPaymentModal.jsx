@@ -16,7 +16,7 @@ import { userState } from '../Atoms';
 import { useRecoilState } from 'recoil';
 import fetchRequest from '../fetchConfig';
 
-const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,amount}) => {
+const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,amount,userPoint}) => {
   // const [isOpen, setIsOpen] = useState(false); 
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false); // 두 번째 모달 열기/닫기 상태
   const [isChargeListModalOpen, setIsChargeListModalOpen] = useState(false); 
@@ -59,7 +59,7 @@ const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,am
         if (isOpen) {
             const fetchEventDiscount = async () => {
                 try {
-                    const response = await fetchRequest('/auth/user/events?status=CURRENT', {
+                    const response = await fetchRequest('/auth/user/event', {
                         method: 'GET',
                     });
                     if (response.ok) {
@@ -113,7 +113,7 @@ const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,am
               <P.ChargePointText>포인트 충전</P.ChargePointText>
               <P.CloseButton onClick={closeModal}>닫기</P.CloseButton>
             </P.Header>
-            <MyPointCharge onOpenChargeHistory={openChargeHistoryModal} />
+            <MyPointCharge onOpenChargeHistory={openChargeHistoryModal} userPoint={userPoint} />
           </div>
           <PopularPaymentMenu discountRate={discountRate} openSecondModal={openSecondModal} setPointPrice={setPointPrice} setProductName={setProductName} setDiscount={setDiscount} setChargePoint={setChargePoint}/>
           <AllPaymentMenu discountRate={discountRate} openSecondModal={openSecondModal} setPointPrice={setPointPrice} setProductName={setProductName}setDiscount={setDiscount} setChargePoint={setChargePoint} />
@@ -125,6 +125,7 @@ const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,am
           isOpen={isChargeListModalOpen}
           onClose={closeChargeHistoryModal}
           closeAllModal = {closeModal}
+          userPoint={userPoint}
           />
         )}
        
