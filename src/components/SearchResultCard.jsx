@@ -110,7 +110,7 @@ const SearchResultCard = ({ profile}) => {
               />
             ) : (
               <img
-                src="/assets/Mainpage/kakao.png"
+                src="/assets/Mainpage/kakao.svg"
                 alt="Kakao Link"
                 style={{ cursor: profile.contactId ? "pointer" : "default", opacity: profile.contact_id ? 1 : 0.5 }}
               />
