@@ -56,6 +56,7 @@ export const userState = atom({
     numParticipants: 0,
     contact_frequency: "",
     contact: "",
+    realName:"",
   },
 });
 
