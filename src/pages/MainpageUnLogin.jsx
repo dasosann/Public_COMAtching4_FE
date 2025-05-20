@@ -15,13 +15,11 @@ function MainpageUnLogin() {
   const [showModal, setShowModal] = useState(false);
 
   const handleKakaoLogin = () => {
-    // window.location.href = "https://backend.comatching.site/oauth2/authorization/kakao";
-    alert("5월 21일 오전 10시부터 시작합니다!!")
+    window.location.href = "https://backend.comatching.site/oauth2/authorization/kakao";
   };
 
   const handleGoogleLogin = () => {
-    // window.location.href = "https://backend.comatching.site/oauth2/authorization/google";
-    alert("5월 21일 오전 10시부터 시작합니다!!")
+    window.location.href = "https://backend.comatching.site/oauth2/authorization/google";
   };
 
   useEffect(() => {
