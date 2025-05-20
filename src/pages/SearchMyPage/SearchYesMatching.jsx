@@ -231,8 +231,7 @@ const SearchYesMatching = ({ matchingData,userNumber,username}) => {
   }, [isModalOpen]);
 
   const handleMatchButtonClick = () => {
-    alert('매칭 페이지로 이동합니다!');
-    // 예: navigate('/matching');
+    navigate('/matching');
   };
 
   return (
@@ -250,14 +249,14 @@ const SearchYesMatching = ({ matchingData,userNumber,username}) => {
         <span>{sortType}</span>
       </Y.SortDiv>
       <Y.CardWrapper>
-        {sortedProfiles.map((profile) => (
-          <SearchResultCard key={profile.id} profile={profile} />
+        {sortedProfiles.map((profile,index) => (
+          <SearchResultCard key={index} profile={profile} />
         ))}
       </Y.CardWrapper>
       <Y.MessageContainer ref={messageContainerRef}>
         {!isVisible && (
           <div style={{ color: 'red', textAlign: 'center' }}>
-            MessageContainer is not visible yet
+            내가 뽑은 매칭 리스트를 가져오는 중이에요......
           </div>
         )}
         {isVisible && (
