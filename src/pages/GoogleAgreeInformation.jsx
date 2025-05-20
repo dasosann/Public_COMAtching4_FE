@@ -6,7 +6,7 @@ const GoogleAgreeInformation = () => {
     const navigate =useNavigate();
   return (
     <div className="agreement-box_TERM" style={{width:'90%',height:'100%'}}>
-      <p style={{ textAlign: "left" }}>
+      <p style={{ textAlign: "left" ,marginBottom:'160px'}}>
         <strong>COMAtching 이용약관</strong>
         <br />
         <br />

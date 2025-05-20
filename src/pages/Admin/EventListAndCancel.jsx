@@ -72,8 +72,6 @@ const EachEventComponent = ({data}) =>{
     const startDate = `${startDateObj.getFullYear()}-${String(startDateObj.getMonth() + 1).padStart(2, '0')}-${String(startDateObj.getDate()).padStart(2, '0')}`;
     const startTime= startDateObj.toTimeString().slice(0, 5); // HH:MM
     const endTime= endDateObj.toTimeString().slice(0, 5);    // HH:MM
-    console.log("사용해야할데이터",data)
-    console.log ("시작날짜", startDate, "시작시간",startTime, "종료시간",endTime)
     const [showSecondModal, setShowSecondModal] = useState(false);  // 두 번째 모달 표시 여부
     const [showModal, setShowModal] = useState(false);
     const handleCloseModal = () =>{
@@ -181,13 +179,11 @@ const EventListAndCancel = () => {
     //     },
     //   ];
     const [adminSelect, setAdminSelect] = useState('가입자관리');
-    
-    
     return (
         <div>
             <AdminHeader setAdminSelect={setAdminSelect} adminSelect={adminSelect} />
             <MainWrapper>
-                <AdminDiv style={{paddingRight:'24px', height:'530px', justifyContent:'start'}}>
+                <AdminDiv style={{paddingRight:'24px', height:'800px', justifyContent:'start', paddingBottom:'30px'}}>
                     <L.TitleDiv>이벤트 예약목록 및 <L.RedSpan>취소</L.RedSpan></L.TitleDiv>
                     <L.SubTitle>예약 이벤트 관리기능</L.SubTitle>
                     <div style={{maxHeight:'514px', overflowY:'auto'}}>{eventList.map((data,i)=><EachEventComponent key={i} data={data}/>)}</div>
