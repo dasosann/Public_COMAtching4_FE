@@ -1,5 +1,5 @@
 const interestOptions = [
-    { label: "운동", image: "/assets/Match/sports.svg" },
+    { label: "스포츠", image: "/assets/Match/sports.svg" },
     { label: "문화", image: "/assets/Match/culture.svg" },
     { label: "예술", image: "/assets/Match/art.svg" },
     { label: "여행", image: "/assets/Match/trip.svg" },
