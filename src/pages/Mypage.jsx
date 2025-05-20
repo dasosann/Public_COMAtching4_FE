@@ -23,7 +23,7 @@ const Mypage = () => {
     // ✅ 사용자 프로필 정보 요청
     const fetchUserProfile = async () => {
       try {
-        const res = await instance.get('/auth/user/profile');
+        const res = await instance.get('/auth/user/api/points');
         console.log("사용자정보",res)
         if (res.data?.code === 'GEN-000') {
           setUserData(res.data.data); // { username, point }
