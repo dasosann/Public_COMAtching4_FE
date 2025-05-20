@@ -6,7 +6,7 @@ import S from '../../css/pages/Admin/AdminSearch';
 import P from '../../css/pages/Admin/AdminPaymentHistoryStyle';
 import fetchRequest from '../../fetchConfig';
 
-const RequestUserComponent = ({ orderId, point, username, price, requestAt, productName, onUpdate,realName }) => {
+const RequestUserComponent = ({ contact,orderId, point, username, price, requestAt, productName, onUpdate,realName }) => {
   const formatDateTime = (isoString) => {
     if (!isoString || typeof isoString !== 'string') {
         return '알 수 없음'; // 잘못된 입력 처리
@@ -81,6 +81,10 @@ const RequestUserComponent = ({ orderId, point, username, price, requestAt, prod
         <div style={{ display: 'flex', alignItems: 'center', height: '32px' }}>
           <P.DefaultSpan>가격 : </P.DefaultSpan>
           <P.DefaultSpan style={{ width: '120px', textAlign: 'center' }}>{price}원 </P.DefaultSpan>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', height: '32px' }}>
+          <P.DefaultSpan>소셜ID : </P.DefaultSpan>
+          <P.DefaultSpan style={{ width: '120px', textAlign: 'center' }}>&nbsp;&nbsp;{contact} </P.DefaultSpan>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', paddingRight: '32px', gap: '8px' }}>
           <S.DetailButton style={{ width: '100px', height: '100%' }} onClick={handleApprove}>수락</S.DetailButton>
