@@ -7,12 +7,12 @@ const SupportSection = () => {
     <>
       <div className='mypage-support'>
         <p className='mypage-support-title'>고객 지원</p>
-        <div className='mypage-support-item'>
-          <span>공지사항</span>
+        <div className='mypage-support-item' onClick={()=>navigate('/search-mylist')}>
+          <span>매칭 내역</span>
           <img src='../assets/Common/gt.svg' alt='>' />
         </div>
-        <div className='mypage-support-item' onClick={()=>navigate('/guide')}>
-          <span>가이드북</span>
+        <div className='mypage-support-item' onClick={()=>navigate('/qa')}>
+          <span>Q&A</span>
           <img src='../assets/Common/gt.svg' alt='>' />
         </div>
         {/* <div className='mypage-support-item'>
@@ -27,8 +27,8 @@ const SupportSection = () => {
           <span>이용약관</span>
           <img src='../assets/Common/gt.svg' alt='>' />
         </div>
-        <div className='mypage-support-item' >
-          <span>회사정보</span>
+        <div className='mypage-support-item' onClick={()=>navigate('/matching')} >
+          <span>매칭하기</span>
           <img src='../assets/Common/gt.svg' alt='>' />
         </div>
       </div>
