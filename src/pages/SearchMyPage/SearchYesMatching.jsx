@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import SearchResultCard from '../../components/SearchResultCard';
 import Y from '../../css/pages/MyPageSearch/SearchYesMatchingStyle';
+import { useNavigate } from 'react-router-dom';
 
 const TypeSelectModal = ({ setSortType, setIsModalOpen, sortType }) => {
   const [tempSortType, setTempSortType] = useState(sortType);
@@ -62,6 +63,7 @@ const SearchYesMatching = ({ matchingData,userNumber,username}) => {
   const [isVisible, setIsVisible] = useState(false);
   const [sortedProfiles, setSortedProfiles] = useState([]);
   const [filteredProfiles, setFilteredProfiles] = useState(matchingData); // 필터링된 프로필
+  const navigate = useNavigate();
   // SearchResultCard에 맞게 데이터 매핑
   const mappedProfiles = useMemo(() => {
     const profiles = matchingData.map((profile) => ({
@@ -144,7 +146,6 @@ const SearchYesMatching = ({ matchingData,userNumber,username}) => {
 
     if (messageContainerRef.current) {
       observer.observe(messageContainerRef.current);
-    } else {
     }
 
     return () => {
