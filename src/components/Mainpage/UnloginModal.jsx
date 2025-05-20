@@ -19,10 +19,7 @@ function UnloginModal({onClose,handleKakaoLogin,handleGoogleLogin}) {
                         <img src="/assets/Mainpage/google.svg" alt="구글"/>
                         <span>구글로 시작하기</span>
                     </button>
-                    <button className="unlogin-modal-btn apple">
-                        <img src="/assets/Mainpage/apple.svg" alt="애플"/>
-                        <span>Apple로 시작하기</span>
-                    </button>
+                    
                 </div>
                 <div className="unlogin-modal-email">
                     혹은
