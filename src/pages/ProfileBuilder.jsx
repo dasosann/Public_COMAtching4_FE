@@ -59,10 +59,7 @@ const ProfileBuilder = () => {
       updatedQuestions[index][1] = true;
       return updatedQuestions;
     });
-    console.log(
-      `handleQuestionComplete - 질문 ${index} 완료, 현재 MBTI 상태값:`,
-      selectedMBTI
-    ); // 질문 완료 시 상태값 출력
+    
     // 마지막 질문이라면 /hobby로 이동
     if (index === QUESTIONS.length - 1) {
       navigatehobby();
@@ -74,8 +71,7 @@ const ProfileBuilder = () => {
     setCurrentUserState((prev) => ({
       ...prev,
       mbti: `${selectedMBTI.EI}${selectedMBTI.SN}${selectedMBTI.TF}${selectedMBTI.PJ}`,
-    }));
-    console.log("navigatehobby - MBTI 상태값:", currentUserState); // navigatehobby에서 상태값 출력
+    })); // navigatehobby에서 상태값 출력
     navigate("/hobby");
   };
   const [step, setStep] = useState(1); 

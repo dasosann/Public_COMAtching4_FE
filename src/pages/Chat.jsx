@@ -12,7 +12,7 @@ function Chat() {
     const fetchChats = async () => {
       try {
         const response = await instance.get('/auth/user/chat');
-        console.log("response",response);
+        
         const chatData = response.data.data;
 
         // 실제 사용자 정보가 없는 경우엔 name만 표시

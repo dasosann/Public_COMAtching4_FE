@@ -87,11 +87,8 @@ useEffect(() => {
     contactFrequencyOption !== "";
 
   setIsButtonEnabled(isAllOptionsSelected);
-  console.log(isAllOptionsSelected);
 }, [MatchState.formData]); // formData 값이 변경될 때마다 실행
-console.log("보낼 매칭 요청 데이터:", FormData);
 useEffect(() => {
-  console.log("Updated MatchState:", MatchState);
 }, [MatchState]); // MatchState가 변경될 때마다 실행
 
   useEffect(() => {
@@ -168,7 +165,6 @@ useEffect(() => {
       university: "Catholic",
     };
 
-    console.log("보낼 매칭 요청 FormData:", FormData);
 
     try {
       setLoading(true);
@@ -176,7 +172,6 @@ useEffect(() => {
         "/auth/user/api/match/request",
         FormData
       );
-      console.log("서버 응답:", response.data)
       if (response.status === 200) {
         await setMatchPageResult((prev) => ({
           ...prev,

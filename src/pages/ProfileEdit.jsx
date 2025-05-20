@@ -51,7 +51,6 @@ const ProfileEdit = () => {
         const responseData = response.data;
         const { status } = responseData;
         const userData = responseData.data;
-        console.log("userData",userData);
         if (status === 200 && userData) {
           const newProfile = {
             nickname: userData.username ?? '',

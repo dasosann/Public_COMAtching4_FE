@@ -18,6 +18,8 @@ function Hobby() {
   const [searchQuery, setSearchQuery] = useState(""); // State to track search input
   const [customHobbyInput, setCustomHobbyInput] = useState(""); // 커스텀 관심사 입력값
   const [customHobbies, setCustomHobbies] = useState([]); // 사용자 추가 관심사 목록
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
 
   const handleCustomHobbyChange = (e) => {
     const input = e.target.value;
@@ -38,7 +40,7 @@ function Hobby() {
   };
   const handleCustomHobbyKeyDown = (e) => {
     if (e.key === "Enter" && customHobbyInput.trim() !== "") {
-      if (customHobbies.length < 3) {
+      if (customHobbies.length < 5) {
         setCustomHobbies((prev) => [...prev, customHobbyInput.trim()]);
         setCustomHobbyInput(""); // 입력 필드 초기화
       } else {
@@ -83,15 +85,18 @@ function Hobby() {
   
 
   const handleSubmit = () => {
+    if (isSubmitting) return;
+
     if (pickHobby.hobby.length < 1) {
       alert("관심사를 최소 1개 이상 선택해주세요.");
       return false;
     }
+    setIsSubmitting(true);
+
     setUser((prevUser) => ({
       ...prevUser,
       hobby: pickHobby.hobby,
     }));
-    console.log(user);
     navigate("/userinfo");
   };
 
@@ -99,7 +104,7 @@ function Hobby() {
     const isAlreadySelected = pickHobby.hobby.includes(name);
     const updatedHobbies = isAlreadySelected
       ? pickHobby.hobby.filter((hobby) => hobby !== name)
-      : pickHobby.hobby.length < 3
+      : pickHobby.hobby.length < 5
       ? [...pickHobby.hobby, name]
       : pickHobby.hobby;
 
@@ -116,7 +121,7 @@ function Hobby() {
       <div className="text-container">
         <div className="main-text">당신의 관심사를 알려주세요.</div>
         <div className="sub-text">
-          요즘 관심있는 것들을 1개 이상 선택해주세요. <br /> 최대 3개까지 선택할 수
+          요즘 관심있는 것들을 1개 이상 선택해주세요. <br /> 최대 5개까지 선택할 수
           있어요.
         </div>
       </div>
@@ -183,7 +188,7 @@ function Hobby() {
           pickHobby.hobby.length >= 1 ? "active" : "inactive"
         }`}
         onClick={pickHobby.hobby.length >= 1 ? handleSubmit : null}
-        disabled={pickHobby.hobby.length < 1}
+        disabled={pickHobby.hobby.length < 1 || isSubmitting}
       >
         다음으로
       </button>

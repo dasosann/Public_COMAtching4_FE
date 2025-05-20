@@ -27,7 +27,7 @@ function MainpageLogin() {
     const fetchMatchingHistory = async () => {
       try {
         const res = await instance.get("/auth/user/api/history/matching");
-        console.log("매칭조회,",res);
+        
         const data = res.data.data;
 
         const mapped = data.map((item) => ({

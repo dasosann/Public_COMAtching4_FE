@@ -128,7 +128,6 @@ function Matchresult() {
     navigate(`/chat`);
   };
 
-  console.log(resultData);
   return (
     <>
       {loading ? (

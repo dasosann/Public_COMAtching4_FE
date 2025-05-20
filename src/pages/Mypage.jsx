@@ -24,7 +24,7 @@ const Mypage = () => {
     const fetchUserProfile = async () => {
       try {
         const res = await instance.get('/auth/user/api/points');
-        console.log("사용자정보",res)
+        
         if (res.data?.code === 'GEN-000') {
           setUserData(res.data.data); // { username, point }
         } else {
