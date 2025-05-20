@@ -10,7 +10,7 @@ import MainPaymentModal from '../components/MainPaymentModal.jsx';
 const Mypage = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
-  const [userData, setUserData] = useState({ username: '', point: 0 }); 
+  const [userData, setUserData] = useState({ username: '', point: 0 , realName:null}); 
   const [paymentStatus, setPaymentStatus] = useState(false); 
   const [amount, setAmount] = useState(null);
   const closeModal = ()=>{
@@ -24,6 +24,7 @@ const Mypage = () => {
     const fetchUserProfile = async () => {
       try {
         const res = await instance.get('/auth/user/profile');
+        console.log("사용자정보",res)
         if (res.data?.code === 'GEN-000') {
           setUserData(res.data.data); // { username, point }
         } else {
@@ -78,7 +79,7 @@ const Mypage = () => {
         paymentStatus={paymentStatus}
         setPaymentStatus={setPaymentStatus}
         amount={amount}
-        userPoint = {userData.point}
+        userInfo={userData}
       />
       <div  style={{ height: '100px' }}></div>
     </div>

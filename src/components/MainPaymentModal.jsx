@@ -16,7 +16,7 @@ import { userState } from '../Atoms';
 import { useRecoilState } from 'recoil';
 import fetchRequest from '../fetchConfig';
 
-const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,amount,userPoint}) => {
+const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,amount,userInfo}) => {
   // const [isOpen, setIsOpen] = useState(false); 
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false); // 두 번째 모달 열기/닫기 상태
   const [isChargeListModalOpen, setIsChargeListModalOpen] = useState(false); 
@@ -26,7 +26,6 @@ const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,am
   const [didAnimateOnce, setDidAnimateOnce] = useState(false);
   const [point, setChargePoint] = useState();
   const [discountRate, setDiscountRate] = useState(0); // 할인율 상태 추가
-
   // const closeModal = () => setIsOpen(false);
   
   
@@ -113,19 +112,19 @@ const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,am
               <P.ChargePointText>포인트 충전</P.ChargePointText>
               <P.CloseButton onClick={closeModal}>닫기</P.CloseButton>
             </P.Header>
-            <MyPointCharge onOpenChargeHistory={openChargeHistoryModal} userPoint={userPoint} />
+            <MyPointCharge onOpenChargeHistory={openChargeHistoryModal} userPoint={userInfo.point} />
           </div>
           <PopularPaymentMenu discountRate={discountRate} openSecondModal={openSecondModal} setPointPrice={setPointPrice} setProductName={setProductName} setDiscount={setDiscount} setChargePoint={setChargePoint}/>
           <AllPaymentMenu discountRate={discountRate} openSecondModal={openSecondModal} setPointPrice={setPointPrice} setProductName={setProductName}setDiscount={setDiscount} setChargePoint={setChargePoint} />
           <PointInformationFooter />
         </P.ModalContent>
-        <PaymentSecondModal data-aos="fade-up"  closeSecondModal={closeSecondModal} isOpen={isSecondModalOpen}  productName={productName} pointPrice={pointPrice}discount={discount} point={point} closeAllModal = {closeModal} />
+        <PaymentSecondModal data-aos="fade-up" realName={userInfo.realName} closeSecondModal={closeSecondModal} isOpen={isSecondModalOpen}  productName={productName} pointPrice={pointPrice}discount={discount} point={point} closeAllModal = {closeModal} />
         {isChargeListModalOpen && (
           <PointChargeListModal
           isOpen={isChargeListModalOpen}
           onClose={closeChargeHistoryModal}
           closeAllModal = {closeModal}
-          userPoint={userPoint}
+          userPoint={userInfo.point}
           />
         )}
        

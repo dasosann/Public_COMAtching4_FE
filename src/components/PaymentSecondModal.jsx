@@ -4,9 +4,9 @@ import TossBuyPointComponent from './TossBuyPointComponent.jsx';
 import 'aos/dist/aos.css';
 import fetchRequest from '../fetchConfig.jsx';
 
-const PaymentSecondModal = ({ isOpen, pointPrice, productName, discount, closeSecondModal, point, closeAllModal }) => {
+const PaymentSecondModal = ({ isOpen, pointPrice, productName, discount, closeSecondModal, point, closeAllModal, realName: initialRealName }) => {
     const [isChecked, setIsChecked] = useState(false);
-    const [realName, setRealName] = useState('');
+    const [realName, setRealName] = useState(initialRealName || '');
 
     if (!isOpen) return null;
 
@@ -81,7 +81,7 @@ const PaymentSecondModal = ({ isOpen, pointPrice, productName, discount, closeSe
                 <P.EssentialText>필수</P.EssentialText>
                 <P.ArrowImg src="/assets/MainPayment/gray-arrow-right.svg" alt="" />
             </P.AgreePointRule>
-            <P.NameButton disabled={!isChecked|| !realName.trim()} onClick={handleChargeRequest} isChecked={isChecked}>
+            <P.NameButton disabled={!isChecked || !realName.trim()} onClick={handleChargeRequest} isChecked={isChecked}>
                 <P.NameInput
                     type="text"
                     value={realName}
