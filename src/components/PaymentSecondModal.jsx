@@ -81,14 +81,14 @@ const PaymentSecondModal = ({ isOpen, pointPrice, productName, discount, closeSe
                 <P.EssentialText>필수</P.EssentialText>
                 <P.ArrowImg src="/assets/MainPayment/gray-arrow-right.svg" alt="" />
             </P.AgreePointRule>
-            <P.NameButton disabled={!isChecked || !realName.trim()} onClick={handleChargeRequest} isChecked={isChecked}>
+            <P.NameButton isChecked={isChecked}>
                 <P.NameInput
                     type="text"
                     value={realName}
                     onChange={handleNameChange}
                     placeholder="입금자명"
                 />
-                <span>(으)로 결제 요청 보내기</span>
+                <span onClick={handleChargeRequest} >(으)로 결제 요청 보내기 </span>
             </P.NameButton>
         </P.SecondModalWrapper>
     );
