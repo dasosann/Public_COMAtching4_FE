@@ -25,46 +25,61 @@ function Matchresult() {
   
   //같은 조건으로 다시 매칭하기 핸들러
   const handleSubmit = async () => {
-    
-    if (MatchState.point > resultPoint.point) {
-      alert("포인트가 부족합니다!!");
-      navigate("/charge-request", { replace: true }); 
-      return; // 동작 중단
-    }
-    try {
-      setLoading(true);
-      
-      const response = await instance.post(
-        "/auth/user/api/match/request",
-        MatchState.formData.FormData
-      );
-      if (response.data.status === 200) {
-        await setMatchResult((prev) => ({
-          ...prev,
-          age: response.data.data.age,
-          comment: response.data.data.comment,
-          contactFrequency: response.data.data.contactFrequency,
-          currentPoint: response.data.data.currentPoint,
-          gender: response.data.data.gender,
-          hobby: response.data.data.hobby,
-          major: response.data.data.major,
-          mbti: response.data.data.mbti,
-          socialId: response.data.data.contactId,
-          song: response.data.data.song,
-        }));
-        await setResultPoint((prev) => ({
-          ...prev,
-          point: response.data.data.currentPoint,
-        }));
-        setLoading(false);
-      } else {
-        throw new Error("Unexpected response code or status");
-      }
-    } catch (error) {
-      console.error("Error during match request:", error);
-    }
+  if (MatchState.point > resultPoint.point) {
+    alert("포인트가 부족합니다!!");
+    navigate("/charge-request", { replace: true });
+    return;
+  }
+
+  // ✅ FormData를 여기서 다시 생성
+  const FormData = {
+    importantOption: MatchState.formData.importantOption || "UNSELECTED",
+    mbtiOption: MatchState.selectedMBTI.filter((l) => l !== "X").join(""),
+    hobbyOption: MatchState.formData.hobbyOption,
+    ageOption: MatchState.formData.ageOption,
+    contactFrequencyOption: MatchState.formData.contactFrequencyOption,
+    sameMajorOption: MatchState.isUseOption[3] ? true : false,
+    totalCost: MatchState.point,
+    university: "Catholic",
   };
-  
+
+  try {
+    setLoading(true);
+
+    const response = await instance.post(
+      "/auth/user/api/match/request",
+      FormData // ✅ 여기서 수정된 FormData를 직접 사용
+    );
+
+    if (response.data.status === 200) {
+      await setMatchResult((prev) => ({
+        ...prev,
+        age: response.data.data.age,
+        comment: response.data.data.comment,
+        contactFrequency: response.data.data.contactFrequency,
+        currentPoint: response.data.data.currentPoint,
+        gender: response.data.data.gender,
+        hobby: response.data.data.hobbyList,
+        major: response.data.data.major,
+        mbti: response.data.data.mbti,
+        socialId: response.data.data.contactId,
+        song: response.data.data.song,
+      }));
+
+      await setResultPoint((prev) => ({
+        ...prev,
+        point: response.data.data.currentPoint,
+      }));
+
+      setLoading(false);
+    } else {
+      throw new Error("Unexpected response code or status");
+    }
+  } catch (error) {
+    console.error("Error during match request:", error);
+  }
+};
+
   
   // 취미를 아이콘과 매핑하는 함수
   const mapHobbiesWithIcons = (hobbyList) => {
