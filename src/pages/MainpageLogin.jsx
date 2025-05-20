@@ -2,61 +2,41 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
 import HeaderMain from "../components/HeaderMain";
-import UserInfoRrev from "../components/UserInfoRrev";
-import { charge, userState } from "../Atoms";
+import { userState } from "../Atoms";
 import "../css/pages/MainpageLogin.css";
 import { useNavigate } from "react-router-dom";
 import TotalUsersCounter from "../components/TotalUsersCounter";
 import BottomNavButton from "../components/BottomNavButton";
-import TutorialSlides from "../components/TutorialSlides";
 import Background from "../components/Background";
 import instance from "../axiosConfig";
-import Cookies from "js-cookie"; // js-cookie import 추가
-import EventModal from "../components/EventModal";
 import PointBalance from "../components/PointBalance";
 import MatchProfiles from "../components/Mainpage/MatchProfiles";
-import NavBar from '../components/Navbar.jsx';
-import fetchRequest from "../fetchConfig.jsx";
 import NoticeSlideCard from "../components/Mainpage/NoticeSlideCard.jsx";
 
 function MainpageLogin() {
   const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 훅 사용
   
-  const [showTutorial, setShowTutorial] = useState(false); // Show tutorial on login
   const [userInfo, setUserInfo] = useRecoilState(userState); 
   // const [userPoint, setUserPoint] = useState(0); 
   
   // 충전 요청 상태를 관리하는 Recoil 상태(너무 자주 못누르게 하기 위해서 임시방편이였습니다. 회의를 통해 방식 수정이 필요합니다)
   const [profiles, setProfiles] = useState([]);
-  const [showEventModal, setShowEventModal] = useState(false);
   
-  const handleAccountToggleClick = () => {
-    setIsAccountClicked((prevIsClicked) => !prevIsClicked);
-  };
-  // 포인트 충전 토글 클릭 핸들러
-  
-  const handleLogout = () => {
-    // 쿠키에서 Authorization, RefreshToken 제거
-    Cookies.remove("Authorization");
-    Cookies.remove("RefreshToken");
-    
-    window.location.reload();
-  };
   // 매칭 히스토리 가져오기
   useEffect(() => {
     const fetchMatchingHistory = async () => {
       try {
         const res = await instance.get("/auth/user/api/history/matching");
         console.log("매칭조회,",res);
-        const data = res.data;
+        const data = res.data.data;
 
         const mapped = data.map((item) => ({
-          nickname: item.username,
+          nickname: item.contactId,
           major: item.major,
           age: item.age,
           mbti: item.mbti,
           contactFrequency: item.contactFrequency,
-          hobby: item.hobby,
+          hobby: item.hobbyList,
           song: item.song,
           comment: item.comment,
           contact_id: item.contactId,
@@ -78,36 +58,7 @@ function MainpageLogin() {
       setShowEventModal(true);
     }
   }, [userInfo.eventokay]);
-  const handleCancel = async () => {
-    try {
-      const response = await instance.get("/auth/user/api/event/no-pickMe");
-      if (response.status === 200) {
-        setUserInfo((prev) => ({
-          ...prev,
-          eventokay: true, // Set eventokay to false after participation
-        }));
-        setShowEventModal(false); // Close modal after successful participation
-      }
-    } catch (error) {
-      console.error("Error participating in event:", error);
-    }
-  };
   
-  const handleParticipate = async () => {
-    try {
-      const response = await instance.get("/auth/user/api/event/pickMe");
-      if (response.status === 200) {
-        setUserInfo((prev) => ({
-          ...prev,
-          eventokay: true, // Set eventokay to false after participation
-        }));
-        setShowEventModal(false); // Close modal after successful participation
-        window.location.reload(); 
-      }
-    } catch (error) {
-      console.error("Error participating in event:", error);
-    }
-  };
   
 
   // 사용자 정보를 가져오는 비동기 함수

@@ -16,13 +16,18 @@ function Chat() {
         const chatData = response.data.data;
 
         // 실제 사용자 정보가 없는 경우엔 name만 표시
-        const parsedChatList = chatData.map(chat => ({
-          roomId: chat.roomId,
-          name: chat.myRole === "PICKER" ? chat.pickedName : chat.pickerName,
-          age: chat.age || 20,       // age가 있으면 그대로, 없으면 null
-          major: chat.major || "컴퓨터공학과",   // major가 있으면 그대로, 없으면 null
-          myRole: chat.myRole,
-        }));
+        const parsedChatList = chatData.map(chat => {
+          const isPicker = chat.myRole === "PICKER";
+
+          return {
+            roomId: chat.roomId,
+            name: isPicker ? chat.pickedName : chat.pickerName,
+            age: isPicker ? chat.pickedAge ?? 20 : chat.pickerAge ?? 20,
+            major: isPicker ? chat.pickedMajor ?? "전공없음" : chat.pickerMajor ?? "전공없음",
+            myRole: chat.myRole,
+          };
+        });
+
 
         setChatList(parsedChatList);
       } catch (error) {
@@ -44,7 +49,18 @@ function Chat() {
 
       <div className="chat-list">
         {chatList.map((chat) => (
-          <Link key={chat.roomId} to={`/chat/${chat.roomId}`} state={{ myRole: chat.myRole }}  style={{ textDecoration: 'none' }}>
+          <Link
+            key={chat.roomId}
+            to={`/chat/${chat.roomId}`}
+            state={{
+              myRole: chat.myRole,
+              name: chat.name,
+              age: chat.age,
+              major: chat.major,
+            }}
+            style={{ textDecoration: 'none' }}
+          >
+
             <ChatItem
               name={chat.name}
               age={chat.age}
