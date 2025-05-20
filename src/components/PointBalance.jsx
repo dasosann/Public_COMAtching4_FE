@@ -23,6 +23,7 @@ const PointBalance = () => {
       const response = await fetchRequest("/auth/user/api/points", {
         method: "GET",
       });
+      console.log("포인트 가져올때 세션이 만료되엇을때 응답", response)
       if (response.ok) {
         const data = await response.json();
         setUserInfo((prev)=>({

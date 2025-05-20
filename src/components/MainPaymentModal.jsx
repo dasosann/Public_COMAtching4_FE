@@ -59,7 +59,7 @@ const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,am
         if (isOpen) {
             const fetchEventDiscount = async () => {
                 try {
-                    const response = await fetchRequest('/auth/user/events?status=CURRENT', {
+                    const response = await fetchRequest('/auth/user/event', {
                         method: 'GET',
                     });
                     if (response.ok) {
@@ -125,6 +125,7 @@ const MainPaymentModal = ({isOpen, closeModal, paymentStatus,setPaymentStatus,am
           isOpen={isChargeListModalOpen}
           onClose={closeChargeHistoryModal}
           closeAllModal = {closeModal}
+          userPoint={userPoint}
           />
         )}
        
