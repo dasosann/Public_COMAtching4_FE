@@ -52,7 +52,7 @@ const ChargeMenuComponent = ({
             <C.Container>
                 <C.StyledDiv>
                     {type} 포인트
-                    {discount > 0 && <C.BonusText>{discount}P 보너스!</C.BonusText>}
+                    {discount > 0 && <C.BonusText>&nbsp;&nbsp;{discount}P 보너스!</C.BonusText>}
                 </C.StyledDiv>
                 <C.StyledButton onClick={handleOpenSecondModal}>
                     {formattedFinalPrice}원
