@@ -14,6 +14,18 @@ const PaymentSecondModal = ({ isOpen, pointPrice, productName, discount, closeSe
 
   const amount = Number(pointPrice.replace(/,/g, ''));
 
+  // 계좌번호 복사 함수
+  const copyAccountNumber = async () => {
+    const accountNumber = "토스뱅크 1001-4935-3543";
+    try {
+      await navigator.clipboard.writeText(accountNumber);
+      alert(`계좌번호가 복사되었습니다!\n계좌번호: ${accountNumber}`);
+    } catch (err) {
+      console.error("계좌번호 복사 실패:", err);
+      alert("계좌번호 복사에 실패했습니다.");
+    }
+  };
+
   // 체크박스 클릭 핸들러
   const handleImageClick = () => {
     setIsChecked((prev) => !prev);
@@ -68,12 +80,14 @@ const PaymentSecondModal = ({ isOpen, pointPrice, productName, discount, closeSe
         closeSecondModal();
         closeAllModal();
       } else if (data.code === 'GEN-000') {
-        alert('충전 요청이 정상적으로 완료되었습니다.');
+        alert('충전 요청이 정상적으로 완료되었습니다. 입금주소 : 토스뱅크 1001-4935-3543 (서승준)');
+        await copyAccountNumber(); // 결제 성공 시 계좌번호 복사
         closeSecondModal();
         closeAllModal();
       }
     } catch (error) {
       console.error('catch문으로 잡힌 데이터 보내고 받는 과정에서 에러', error);
+      alert('충전 요청 중 오류가 발생했습니다.');
     }
   };
 
@@ -91,7 +105,7 @@ const PaymentSecondModal = ({ isOpen, pointPrice, productName, discount, closeSe
             onClick={handleImageClick}
           />
           <span onClick={handleImageClick}>포인트 사용 약관 동의 </span>
-          <P.EssentialText>&nbsp;&nbsp;필수</P.EssentialText>
+          <P.EssentialText> 필수</P.EssentialText>
           <P.ArrowImg onClick={openModal} src="/assets/MainPayment/gray-arrow-right.svg" alt="view agreement" />
         </P.AgreePointRule>
         <P.NameButton isChecked={isChecked}>
