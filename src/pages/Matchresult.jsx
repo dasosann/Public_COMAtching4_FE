@@ -115,6 +115,26 @@ function Matchresult() {
   //     navigate("/", { replace: true });
   //   }
   // }, [resultData, navigate]);
+
+  useEffect(() => {
+  const isEmptyResult =
+    resultData.age === 0 &&
+    resultData.comment === "" &&
+    resultData.contactFrequency === "" &&
+    resultData.currentPoint === 0 &&
+    resultData.gender === "" &&
+    resultData.hobby.length === 0 &&
+    resultData.major === "" &&
+    resultData.mbti === "" &&
+    resultData.socialId === "" &&
+    resultData.song === "";
+
+  if (isEmptyResult) {
+    alert("AI가 실수했어요! 포인트는 차감되지 않았습니다.\n다시 매칭을 시도해 주세요.");
+    navigate("/", { replace: true });
+  }
+}, [resultData, navigate]);
+
   
   // 다시뽑기 버튼 핸들러
   const handleRematch = () => {
