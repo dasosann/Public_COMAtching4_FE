@@ -89,7 +89,7 @@ export const selectedMBTIState = atom({
 export const MatchPickState = atom({
   key: "MatchPickState",
   default: {
-    point: 1000,
+    point: 700,
     formData: {
       mbtiOption: "",
       hobbyOption: [],
