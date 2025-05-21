@@ -95,7 +95,7 @@ export const MatchPickState = atom({
       hobbyOption: [],
       ageOption: "",
       contactFrequencyOption: "",
-      importantOption: "None",
+      importantOption: "UNSELECTED",
       
     },
     selectedMBTI: ["X", "X", "X", "X"],
