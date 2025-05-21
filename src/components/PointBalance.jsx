@@ -39,7 +39,7 @@ const PointBalance = () => {
     };
 
     const handleNotService = () => {
-        alert('해당 서비스는 5/21일 10:00에 오픈됩니다 축제까지 기다려주세요!');
+        alert('해당 서비스는 5/22일 10:00에 오픈됩니다 축제까지 기다려주세요!');
     };
 
     useEffect(() => {
