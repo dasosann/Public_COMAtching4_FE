@@ -12,7 +12,7 @@ import instance from "../axiosConfig";
 import PointBalance from "../components/PointBalance";
 import MatchProfiles from "../components/Mainpage/MatchProfiles";
 import NoticeSlideCard from "../components/Mainpage/NoticeSlideCard.jsx";
-
+import NavBar from "../components/Navbar.jsx";
 function MainpageLogin() {
   const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 훅 사용
   
