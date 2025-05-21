@@ -134,8 +134,8 @@ function MainpageLogin() {
       <div className="Mainpage__Login">
         
         <div
-          // onClick={handleClickmatch}
-          onClick={handleNotService}
+          onClick={handleClickmatch}
+          // onClick={handleNotService}
         >
           <button className="matching-button">
             AI 매칭하기 ▶
@@ -149,8 +149,8 @@ function MainpageLogin() {
         
         <div className="button-group">
           <BottomNavButton
-            onClick={handleNotService}
-            // onClick={handleVisitcheckresult}
+            // onClick={handleNotService}
+            onClick={handleVisitcheckresult}
             imgSrc={`../../assets/checkresult.svg`}
             imgText="조회버튼"
             buttonText="조회하기"
@@ -167,7 +167,7 @@ function MainpageLogin() {
           
       </div>
 
-      
+      <NavBar/>
       {/* <NavBar/>
       {showEventModal && userInfo.eventokay === false && (
         <EventModal
