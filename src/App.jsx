@@ -62,7 +62,6 @@ export default function App() {
   return (
     <RecoilRoot>
       <div className="App">
-        <OpenExternalBrowser />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<MainpageUnLogin />} />
