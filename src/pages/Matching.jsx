@@ -173,6 +173,19 @@ useEffect(() => {
         FormData
       );
       if (response.status === 200) {
+        const result = response.data.data;
+
+        if (result.code === "MAT-005") {
+          alert("해당 조건에 맞는 사용자가 없습니다.");
+          navigate("/");
+          return;
+        }
+
+        if (result.code === "MAT-008") {
+          alert("해당 사용자는 이미 10번 이상 뽑혔습니다. 다른 조건으로 시도해 주세요.");
+          // 계속 진행할지 여부는 선택
+        }
+        
         await setMatchPageResult((prev) => ({
           ...prev,
           age: response.data.data.age,
