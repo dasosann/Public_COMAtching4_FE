@@ -39,7 +39,7 @@ const PointBalance = () => {
     };
 
     const handleNotService = () => {
-        alert('해당 서비스는 5/21일 10:00에 오픈됩니다 축제까지 기다려주세요!');
+        alert('해당 서비스는 5/22일 10:00에 오픈됩니다 축제까지 기다려주세요!');
     };
 
     useEffect(() => {
@@ -66,7 +66,7 @@ const PointBalance = () => {
                     <span className="point-text">보유 포인트</span>
                     <span className="amount">{userInfo.point} P</span>
                 </div>
-                <button className="charges-button" onClick={openModal}>
+                <button className="charges-button" onClick={handleNotService}>
                     충전하기
                 </button>
             </div>

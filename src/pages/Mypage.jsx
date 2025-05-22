@@ -19,6 +19,9 @@ const Mypage = () => {
   const openModal = () => {
     setIsModalOpen(true);
   };
+  const handleNotService = () => {
+        alert('해당 서비스는 5/22일 10:00에 오픈됩니다 축제까지 기다려주세요!');
+    };
   useEffect(() => {
     // ✅ 사용자 프로필 정보 요청
     const fetchUserProfile = async () => {

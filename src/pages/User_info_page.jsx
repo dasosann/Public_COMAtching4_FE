@@ -26,6 +26,7 @@ function Userinfo() {
     major: null,
     contactVerified: true,
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [isGenderSelectable, setIsGenderSelectable] = useState(false);
   const [isContactVerified, setIsContactVerified] = useState(false);
@@ -216,63 +217,81 @@ function Userinfo() {
   };
 
   const handleSubmit = async (e) => {
-    if (e && e.preventDefault) {
-      e.preventDefault();
+  if (e && e.preventDefault) {
+    e.preventDefault();
+  }
+  if (isSubmitting) return; // ✅ 중복 제출 방지
+  setIsSubmitting(true); // ✅ 제출 시작
+
+  const requiredFields = [
+    "major",
+    "year",
+    "month",
+    "day",
+    "gender",
+    "university",
+    "contactFrequency",
+    "username",
+    "song",
+    "comment",
+    "admissionYear",
+  ];
+
+  for (let field of requiredFields) {
+    if (
+      !user[field] ||
+      (Array.isArray(user[field]) && user[field].length === 0)
+    ) {
+      alert(`${fieldLabels[field]} 빈칸을 채워주세요`);
+      navigate("/");
+      return;
     }
-  
-    const requiredFields = [
-      "major",
-      "year",
-      "month",
-      "day",
-      "gender",
-      "university",
-      "contactFrequency",
-      "username",
-      "song",
-      "comment",
-      "admissionYear",
-    ];
-  
-    for (let field of requiredFields) {
-      if (
-        !user[field] ||
-        (Array.isArray(user[field]) && user[field].length === 0)
-      ) {
-        alert(`${fieldLabels[field]} 빈칸을 채워주세요`);
-        navigate("/");
-        return;
-      }
-    }
-  
-    const postData = {
-      contactId: user.contact_id,
-      major: user.major,
-      year: user.year,
-      month: user.month,
-      day: user.day,
-      university: user.university,
-      mbti: user.mbti,
-      username: user.username,
-      gender: user.gender,
-      contactFrequency: user.contactFrequency,
-      hobby: user.hobby,
-      song: user.song,
-      comment: user.comment,
-      admissionYear: user.admissionYear,
-    };
-  
-    try {
-      console.log("postData",postData)
-      const response = await instance.post("/auth/social/api/user/info", postData);
-      console.log("등록 성공", response.data);
-      // 성공 후 리디렉션 또는 알림
-      navigate("/login"); // 성공 페이지 예시
-    } catch (error) {
-      console.error("등록 실패", error);
-      alert("등록 중 오류가 발생했습니다.");
-    }
+  }
+
+  const postData = {
+    contactId: user.contact_id,
+    major: user.major,
+    year: user.year,
+    month: user.month,
+    day: user.day,
+    university: user.university,
+    mbti: user.mbti,
+    username: user.username,
+    gender: user.gender,
+    contactFrequency: user.contactFrequency,
+    hobby: user.hobby,
+    song: user.song,
+    comment: user.comment,
+    admissionYear: user.admissionYear,
   };
+
+  // 하나라도 누락 또는 빈 값이면 profile-builder로 이동
+  for (let key in postData) {
+    if (
+      postData[key] === undefined ||
+      postData[key] === null ||
+      postData[key] === "" ||
+      (Array.isArray(postData[key]) && postData[key].length === 0)
+    ) {
+      alert(`프로필 정보가 부족합니다. '${key}' 항목을 확인해주세요.`);
+      navigate("/profile-builder");
+      return;
+    }
+  }
+
+  try {
+    console.log("postData", postData);
+    const response = await instance.post("/auth/social/api/user/info", postData);
+    console.log("등록 성공", response.data);
+    navigate("/login");
+  } catch (error) {
+    console.error("등록 실패", error);
+    alert("등록 중 오류가 발생했습니다.");
+  } finally {
+    setIsSubmitting(false); // ✅ 항상 초기화
+  }
+};
+
   
 
   const openModal = () => {
