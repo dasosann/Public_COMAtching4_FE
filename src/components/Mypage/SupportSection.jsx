@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import "../../css/components/SupportSection.css";
 import { useNavigate } from 'react-router-dom';
 import AccountDeleteModal from './AccountDeleteModal';
+import fetchRequest from '../../fetchConfig';
 
 const SupportSection = () => {
     const navigate = useNavigate();
@@ -15,11 +16,25 @@ const SupportSection = () => {
         setIsModalOpen(false);
     };
 
-    const handleConfirmDelete = () => {
-        // 실제 탈퇴 API 호출 등을 여기에 구현
-        alert('회원 탈퇴가 완료되었습니다.');
-        setIsModalOpen(false);
-        // 예: navigate('/logout') 또는 다른 페이지로 이동
+    const handleConfirmDelete = async () => {
+        try {
+            const response = await fetchRequest('/auth/user/api/remove', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (!response.ok) {
+                throw new Error('공지사항 요청 실패');
+            }
+            const data = await response.json();
+            console.log("탈퇴시 응답", data);
+            alert('회원 탈퇴가 완료되었습니다.');
+        } catch (err) {
+            console.error("탈퇴 중 오류 발생", err);
+        } finally {
+            setIsModalOpen(false);
+        }
     };
 
     return (
@@ -56,12 +71,12 @@ const SupportSection = () => {
                 </div> */}
             </div>
 
-            {/* {isModalOpen && (
+            {isModalOpen && (
                 <AccountDeleteModal
                     onClose={handleCloseModal}
                     onConfirm={handleConfirmDelete}
                 />
-            )} */}
+            )}
         </>
     );
 };
