@@ -65,10 +65,10 @@ const SupportSection = () => {
                     <span>매칭하기</span>
                     <img src='../assets/Common/gt.svg' alt='>' />
                 </div>
-                <div className='mypage-support-item' onClick={handleOpenModal}>
+                {/* <div className='mypage-support-item' onClick={handleOpenModal}>
                     <span>탈퇴하기</span>
                     <img src='../assets/Common/gt.svg' alt='>' />
-                </div>
+                </div> */}
             </div>
 
             {isModalOpen && (
