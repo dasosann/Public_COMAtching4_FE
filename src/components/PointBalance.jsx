@@ -66,7 +66,7 @@ const PointBalance = () => {
                     <span className="point-text">보유 포인트</span>
                     <span className="amount">{userInfo.point} P</span>
                 </div>
-                <button className="charges-button" onClick={handleNotService}>
+                <button className="charges-button" onClick={openModal}>
                     충전하기
                 </button>
             </div>
