@@ -71,15 +71,6 @@ const AllPaymentMenu = ({ discountRate = 0, openSecondModal, setPointPrice, setP
                 setChargePoint={setChargePoint}
                 discountRate={validDiscountRate}
             />
-            <ChargeMenuComponent
-                type="30,000"
-                openSecondModal={openSecondModal}
-                setPointPrice={setPointPrice}
-                setProductName={setProductName}
-                setDiscount={setDiscount}
-                setChargePoint={setChargePoint}
-                discountRate={validDiscountRate}
-            />
         </P.Container>
     );
 };
