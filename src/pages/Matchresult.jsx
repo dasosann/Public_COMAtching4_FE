@@ -131,7 +131,7 @@ function Matchresult() {
 
   if (isEmptyResult) {
     alert("AI가 실수했어요! 포인트는 차감되지 않았습니다.\n다시 매칭을 시도해 주세요.");
-    navigate("/", { replace: true });
+    navigate("/login", { replace: true });
   }
 }, [resultData, navigate]);
 
