@@ -20,7 +20,7 @@ const Mypage = () => {
     setIsModalOpen(true);
   };
   const handleNotService = () => {
-        alert('해당 서비스는 5/22일 10:00에 오픈됩니다 축제까지 기다려주세요!');
+        alert('코매칭 서비스를 이용해주셔서 감사합니다! 충전 요청은 18시부로 종료되었습니다.');
     };
   useEffect(() => {
     // ✅ 사용자 프로필 정보 요청
@@ -63,7 +63,7 @@ const Mypage = () => {
                 <p className='mypage-point-label'>보유 포인트</p>
                 <p className='mypage-point-value'>{userData.point.toLocaleString()} P</p>
             </div>
-            <button className='mypage-recharge-btn' onClick={openModal}>충전하기</button>
+            <button className='mypage-recharge-btn' onClick={handleNotService}>충전하기</button>
             
         </div>
         {/* <div className='mypage-history-btns'>
