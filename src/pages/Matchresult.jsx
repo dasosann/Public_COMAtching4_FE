@@ -121,7 +121,7 @@ function Matchresult() {
     resultData.age === 0 &&
     resultData.comment === "" &&
     resultData.contactFrequency === "" &&
-    resultData.currentPoint === 0 &&
+    // resultData.currentPoint === 0 &&
     resultData.gender === "" &&
     resultData.hobby.length === 0 &&
     resultData.major === "" &&
