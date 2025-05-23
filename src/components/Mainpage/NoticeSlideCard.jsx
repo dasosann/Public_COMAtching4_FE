@@ -87,7 +87,7 @@ const SliderWrapper = styled.div`
 const NoticeCard = styled.div`
     box-sizing: border-box;
     flex: 0 0 100%;
-    height: 250px;
+    height: 270px;
     display: flex;
     flex-direction: column;
     justify-content: center;
