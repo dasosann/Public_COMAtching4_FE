@@ -111,7 +111,9 @@ function MainpageLogin() {
   const handleVisitcheckresult = () => {
     navigate("/search-mylist");
   };
-  
+   const matchingNotAllow = () => {
+    alert("현재 매칭 서비스는 종료되었습니다. 코매칭을 이용해주셔서 감사합니다.")
+  }
   // 충전 요청
   const handleChargeRequest = async () => {
     const response = await instance.get("/user/charge/request");
@@ -134,7 +136,7 @@ function MainpageLogin() {
       <div className="Mainpage__Login">
         
         <div
-          onClick={handleClickmatch}
+          onClick={matchingNotAllow}
           // onClick={handleNotService}
         >
           <button className="matching-button">
