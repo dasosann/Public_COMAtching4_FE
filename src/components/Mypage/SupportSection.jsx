@@ -15,7 +15,9 @@ const SupportSection = () => {
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
-
+      const matchingNotAllow = () => {
+    alert("현재 매칭 서비스는 종료되었습니다. 코매칭을 이용해주셔서 감사합니다.")
+  }
     const handleConfirmDelete = async () => {
         try {
             const response = await fetchRequest('/auth/user/api/remove', {
@@ -61,7 +63,7 @@ const SupportSection = () => {
                     <span>이용약관</span>
                     <img src='../assets/Common/gt.svg' alt='>' />
                 </div>
-                <div className='mypage-support-item' onClick={() => navigate('/matching')}>
+                <div className='mypage-support-item' onClick={matchingNotAllow}>
                     <span>매칭하기</span>
                     <img src='../assets/Common/gt.svg' alt='>' />
                 </div>

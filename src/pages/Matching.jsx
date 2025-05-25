@@ -43,7 +43,9 @@ function Matching() {
   const toggleModal = () => {
     setModalOpen(!modalOpen);
   };
-  
+  const matchingNotAllow = () => {
+    alert("현재 매칭 서비스는 종료되었습니다. 코매칭을 이용해주셔서 감사합니다.")
+  }
 
   
   useEffect(() => {
@@ -629,8 +631,8 @@ useEffect(() => {
                   left: `${imagePosition}px`,
                   cursor: isButtonEnabled && isMBTISelected  ? "pointer" : "not-allowed",
                 }} // 커서 변경
-                onMouseDown={handleStart}
-                onTouchStart={handleStart}
+                onMouseDown={matchingNotAllow}
+                onTouchStart={matchingNotAllow}
               />
               <p>
                 {isButtonEnabled && isMBTISelected 
