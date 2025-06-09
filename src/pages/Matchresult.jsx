@@ -222,7 +222,7 @@ function Matchresult() {
                         {resultData.socialId[0] === "@" ? "instagram" : "kakao"}
                       </div>
                       <div className="MatchResult-Text MatchResult-Text-Contact">
-                        {resultData.socialId}
+                        @test_id
                       </div>
                     </div>
                   </div>

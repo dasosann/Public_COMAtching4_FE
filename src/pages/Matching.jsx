@@ -631,8 +631,8 @@ useEffect(() => {
                   left: `${imagePosition}px`,
                   cursor: isButtonEnabled && isMBTISelected  ? "pointer" : "not-allowed",
                 }} // 커서 변경
-                onMouseDown={matchingNotAllow}
-                onTouchStart={matchingNotAllow}
+                onMouseDown={handleStart}
+                onTouchStart={handleStart}
               />
               <p>
                 {isButtonEnabled && isMBTISelected 
