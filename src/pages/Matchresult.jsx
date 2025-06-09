@@ -129,10 +129,7 @@ function Matchresult() {
     resultData.socialId === "" &&
     resultData.song === "";
 
-  if (isEmptyResult) {
-    alert("AI가 실수했어요! 포인트는 차감되지 않았습니다.\n다시 매칭을 시도해 주세요.");
-    navigate("/login", { replace: true });
-  }
+  
 }, [resultData, navigate]);
 
   
@@ -173,23 +170,23 @@ function Matchresult() {
                   <div className="MatchResult-Container">
                     <div className="MatchResult-Major">
                       <div className="MatchResult-Topic-Top">전공</div>
-                      <div className="MatchResult-Text">{resultData.major}</div>
+                      <div className="MatchResult-Text">컴퓨터 정보공학과과</div>
                     </div>
                   </div>
 
                   <div className="MatchResult-Container">
                     <div className="MatchResult-Age">
                       <div className="MatchResult-Topic">나이</div>
-                      <div className="MatchResult-Text">{resultData.age}</div>
+                      <div className="MatchResult-Text">20</div>
                     </div>
                     <div className="MatchResult-MBTI">
                       <div className="MatchResult-Topic">MBTI</div>
-                      <div className="MatchResult-Text">{resultData.mbti}</div>
+                      <div className="MatchResult-Text">ESTP</div>
                     </div>
                     <div className="MatchResult-Frequency">
                       <div className="MatchResult-Topic">연락빈도</div>
                       <div className="MatchResult-Text">
-                        {resultData.contactFrequency}
+                        가끔끔
                       </div>
                     </div>
                   </div>
@@ -198,23 +195,21 @@ function Matchresult() {
                     <div className="MatchResult-Hobby">
                       <div className="MatchResult-Topic">취미</div>
                       <div className="MatchResult-Text-Hobby">
-                        {resultData.hobby.map((hobby, index) => (
-                          <div key={index} className="hobby-box">
-                            <span className="hobby-icon">{hobby.image}</span>
-                            <span className="hobby-text">{hobby.name}</span>
+                        <div key={index} className="hobby-box">
+                            <span className="hobby-icon">🏀</span>
+                            <span className="hobby-text">농구</span>
                           </div>
-                        ))}
                       </div>
                     </div>
                   </div>
 
                   <div className="MatchResult-Song">
                     <div className="MatchResult-Topic">좋아하는 노래</div>
-                    <div className="MatchResult-Text">{resultData.song}</div>
+                    <div className="MatchResult-Text">아무노래</div>
                   </div>
                   <div className="MatchResult-Song">
                     <div className="MatchResult-Topic">나를 표현하는 다섯글자</div>
-                    <div className="MatchResult-Text">{resultData.comment}</div>
+                    <div className="MatchResult-Text">착합니다 </div>
                   </div>
                   <div className="MatchResult-Container">
                     <div className="MatchResult-Contact">
