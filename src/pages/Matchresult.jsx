@@ -195,9 +195,13 @@ function Matchresult() {
                     <div className="MatchResult-Hobby">
                       <div className="MatchResult-Topic">취미</div>
                       <div className="MatchResult-Text-Hobby">
-                        <div key={index} className="hobby-box">
+                        <div  className="hobby-box">
                             <span className="hobby-icon">🏀</span>
                             <span className="hobby-text">농구</span>
+                          </div>
+                          <div  className="hobby-box">
+                            <span className="hobby-icon">💻</span>
+                            <span className="hobby-text">프로그래밍</span>
                           </div>
                       </div>
                     </div>
