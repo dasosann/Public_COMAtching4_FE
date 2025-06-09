@@ -51,19 +51,19 @@ function Matchresult() {
       FormData // ✅ 여기서 수정된 FormData를 직접 사용
     );
 
-    if (response.data.status === 200) {
+    if (true) {
       await setMatchResult((prev) => ({
         ...prev,
-        age: response.data.data.age,
-        comment: response.data.data.comment,
-        contactFrequency: response.data.data.contactFrequency,
-        currentPoint: response.data.data.currentPoint,
-        gender: response.data.data.gender,
-        hobby: response.data.data.hobbyList,
-        major: response.data.data.major,
-        mbti: response.data.data.mbti,
-        socialId: response.data.data.contactId,
-        song: response.data.data.song,
+        age: 20,
+        comment: "노래를 잘해요",
+        contactFrequency: "가끔끔",
+        currentPoint: 99500,
+        gender: "여성",
+        hobby: ["농구","게임"],
+        major: "컴퓨터정보공학과",
+        mbti: "ESTP",
+        socialId: "@test_id",
+        song: "Letter",
       }));
 
       await setResultPoint((prev) => ({
@@ -129,7 +129,10 @@ function Matchresult() {
     resultData.socialId === "" &&
     resultData.song === "";
 
-  
+  if (isEmptyResult) {
+    alert("AI가 실수했어요! 포인트는 차감되지 않았습니다.\n다시 매칭을 시도해 주세요.");
+    navigate("/login", { replace: true });
+  }
 }, [resultData, navigate]);
 
   
@@ -170,23 +173,23 @@ function Matchresult() {
                   <div className="MatchResult-Container">
                     <div className="MatchResult-Major">
                       <div className="MatchResult-Topic-Top">전공</div>
-                      <div className="MatchResult-Text">컴퓨터 정보공학과과</div>
+                      <div className="MatchResult-Text">{resultData.major}</div>
                     </div>
                   </div>
 
                   <div className="MatchResult-Container">
                     <div className="MatchResult-Age">
                       <div className="MatchResult-Topic">나이</div>
-                      <div className="MatchResult-Text">20</div>
+                      <div className="MatchResult-Text">{resultData.age}</div>
                     </div>
                     <div className="MatchResult-MBTI">
                       <div className="MatchResult-Topic">MBTI</div>
-                      <div className="MatchResult-Text">ESTP</div>
+                      <div className="MatchResult-Text">{resultData.mbti}</div>
                     </div>
                     <div className="MatchResult-Frequency">
                       <div className="MatchResult-Topic">연락빈도</div>
                       <div className="MatchResult-Text">
-                        가끔끔
+                        {resultData.contactFrequency}
                       </div>
                     </div>
                   </div>
@@ -195,21 +198,23 @@ function Matchresult() {
                     <div className="MatchResult-Hobby">
                       <div className="MatchResult-Topic">취미</div>
                       <div className="MatchResult-Text-Hobby">
-                        <div key={index} className="hobby-box">
-                            <span className="hobby-icon">🏀</span>
-                            <span className="hobby-text">농구</span>
+                        {resultData.hobby.map((hobby, index) => (
+                          <div key={index} className="hobby-box">
+                            <span className="hobby-icon">{hobby.image}</span>
+                            <span className="hobby-text">{hobby.name}</span>
                           </div>
+                        ))}
                       </div>
                     </div>
                   </div>
 
                   <div className="MatchResult-Song">
                     <div className="MatchResult-Topic">좋아하는 노래</div>
-                    <div className="MatchResult-Text">아무노래</div>
+                    <div className="MatchResult-Text">{resultData.song}</div>
                   </div>
                   <div className="MatchResult-Song">
                     <div className="MatchResult-Topic">나를 표현하는 다섯글자</div>
-                    <div className="MatchResult-Text">착합니다 </div>
+                    <div className="MatchResult-Text">{resultData.comment}</div>
                   </div>
                   <div className="MatchResult-Container">
                     <div className="MatchResult-Contact">
