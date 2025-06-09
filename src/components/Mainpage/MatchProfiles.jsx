@@ -56,7 +56,7 @@ const MatchProfiles = ({ profiles = [] }) => {
               <p>제 장점은 <span>{profile.comment} 😊</span></p>
               <div className="contact-container">
                 <div className={`profile-contact ${profile.contact_id?.startsWith("@") ? "instagram" : "kakao"}`}>
-                  <div className="profile-text">{profile.contact_id || "연락처 없음"}</div>
+                  <div className="profile-text">@test_id</div>
                   <div className="profile-right">
                     {profile.contact_id?.startsWith("@") ? (
                       <img

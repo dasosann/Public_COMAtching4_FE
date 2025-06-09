@@ -136,7 +136,7 @@ function MainpageLogin() {
       <div className="Mainpage__Login">
         
         <div
-          onClick={matchingNotAllow}
+          onClick={handleClickmatch}
           // onClick={handleNotService}
         >
           <button className="matching-button">

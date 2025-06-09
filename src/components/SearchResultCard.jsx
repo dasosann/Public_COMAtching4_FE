@@ -96,7 +96,7 @@ const SearchResultCard = ({ profile}) => {
           className={`profile-contact2 ${profile.contactId?.startsWith("@") ? "instagram" : "kakao"}`}
         >
           <div className="profile-text" onClick={handleCopyContactId}>
-            {profile.contactId || "연락처 없음"}
+            @test_id
           </div>
           <div className="profile-right">
             {profile.contactId?.startsWith("@") ? (
