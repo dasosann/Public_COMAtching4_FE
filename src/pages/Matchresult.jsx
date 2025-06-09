@@ -68,7 +68,7 @@ function Matchresult() {
 
       await setResultPoint((prev) => ({
         ...prev,
-        point: response.data.data.currentPoint,
+        point: 99500,
       }));
 
       setLoading(false);
