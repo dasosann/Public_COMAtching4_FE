@@ -174,7 +174,7 @@ useEffect(() => {
         "/auth/user/api/match/request",
         FormData
       );
-      if (response.status === 200) {
+      if (true) {
         const result = response.data.data;
 
         if (result.code === "MAT-005") {
@@ -190,17 +190,17 @@ useEffect(() => {
         
         await setMatchPageResult((prev) => ({
           ...prev,
-          age: response.data.data.age,
-          comment: response.data.data.comment,
-          contactFrequency: response.data.data.contactFrequency,
-          currentPoint: response.data.data.currentPoint,
-          gender: response.data.data.gender,
-          hobby: response.data.data.hobbyList,
-          major: response.data.data.major,
-          mbti: response.data.data.mbti,
-          socialId: response.data.data.contactId,
-          song: response.data.data.song,
-          roomId:response.data.data.chatRoomId,
+          age: 22,
+          comment: "책을 사랑하는 감성파",
+          contactFrequency: "보통",
+          currentPoint: 97000,
+          gender: "여성",
+          hobby: ["독서", "농구"],
+          major: "문헌정보학과",
+          mbti: "INFJ",
+          socialId: "@booklover",
+          song: "취기를 빌려",
+          roomId: 987654321,
         }));
         await setUserPoint((prev) => ({
           ...prev,
