@@ -18,7 +18,7 @@ function MainpageUnLogin() {
     window.location.href = "https://backend.comatching.site/oauth2/authorization/kakao";
     // alert("서버 점검중입니다. 이용에 불편을 끼쳐드려 죄송합니다. 빠르게 다시 돌아오겠습니다!!");
   };
-
+  
   const handleGoogleLogin = () => {
     window.location.href = "https://backend.comatching.site/oauth2/authorization/google";
     // alert("서버 점검중입니다. 이용에 불편을 끼쳐드려 죄송합니다. 빠르게 다시 돌아오겠습니다!!");

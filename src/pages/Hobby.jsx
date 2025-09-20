@@ -16,19 +16,19 @@ function Hobby() {
   const [user, setUser] = useRecoilState(userState);
   const [pickHobby, setPickHobby] = useRecoilState(userState);
   const [searchQuery, setSearchQuery] = useState(""); // State to track search input
-  const [customHobbyInput, setCustomHobbyInput] = useState(""); // 커스텀 관심사 입력값
-  const [customHobbies, setCustomHobbies] = useState([]); // 사용자 추가 관심사 목록
+  // const [customHobbyInput, setCustomHobbyInput] = useState(""); // 커스텀 관심사 입력값
+  // const [customHobbies, setCustomHobbies] = useState([]); // 사용자 추가 관심사 목록
   const [isSubmitting, setIsSubmitting] = useState(false);
 
 
-  const handleCustomHobbyChange = (e) => {
-    const input = e.target.value;
-    if (input.length <= 10) {
-      setCustomHobbyInput(input);
-    } else {
-      alert("관심사는 10글자 이내로 입력해주세요.");
-    }
-  };
+  // const handleCustomHobbyChange = (e) => {
+  //   const input = e.target.value;
+  //   if (input.length <= 10) {
+  //     setCustomHobbyInput(input);
+  //   } else {
+  //     alert("관심사는 10글자 이내로 입력해주세요.");
+  //   }
+  // };
   
   
 
@@ -38,16 +38,16 @@ function Hobby() {
   const handleSearch = (query) => {
     setSearchQuery(query); // Update the search query
   };
-  const handleCustomHobbyKeyDown = (e) => {
-    if (e.key === "Enter" && customHobbyInput.trim() !== "") {
-      if (customHobbies.length < 5) {
-        setCustomHobbies((prev) => [...prev, customHobbyInput.trim()]);
-        setCustomHobbyInput(""); // 입력 필드 초기화
-      } else {
-        alert("최대 3개의 관심사만 추가할 수 있습니다.");
-      }
-    }
-  };
+  // const handleCustomHobbyKeyDown = (e) => {
+  //   if (e.key === "Enter" && customHobbyInput.trim() !== "") {
+  //     if (customHobbies.length < 5) {
+  //       setCustomHobbies((prev) => [...prev, customHobbyInput.trim()]);
+  //       setCustomHobbyInput(""); // 입력 필드 초기화
+  //     } else {
+  //       alert("최대 3개의 관심사만 추가할 수 있습니다.");
+  //     }
+  //   }
+  // };
 
   const filteredHobbyData = hobbyData.map((category) => ({
     ...category,
@@ -152,7 +152,7 @@ function Hobby() {
         )}
         
       </div>
-      <div className="hobby-container">
+      {/* <div className="hobby-container">
         <div className="hobby-category">
           <div className="hobby-category-title">내 관심사 추가하기</div>
           <div className="hobby-list">
@@ -180,9 +180,9 @@ function Hobby() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       <div style={{ height: `60px` }} />
-      
+        
       <button
         className={`submits-button ${
           pickHobby.hobby.length >= 1 ? "active" : "inactive"

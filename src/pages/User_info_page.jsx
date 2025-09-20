@@ -74,7 +74,7 @@ function Userinfo() {
       "username",
       "song",
       "comment",
-      "admissionYear",
+      // "admissionYear",
     ];
     const isFilled = requiredFields.every((field) => {
       const value = user[field];
@@ -89,7 +89,7 @@ function Userinfo() {
     const isAllSelected =
       isMajorSelected() &&
       isBirthDateValid() &&
-      isAdmissionYearValid() &&
+      // isAdmissionYearValid() &&
       isContactFrequencySelected();
     setIsGenderSelectable(isAllSelected);
   };
@@ -106,7 +106,7 @@ function Userinfo() {
     user.year,
     user.month,
     user.day,
-    user.admissionYear,
+    // user.admissionYear,
     user.mbti,
     user.contactFrequency,
   ]);
@@ -174,12 +174,12 @@ function Userinfo() {
           errorMessage = "닉네임은 최대 10자까지 가능합니다.";
         }
         break;
-      case "admissionYear":
-        setUser((prevUser) => ({
-          ...prevUser,
-          admissionYear: value !== "" ? parseInt(value, 10) : "",
-        }));
-        break;
+      // case "admissionYear":
+      //   setUser((prevUser) => ({
+      //     ...prevUser,
+      //     admissionYear: value !== "" ? parseInt(value, 10) : "",
+      //   }));
+      //   break;
       case "gender":
         if (value === "MALE" || value === "FEMALE") {
           setUser((prevUser) => ({
@@ -213,7 +213,7 @@ function Userinfo() {
     hobby: "취미",
     song: "좋아하는 노래",
     comment: "소개할 다섯글자",
-    admissionYear: "입학년도",
+    // admissionYear: "입학년도",
   };
 
   const handleSubmit = async (e) => {
@@ -234,7 +234,7 @@ function Userinfo() {
     "username",
     "song",
     "comment",
-    "admissionYear",
+    // "admissionYear",
   ];
 
   for (let field of requiredFields) {
@@ -262,7 +262,7 @@ function Userinfo() {
     hobby: user.hobby,
     song: user.song,
     comment: user.comment,
-    admissionYear: user.admissionYear,
+    // admissionYear: user.admissionYear,
   };
 
   // 하나라도 누락 또는 빈 값이면 profile-builder로 이동
@@ -399,7 +399,7 @@ function Userinfo() {
             />
           )}
 
-          {isMajorSelected() && isBirthDateValid() && isAdmissionYearValid() && (
+          {isMajorSelected() && isBirthDateValid() && (
             <div>
               <h3>연락빈도</h3>
               <div className="match-select-button">
@@ -435,12 +435,12 @@ function Userinfo() {
             </div>
           )}
 
-          {isMajorSelected() && isBirthDateValid() && (
+          {/* {isMajorSelected() && isBirthDateValid() && (
             <AdmissionYearInput
               value={user.admissionYear}
               onChange={handleChange}
             />
-          )}
+          )} */}
 
           {isMajorSelected() && (
             <AgeInputInput user={user} setUser={setUser} />
