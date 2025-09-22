@@ -20,9 +20,9 @@ function Matchresult() {
 
   const [resultPoint, setResultPoint] = useRecoilState(userState);
   const [loading, setLoading] = useState(false);
-  
-   
-  
+
+
+
   //같은 조건으로 다시 매칭하기 핸들러
   const handleSubmit = async () => {
   if (MatchState.point > resultPoint.point) {
@@ -39,8 +39,6 @@ function Matchresult() {
     ageOption: MatchState.formData.ageOption,
     contactFrequencyOption: MatchState.formData.contactFrequencyOption,
     sameMajorOption: MatchState.isUseOption[3] ? true : false,
-    totalCost: MatchState.point,
-    university: "Catholic",
   };
 
   try {
@@ -50,25 +48,31 @@ function Matchresult() {
       "/auth/user/api/match/request",
       FormData // ✅ 여기서 수정된 FormData를 직접 사용
     );
+    if (response.data.code === "MAT-006") {
+          alert("조건에 맞는 사용자가 없어서 잠시 뒤에 다시 시도해주세요.");
+          navigate("/login");
+          return;
+          // 계속 진행할지 여부는 선택
+        }
 
-    if (true) {
+    if (response.data.status === 200) {
       await setMatchResult((prev) => ({
         ...prev,
-        age: 20,
-        comment: "노래를 잘해요",
-        contactFrequency: "가끔끔",
-        currentPoint: 99500,
-        gender: "여성",
-        hobby: ["농구","게임"],
-        major: "컴퓨터정보공학과",
-        mbti: "ESTP",
-        socialId: "@test_id",
-        song: "Letter",
+        age: response.data.data.age,
+        comment: response.data.data.comment,
+        contactFrequency: response.data.data.contactFrequency,
+        currentPoint: response.data.data.currentPoint,
+        gender: response.data.data.gender,
+        hobby: response.data.data.hobbyList,
+        major: response.data.data.major,
+        mbti: response.data.data.mbti,
+        socialId: response.data.data.contactId,
+        song: response.data.data.song,
       }));
 
       await setResultPoint((prev) => ({
         ...prev,
-        point: 99500,
+        point: response.data.data.currentPoint,
       }));
 
       setLoading(false);
@@ -80,7 +84,7 @@ function Matchresult() {
   }
 };
 
-  
+
   // 취미를 아이콘과 매핑하는 함수
   const mapHobbiesWithIcons = (hobbyList) => {
     return hobbyList.map((hobbyName) => {
@@ -93,12 +97,12 @@ function Matchresult() {
       return { name: hobbyName, image: matchedHobby?.emoji || "" };
     });
   };
-  
+
   const resultData = {
     ...MatchResult,
     hobby: mapHobbiesWithIcons(MatchResult.hobby),
   };
-  
+  console.log("resultData",resultData)
   // useEffect(() => {
   //   if (
   //     resultData.age === 0 &&
@@ -129,10 +133,9 @@ function Matchresult() {
     resultData.socialId === "" &&
     resultData.song === "";
 
-  
 }, [resultData, navigate]);
 
-  
+
   // 다시뽑기 버튼 핸들러
   const handleRematch = () => {
     navigate("/matching");
@@ -170,23 +173,23 @@ function Matchresult() {
                   <div className="MatchResult-Container">
                     <div className="MatchResult-Major">
                       <div className="MatchResult-Topic-Top">전공</div>
-                      <div className="MatchResult-Text">컴퓨터정보공학과</div>
+                      <div className="MatchResult-Text">{resultData.major}</div>
                     </div>
                   </div>
 
                   <div className="MatchResult-Container">
                     <div className="MatchResult-Age">
                       <div className="MatchResult-Topic">나이</div>
-                      <div className="MatchResult-Text">20</div>
+                      <div className="MatchResult-Text">{resultData.age}</div>
                     </div>
                     <div className="MatchResult-MBTI">
                       <div className="MatchResult-Topic">MBTI</div>
-                      <div className="MatchResult-Text">ESTP</div>
+                      <div className="MatchResult-Text">{resultData.mbti}</div>
                     </div>
                     <div className="MatchResult-Frequency">
                       <div className="MatchResult-Topic">연락빈도</div>
                       <div className="MatchResult-Text">
-                        가끔
+                        {resultData.contactFrequency}
                       </div>
                     </div>
                   </div>
@@ -195,25 +198,23 @@ function Matchresult() {
                     <div className="MatchResult-Hobby">
                       <div className="MatchResult-Topic">취미</div>
                       <div className="MatchResult-Text-Hobby">
-                        <div  className="hobby-box">
-                            <span className="hobby-icon">🏀</span>
-                            <span className="hobby-text">농구</span>
+                        {resultData.hobby.map((hobby, index) => (
+                          <div key={index} className="hobby-box">
+                            <span className="hobby-icon">{hobby.image}</span>
+                            <span className="hobby-text">{hobby.name}</span>
                           </div>
-                          <div  className="hobby-box">
-                            <span className="hobby-icon">💻</span>
-                            <span className="hobby-text">프로그래밍</span>
-                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
 
                   <div className="MatchResult-Song">
                     <div className="MatchResult-Topic">좋아하는 노래</div>
-                    <div className="MatchResult-Text">Letter</div>
+                    <div className="MatchResult-Text">{resultData.song}</div>
                   </div>
                   <div className="MatchResult-Song">
                     <div className="MatchResult-Topic">나를 표현하는 다섯글자</div>
-                    <div className="MatchResult-Text">행복합니다</div>
+                    <div className="MatchResult-Text">{resultData.comment}</div>
                   </div>
                   <div className="MatchResult-Container">
                     <div className="MatchResult-Contact">
@@ -221,7 +222,7 @@ function Matchresult() {
                         {resultData.socialId[0] === "@" ? "instagram" : "kakao"}
                       </div>
                       <div className="MatchResult-Text MatchResult-Text-Contact">
-                        @test_id
+                        {resultData.socialId}
                       </div>
                     </div>
                   </div>
@@ -251,7 +252,7 @@ function Matchresult() {
                     같은 조건으로 다시 뽑기
                   </button>
                 </div>
-                
+
               </div>
             )}
           </div>

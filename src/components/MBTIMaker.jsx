@@ -10,14 +10,18 @@ function MBTIMaker({
   setChooseAnswer,
 }) {
   const [answerChecked, setAnswerChecked] = useState(null);
+  const [disabled, setDisabled] = useState(false);
 
   const handleMBTIClick = (mbtiType, value, index) => {
+    if (disabled) return;
     setSelectedMBTI((prevMBTI) => ({
       ...prevMBTI,
       [mbtiType]: value,
     }));
     setAnswerChecked(value);
     setChooseAnswer(index);
+    setDisabled(true);
+    handleQuestionComplete(questionNum);
   };
 
   return (
@@ -34,6 +38,7 @@ function MBTIMaker({
             0
           )
         }
+        disabled={disabled}
       >
         <div className={styles.mbtiMakerButtonTitle}>
           {mbtiAnswers[questionNum][2]}
@@ -51,18 +56,12 @@ function MBTIMaker({
             1
           )
         }
+        disabled={disabled}
       >
         <div className={styles.mbtiMakerButtonTitle}>
           {mbtiAnswers[questionNum][3]}
         </div>
         <div>{mbtiAnswers[questionNum][1]}</div>
-      </button>
-      <button
-        className={styles.mbtiMakerSubmitButton}
-        onClick={() => handleQuestionComplete(questionNum)}
-        disabled={!answerChecked}
-      >
-        전송
       </button>
     </div>
   );

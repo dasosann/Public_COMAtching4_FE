@@ -81,9 +81,19 @@ const PaymentSecondModal = ({ isOpen, pointPrice, productName, discount, closeSe
         closeAllModal();
       } else if (data.code === 'GEN-000') {
         alert('충전 요청이 정상적으로 완료되었습니다. 입금주소 : 토스뱅크 1001-4935-3543 (서승준)');
-        await copyAccountNumber(); // 결제 성공 시 계좌번호 복사
+        const accountNo = "100149353543";
+        const bankCode = "TOSSBANK";
+        const message = "포인트충전";
+        const tossDeepLink = `toss://send?accountNo=${accountNo}&bankCode=${bankCode}&amount=${amount}&message=${encodeURIComponent(message)}`;
         closeSecondModal();
         closeAllModal();
+        if (/Android|iPhone|iPad/i.test(navigator.userAgent)) {
+          console.log("모바일");
+          window.location.href = tossDeepLink;
+        } else {
+          console.log("웹");
+          copyAccountNumber();
+        }
       }
     } catch (error) {
       console.error('catch문으로 잡힌 데이터 보내고 받는 과정에서 에러', error);

@@ -163,44 +163,50 @@ useEffect(() => {
       ageOption: MatchState.formData.ageOption,
       contactFrequencyOption: MatchState.formData.contactFrequencyOption,
       sameMajorOption: MatchState.isUseOption[3] ? true : false,
-      totalCost: MatchState.point,
-      university: "Catholic",
+      // totalCost: MatchState.point,
+      // university: "Catholic",
     };
 
 
     try {
       setLoading(true);
-      // const response = await instance.post(
-      //   "/auth/user/api/match/request",
-      //   FormData
-      // );
+      console.log("보내는 데이터", FormData);
+      const response = await instance.post(
+        "/auth/user/api/match/request",
+        FormData
+      );
       if (true) {
-        const result = response.data.data;
+        const result = response.data;
 
         if (result.code === "MAT-005") {
           alert("해당 조건에 맞는 사용자가 없습니다.");
-          navigate("/");
+          navigate("/login");
           return;
         }
-
+        if (result.code === "MAT-006") {
+          alert("조건에 맞는 사용자가 없어서 잠시 뒤에 다시 시도해주세요.");
+          navigate("/login");
+          return;
+        }
         if (result.code === "MAT-008") {
           alert("해당 사용자는 이미 10번 이상 뽑혔습니다. 다른 조건으로 시도해 주세요.");
-          // 계속 진행할지 여부는 선택
+          navigate("/login");
+          return;
         }
         
         await setMatchPageResult((prev) => ({
           ...prev,
-          age: 22,
-          comment: "책을 사랑하는 감성파",
-          contactFrequency: "보통",
-          currentPoint: 97000,
-          gender: "여성",
-          hobby: ["독서", "농구"],
-          major: "문헌정보학과",
-          mbti: "INFJ",
-          socialId: "@booklover",
-          song: "취기를 빌려",
-          roomId: 987654321,
+          age: response.data.data.age,
+          comment: response.data.data.comment,
+          contactFrequency: response.data.data.contactFrequency,
+          currentPoint: response.data.data.currentPoint,
+          gender: response.data.data.gender,
+          hobby: response.data.data.hobbyList,
+          major: response.data.data.major,
+          mbti: response.data.data.mbti,
+          socialId: response.data.data.contactId,
+          song: response.data.data.song,
+          roomId:response.data.data.chatRoomId,
         }));
         await setUserPoint((prev) => ({
           ...prev,
