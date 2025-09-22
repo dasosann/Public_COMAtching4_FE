@@ -54,7 +54,9 @@ function Matchresult() {
           return;
           // 계속 진행할지 여부는 선택
         }
-
+    if (response.data.data.refunded) {
+      alert("중요한 옵션이 반영되지 않아서 300원을 환불해드렸어요");
+    }
     if (response.data.status === 200) {
       await setMatchResult((prev) => ({
         ...prev,
@@ -68,7 +70,6 @@ function Matchresult() {
         mbti: response.data.data.mbti,
         socialId: response.data.data.contactId,
         song: response.data.data.song,
-        isRefund: response.data.data.refunded,
         roomId: response.data.data.chatRoomId,
       }));
 
