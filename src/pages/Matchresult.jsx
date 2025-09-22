@@ -68,6 +68,8 @@ function Matchresult() {
         mbti: response.data.data.mbti,
         socialId: response.data.data.contactId,
         song: response.data.data.song,
+        isRefund: response.data.data.refunded,
+        roomId: response.data.data.chatRoomId,
       }));
 
       await setResultPoint((prev) => ({

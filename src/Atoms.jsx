@@ -120,6 +120,7 @@ export const MatchResultState = atom({
     socialId: "",
     song: "",
     roomId: "",
+    isRefund: false,
   },
 });
 

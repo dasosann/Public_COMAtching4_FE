@@ -193,6 +193,9 @@ useEffect(() => {
           navigate("/login");
           return;
         }
+        if (result.data.data.isRefund){
+          alert("중요한 옵션이 반영되지 않아서 300원을 환불해드렸어요");
+        }
         
         await setMatchPageResult((prev) => ({
           ...prev,
@@ -207,6 +210,7 @@ useEffect(() => {
           socialId: response.data.data.contactId,
           song: response.data.data.song,
           roomId:response.data.data.chatRoomId,
+          isRefund: response.data.data.refunded,
         }));
         await setUserPoint((prev) => ({
           ...prev,
