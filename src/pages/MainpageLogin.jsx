@@ -169,7 +169,7 @@ function MainpageLogin() {
           
       </div>
 
-      <NavBar/>
+      {/* <NavBar/> */}
       {/* <NavBar/>
       {showEventModal && userInfo.eventokay === false && (
         <EventModal

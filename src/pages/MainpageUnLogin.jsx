@@ -60,7 +60,7 @@ function MainpageUnLogin() {
         이미 커플입니다
       </motion.div>
 
-      <div style={{ marginTop: "69px" }}>
+      <div style={{ marginTop: "250px" }}>
         <div className="bubble">
           <TotalUsersCounter font_size="16px" numParticipants={numParticipants} />
         </div>

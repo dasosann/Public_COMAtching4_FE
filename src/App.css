@@ -3,6 +3,8 @@
   margin: 0px;
   text-align: center;
   font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  /* background-color: #EFEFEF; */
+  /* background-color: #fff; */
 }
 
 .App-logo {
@@ -46,7 +48,7 @@
   min-height: 100vh;
   font-family: Pretendard;
   text-align: center;
-  background-color: #FFFAFB;
+  /* background-color: #EFEFEF; */
   align-items: center;
 }
 
