@@ -2,7 +2,7 @@ export const QUESTIONS = [
   "Q1. 약속이 취소되었을 때",
   "Q2. 1분 동안 아무 생각 하지마!",
   "Q3. 나 넘어졌어 아파 😭",
-  "Q4. 여행 계획을 세울 때"
+  "Q4. 여행 계획을 세울 때",
 ];
 
 export const MBTI_ANSWERS = [

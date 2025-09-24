@@ -27,15 +27,12 @@ function Userinfo() {
     contactVerified: true,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const [isGenderSelectable, setIsGenderSelectable] = useState(false);
   const [isContactVerified, setIsContactVerified] = useState(false);
-  const [isSongInputVisible, setIsSongInputVisible] = useState(false);
-  const [isCommentVisible, setIsCommentVisible] = useState(false);
-  const [isUsernameVisible, setIsUsernameVisible] = useState(false);
   const [isFiveChars, setIsFiveChars] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [isGenderSelected, setIsGenderSelected] = useState(false);
+  
+  // 단계별 진행 상태 추가
+  const [currentStep, setCurrentStep] = useState(1); // 1: 기본정보, 2: 연락빈도, 3: 성별, 4: 연락방법, 5: 노래, 6: 장점, 7: 닉네임
   const [registerCheck, setRegisterCheck] = useState({
     terms1: false,
     terms2: false,
@@ -57,9 +54,6 @@ function Userinfo() {
     user.month !== "" &&
     user.day !== "";
 
-  const isAdmissionYearValid = () =>
-    user.admissionYear && user.admissionYear.toString().length === 2;
-
   const isContactFrequencySelected = () => user.contactFrequency;
 
   // 모든 필드가 채워졌는지 확인하는 함수
@@ -74,7 +68,6 @@ function Userinfo() {
       "username",
       "song",
       "comment",
-      // "admissionYear",
     ];
     const isFilled = requiredFields.every((field) => {
       const value = user[field];
@@ -84,32 +77,10 @@ function Userinfo() {
     setIsFiveChars(isFilled && isCommentValid);
   };
 
-  // 연락빈도 선택 가능 여부 확인 (전공, 생년월일, 입학년도, 연락빈도 모두 유효하면 true)
-  const checkAllFieldsSelected = () => {
-    const isAllSelected =
-      isMajorSelected() &&
-      isBirthDateValid() &&
-      // isAdmissionYearValid() &&
-      isContactFrequencySelected();
-    setIsGenderSelectable(isAllSelected);
-  };
-
   // user가 바뀔 때마다 확인
   useEffect(() => {
     checkAllFieldsFilled();
-  }, [user, checkMethod]);
-
-  useEffect(() => {
-    checkAllFieldsSelected();
-  }, [
-    checkMethod,
-    user.year,
-    user.month,
-    user.day,
-    // user.admissionYear,
-    user.mbti,
-    user.contactFrequency,
-  ]);
+  }, [user, checkMethod, checkAllFieldsFilled]);
 
   const handleMBTISelection = (value) => {
     const category =
@@ -147,6 +118,55 @@ function Userinfo() {
     });
   };
 
+  // 다음 단계로 이동하는 함수들
+  const handleNextToContactFrequency = () => {
+    if (isMajorSelected() && isBirthDateValid()) {
+      setCurrentStep(2);
+    } else {
+      alert('전공과 생년월일을 모두 입력해주세요.');
+    }
+  };
+
+  const handleNextToGender = () => {
+    if (user.contactFrequency) {
+      setCurrentStep(3);
+    } else {
+      alert('연락빈도를 선택해주세요.');
+    }
+  };
+
+  const handleNextToContact = () => {
+    if (user.gender) {
+      setCurrentStep(4);
+    } else {
+      alert('성별을 선택해주세요.');
+    }
+  };
+
+  const handleNextToSong = () => {
+    if (isContactVerified) {
+      setCurrentStep(5);
+    } else {
+      alert('연락방법을 인증해주세요.');
+    }
+  };
+
+  const handleNextToComment = () => {
+    if (user.song) {
+      setCurrentStep(6);
+    } else {
+      alert('좋아하는 노래를 입력해주세요.');
+    }
+  };
+
+  const handleNextToUsername = () => {
+    if (user.comment && user.comment.length >= 3) {
+      setCurrentStep(7);
+    } else {
+      alert('장점을 3글자 이상 입력해주세요.');
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     let errorMessage = "";
@@ -156,8 +176,6 @@ function Userinfo() {
         if (!/^[^?~!@#$%^&*()+'"<>\\/|{}[\]_=;:]{0,20}$/.test(value)) {
           errorMessage =
             "노래에는 특수 기호를 사용할 수 없고 20자리 이내로 작성해주세요";
-        } else {
-          setIsCommentVisible(true);
         }
         break;
       case "comment":
@@ -166,7 +184,6 @@ function Userinfo() {
             ...prevUser,
             comment: value,
           }));
-          setIsUsernameVisible(true);
         }
         break;
       case "username":
@@ -174,19 +191,12 @@ function Userinfo() {
           errorMessage = "닉네임은 최대 10자까지 가능합니다.";
         }
         break;
-      // case "admissionYear":
-      //   setUser((prevUser) => ({
-      //     ...prevUser,
-      //     admissionYear: value !== "" ? parseInt(value, 10) : "",
-      //   }));
-      //   break;
       case "gender":
         if (value === "MALE" || value === "FEMALE") {
           setUser((prevUser) => ({
             ...prevUser,
             gender: value,
           }));
-          setIsGenderSelected(true);
         } else {
           errorMessage = "성별은 MALE 또는 FEMALE로 선택해야 합니다.";
         }
@@ -323,7 +333,8 @@ function Userinfo() {
       </div>
       <form className="form_container" onSubmit={handleSubmit}>
         <div className="form-inner-content">
-          {isUsernameVisible && (
+          {/* 7단계: 닉네임 */}
+          {currentStep >= 7 && (
             <div>
               <label>
                 <h3 className="commet_title">
@@ -343,7 +354,8 @@ function Userinfo() {
             </div>
           )}
 
-          {isCommentVisible && (
+          {/* 6단계: 장점 */}
+          {currentStep >= 6 && (
             <div>
               <label>
                 <h3 className="commet_title">제 장점은요...</h3>
@@ -358,10 +370,22 @@ function Userinfo() {
                   />
                 </div>
               </label>
+              
+              {currentStep === 6 && (
+                <button
+                  type="button"
+                  className={`next-button ${user.comment && user.comment.length >= 3 ? 'active' : 'disabled'}`}
+                  onClick={handleNextToUsername}
+                  disabled={!(user.comment && user.comment.length >= 3)}
+                >
+                  다음으로
+                </button>
+              )}
             </div>
           )}
 
-          {isContactVerified && (
+          {/* 5단계: 노래 */}
+          {currentStep >= 5 && (
             <div>
               <label>
                 <h3 className="music_title">좋아하는 노래</h3>
@@ -375,92 +399,147 @@ function Userinfo() {
                   />
                 </div>
               </label>
+              
+              {currentStep === 5 && (
+                <button
+                  type="button"
+                  className={`next-button ${user.song ? 'active' : 'disabled'}`}
+                  onClick={handleNextToComment}
+                  disabled={!user.song}
+                >
+                  다음으로
+                </button>
+              )}
             </div>
           )}
 
-          {isGenderSelected && (
-            <ContactMethod
-              checkMethod={checkMethod}
-              isContactVerified={isContactVerified}
-              setCheckMethod={setCheckMethod}
-              setIsContactVerified={setIsContactVerified}
-              user={user}
-              setUser={setUser}
-              handleChange={handleChange}
-            />
+          {/* 4단계: 연락방법 */}
+          {currentStep >= 4 && (
+            <div>
+              <ContactMethod
+                checkMethod={checkMethod}
+                isContactVerified={isContactVerified}
+                setCheckMethod={setCheckMethod}
+                setIsContactVerified={setIsContactVerified}
+                user={user}
+                setUser={setUser}
+                handleChange={handleChange}
+              />
+              
+              {currentStep === 4 && (
+                <button
+                  type="button"
+                  className={`next-button ${isContactVerified ? 'active' : 'disabled'}`}
+                  onClick={handleNextToSong}
+                  disabled={!isContactVerified}
+                >
+                  다음으로
+                </button>
+              )}
+            </div>
           )}
 
-          {isGenderSelectable && (
-            <GenderSelect
-              user={user}
-              setUser={setUser}
-              onChange={handleChange}
-              setIsGenderSelected={setIsGenderSelected}
-            />
+          {/* 3단계: 성별 */}
+          {currentStep >= 3 && (
+            <div>
+              <GenderSelect
+                user={user}
+                setUser={setUser}
+                onChange={handleChange}
+              />
+              
+              {currentStep === 3 && (
+                <button
+                  type="button"
+                  className={`next-button ${user.gender ? 'active' : 'disabled'}`}
+                  onClick={handleNextToContact}
+                  disabled={!user.gender}
+                >
+                  다음
+                </button>
+              )}
+            </div>
           )}
 
-          {isMajorSelected() && isBirthDateValid() && (
+          {/* 2단계: 연락빈도 */}
+          {currentStep >= 2 && (
             <div>
               <h3>연락빈도</h3>
               <div className="match-select-button">
-              <button
-                type="button"
-                className={`form-AgeMaker ${
-                  user.contactFrequency === "NOT_FREQUENT" ? "selected" : ""
-                }`}
-                onClick={() => handleAgeClick("NOT_FREQUENT")}
-              >
-                적음
-              </button>
-              <button
-                type="button"
-                className={`form-AgeMaker ${
-                  user.contactFrequency === "NORMAL" ? "selected" : ""
-                }`}
-                onClick={() => handleAgeClick("NORMAL")}
-              >
-                중간
-              </button>
-              <button
-                type="button"
-                className={`form-AgeMaker ${
-                  user.contactFrequency === "FREQUENT" ? "selected" : ""
-                }`}
-                onClick={() => handleAgeClick("FREQUENT")}
-              >
-                많음
-              </button>
-            </div>
-
+                <button
+                  type="button"
+                  className={`form-AgeMaker ${
+                    user.contactFrequency === "NOT_FREQUENT" ? "selected" : ""
+                  }`}
+                  onClick={() => handleAgeClick("NOT_FREQUENT")}
+                >
+                  적음
+                </button>
+                <button
+                  type="button"
+                  className={`form-AgeMaker ${
+                    user.contactFrequency === "NORMAL" ? "selected" : ""
+                  }`}
+                  onClick={() => handleAgeClick("NORMAL")}
+                >
+                  중간
+                </button>
+                <button
+                  type="button"
+                  className={`form-AgeMaker ${
+                    user.contactFrequency === "FREQUENT" ? "selected" : ""
+                  }`}
+                  onClick={() => handleAgeClick("FREQUENT")}
+                >
+                  많음
+                </button>
+              </div>
+              
+              {currentStep === 2 && (
+                <button
+                  type="button"
+                  className={`next-button ${user.contactFrequency ? 'active' : 'disabled'}`}
+                  onClick={handleNextToGender}
+                  disabled={!user.contactFrequency}
+                >
+                  다음으로
+                </button>
+              )}
             </div>
           )}
 
-          {/* {isMajorSelected() && isBirthDateValid() && (
-            <AdmissionYearInput
-              value={user.admissionYear}
-              onChange={handleChange}
-            />
-          )} */}
-
-          {isMajorSelected() && (
-            <AgeInputInput user={user} setUser={setUser} />
+          {currentStep === 1 && (
+            <button
+              type="button"
+              className={`next-button ${isMajorSelected() && isBirthDateValid() ? 'active' : 'disabled'}`}
+              onClick={handleNextToContactFrequency}
+              disabled={!(isMajorSelected() && isBirthDateValid())}
+            >
+              다음으로
+            </button>
           )}
 
+          {/* 1단계: 기본정보 (항상 보임) */}
           <MajorSelector
             user={user}
             setUser={setUser}
             checkMethod={checkMethod}
             setCheckMethod={setCheckMethod}
           />
+          
+          <AgeInputInput user={user} setUser={setUser} />
 
-          <button
-            className={`start-button ${isFiveChars ? "active" : ""}`}
-            type="button"
-            onClick={openModal}
-            disabled={!isFiveChars}
-          >
-            코매칭 시작하기
-          </button>
+          {/* 최종 시작하기 버튼 */}
+          {currentStep >= 7 && user.username && (
+            <button
+              className={`next-button ${isFiveChars ? "active" : ""}`}
+              type="button"
+              onClick={openModal}
+              disabled={!isFiveChars}
+            >
+              코매칭 시작하기
+            </button>
+          )}
         </div>
       </form>
       <TermsAgreementModal

@@ -127,30 +127,39 @@ function Hobby() {
       </div>
       <SearchBar onSearch={handleSearch} />
       <div className="hobby-container">
-        {filteredHobbyData.map(
-          (category, index) =>
-            category.hobbies.length > 0 && ( // Display only categories with filtered hobbies
-              <div className="hobby-category" key={index}>
-                <div className="hobby-category-title">{category.category}</div>
-                <div className="hobby-list">
-                  {category.hobbies.map((hobby, index) => (
-                    <div
-                      key={index}
-                      className={`hobby-items ${
-                        pickHobby.hobby.includes(hobby.name) ? "selected" : ""
-                      }`}
-                      onClick={() => handleHobbyClick(hobby.name)}
-                    >
-                      <span className="hobby-emoji">
-                        {hobby.emoji} {hobby.name}
-                      </span>
-                    </div>
-                  ))}
+        {filteredHobbyData.every(category => category.hobbies.length === 0) ? (
+          <div className="no-search-result">
+            <img src="/assets/Mainpage/logo.svg" alt="No Match" className="no-match-icon" />
+            <div>
+              앗! 찾으시는 검색어가 없어요.<br />
+              다른 검색어를 입력해주세요.
+            </div>
+          </div>
+        ) : (
+          filteredHobbyData.map(
+            (category, index) =>
+              category.hobbies.length > 0 && (
+                <div className="hobby-category" key={index}>
+                  <div className="hobby-category-title">{category.category}</div>
+                  <div className="hobby-list">
+                    {category.hobbies.map((hobby, index) => (
+                      <div
+                        key={index}
+                        className={`hobby-items ${
+                          pickHobby.hobby.includes(hobby.name) ? "selected" : ""
+                        }`}
+                        onClick={() => handleHobbyClick(hobby.name)}
+                      >
+                        <span className="hobby-emoji">
+                          {hobby.emoji} {hobby.name}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )
+              )
+          )
         )}
-        
       </div>
       {/* <div className="hobby-container">
         <div className="hobby-category">

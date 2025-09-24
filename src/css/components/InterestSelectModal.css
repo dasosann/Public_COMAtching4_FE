@@ -61,5 +61,5 @@
     width: 100%;
     max-height: 70vh; /* 화면 크기에 따라 조정 */
     overflow-y: auto; /* 수직 스크롤 허용 */
-    padding-right: 10px; /* 스크롤바와 컨텐츠 간 여백 */
+    padding-right: 10px; /*스크롤바와 컨텐츠 간 여백 */
 }
